@@ -5,7 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext js,ts,jsx,tsx --ignore-path .gitignore",
+    "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
     "@headlessui/react": "^1.2.0",
@@ -20,7 +24,14 @@
     "@tailwindcss/typography": "^0.4.0",
     "@types/node": "^14.17.0",
     "@types/react": "^17.0.6",
+    "@typescript-eslint/eslint-plugin": "^4.24.0",
+    "@typescript-eslint/parser": "^4.24.0",
     "autoprefixer": "^10.2.0",
+    "eslint": "^7.26.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.2",
     "postcss": "^8.2.2",
     "tailwindcss": "^2.0.2",
     "typescript": "^4.2.4"
