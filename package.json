@@ -9,7 +9,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext js,ts,jsx,tsx --ignore-path .gitignore",
     "lint:fix": "yarn lint --fix",
-    "contentful-typing": "contentful-typescript-codegen --output types/contentful.d.ts"
+    "contentful-typing": "contentful-typescript-codegen --output types/contentful.d.ts",
+    "tailwind:viewer": "tailwind-config-viewer -o"
   },
   "dependencies": {
     "@contentful/rich-text-from-markdown": "^14.1.2",
@@ -43,7 +44,8 @@
     "eslint-plugin-react": "^7.14.2",
     "postcss": "^8.2.2",
     "prettier": "^2.3.0",
-    "tailwindcss": "^2.0.2",
+    "tailwind-config-viewer": "^1.5.1",
+    "tailwindcss": "^2.1.2",
     "typescript": "^4.2.4"
   }
 }
