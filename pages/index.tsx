@@ -29,7 +29,7 @@ export default function Home({ fiches }: HomeProps) {
         <h1>{fiche.titre}</h1>
         <h2>{fiche.slug}</h2>
         <Image
-          src={`https:${fiche.illustration.file.url}`}
+          src={fiche.illustration.file.url}
           height={fiche.illustration.file.details.image.height}
           width={fiche.illustration.file.details.image.width}
           alt={fiche.illustration.title}

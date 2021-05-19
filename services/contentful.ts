@@ -20,27 +20,29 @@ const markdownToHtmlString = async (markdown: string) => (
   documentToHtmlString(await richTextFromMarkdown(markdown))
 )
 
-const sanitizeEntries = (element: any) => {
+const parseContentfulEntries = (element: any) => {
   if (typeof element !== 'object') return element
 
   if (element.sys) {
     return ({
       id: element.sys.id,
       createdAt: element.sys.createdAt,
-      ...sanitizeEntries(element.fields),
+      ...parseContentfulEntries(element.fields),
     })
   }
 
-  return map(sanitizeEntries, element)
+  // eslint-disable-next-line no-param-reassign
+  if (element.file) element.file.url = `https:${element.file.url}`
+
+  return map(parseContentfulEntries, element)
 }
 
 export const listAllFiches = async (): Promise<Fiche[]> => {
   const entries = await client.getEntries({
     content_type: CONTENT_TYPES.fiche,
-    include: 1,
   })
 
-  return Promise.all(sanitizeEntries(entries.items)
+  return Promise.all(parseContentfulEntries(entries.items)
     .map(async fields => ({
       ...fields,
       description: await markdownToHtmlString(fields.description),
