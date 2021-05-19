@@ -4,6 +4,7 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { TestMenu } from '../components/TestMenu'
 import { listAllFiches } from '../services/contentful'
 import { BrowserOnly } from '../components/BrowserOnly'
+import { Prose } from '../components/Prose'
 
 export const getStaticProps: GetStaticProps = async ({ preview }) => ({
   props: {
@@ -33,8 +34,8 @@ export default function Home({ fiches, preview }: InferGetStaticPropsType<typeof
           alt={fiche.illustration.title}
         />
 
-        <div dangerouslySetInnerHTML={{ __html: fiche.description }} />
-        <div dangerouslySetInnerHTML={{ __html: fiche.contenu }} />
+        <Prose html={fiche.description} />
+        <Prose html={fiche.contenu} />
         <p>{fiche.auteur.prenom} {fiche.auteur.nom}, {fiche.auteur.structure}, {fiche.auteur.email}</p>
 
         <BrowserOnly>
