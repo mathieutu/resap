@@ -1,52 +1,13 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { TestMenu } from '../components/TestMenu'
-import { listAllFiches } from '../services/contentful'
-import { BrowserOnly } from '../components/BrowserOnly'
-import { Prose } from '../components/Prose'
+import Link from 'next/link'
 
-export const getStaticProps: GetStaticProps = async ({ preview }) => ({
-  props: {
-    fiches: await listAllFiches(preview),
-    preview: Boolean(preview),
-  },
-})
-
-export default function Home({ fiches, preview }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const fiche = fiches[0]
-
+export default function Home() {
   return (
-    <div>
-      preview : {JSON.stringify(preview)}
-      <TestMenu />
-      <Head>
-        <title>{fiche.titre}</title>
-      </Head>
-
-      <div className="prose">
-        <h1>{fiche.titre}</h1>
-        <h2>{fiche.slug}</h2>
-        <Image
-          src={fiche.illustration.file.url}
-          height={fiche.illustration.file.details.image.height}
-          width={fiche.illustration.file.details.image.width}
-          alt={fiche.illustration.title}
-        />
-
-        <Prose html={fiche.description} />
-        <Prose html={fiche.contenu} />
-        <p>{fiche.auteur.prenom} {fiche.auteur.nom}, {fiche.auteur.structure}, {fiche.auteur.email}</p>
-
-        <BrowserOnly>
-          {() => {
-            // eslint-disable-next-line global-require
-            const ReactJson = require('react-json-view').default
-            return <ReactJson src={fiches} indentWidth={2} />
-          }}
-        </BrowserOnly>
-      </div>
-
-    </div>
+    <Link href="/fiches">
+      <a
+        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        Fiches
+      </a>
+    </Link>
   )
 }

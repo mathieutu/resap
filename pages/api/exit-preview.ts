@@ -1,10 +1,9 @@
-import { NextApiResponse } from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async (_req, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   // Exit the current user from "Preview Mode". This function accepts no args.
   res.clearPreviewData()
 
-  // Redirect the user back to the index page.
-  res.writeHead(307, { Location: '/' })
+  res.redirect(req.headers.referer)
   res.end()
 }
