@@ -1,25 +1,23 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { GetStaticProps } from 'next'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { TestMenu } from '../components/TestMenu'
 import { listAllFiches } from '../services/contentful'
 import { BrowserOnly } from '../components/BrowserOnly'
-import { Fiche } from '../types/models'
 
-type HomeProps = {
-  fiches: Fiche[],
-}
-export const getStaticProps: GetStaticProps<HomeProps> = async () => ({
+export const getStaticProps: GetStaticProps = async ({ preview }) => ({
   props: {
-    fiches: await listAllFiches(),
+    fiches: await listAllFiches(preview),
+    preview: Boolean(preview),
   },
 })
 
-export default function Home({ fiches }: HomeProps) {
+export default function Home({ fiches, preview }: InferGetStaticPropsType<typeof getStaticProps>) {
   const fiche = fiches[0]
 
   return (
     <div>
+      preview : {JSON.stringify(preview)}
       <TestMenu />
       <Head>
         <title>{fiche.titre}</title>

@@ -4,17 +4,20 @@ import { richTextFromMarkdown } from '@contentful/rich-text-from-markdown'
 import { map } from 'ramda'
 import { Fiche } from '../types/models'
 
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-})
-
 const CONTENT_TYPES = {
   auteur: 'auteur',
   categorie: 'categorie',
   fiche: 'fiche',
   structure: 'structure',
 } as const
+
+type ContentType = typeof CONTENT_TYPES[keyof typeof CONTENT_TYPES]
+
+const getEntries = (contentType: ContentType, preview = false) => createClient({
+  space: process.env.CONTENTFUL_SPACE_ID,
+  accessToken: preview ? process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN : process.env.CONTENTFUL_ACCESS_TOKEN,
+  host: preview ? 'preview.contentful.com' : 'cdn.contentful.com',
+}).getEntries({ content_type: contentType })
 
 const markdownToHtmlString = async (markdown: string) => (
   documentToHtmlString(await richTextFromMarkdown(markdown))
@@ -37,10 +40,8 @@ const parseContentfulEntries = (element: any) => {
   return map(parseContentfulEntries, element)
 }
 
-export const listAllFiches = async (): Promise<Fiche[]> => {
-  const entries = await client.getEntries({
-    content_type: CONTENT_TYPES.fiche,
-  })
+export const listAllFiches = async (preview: boolean): Promise<Fiche[]> => {
+  const entries = await getEntries(CONTENT_TYPES.fiche, preview)
 
   return Promise.all(parseContentfulEntries(entries.items)
     .map(async fields => ({
