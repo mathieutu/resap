@@ -1,7 +1,8 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import { findAFiche, listAllFichesSlugs } from '../../services/contentful'
 import { BrowserOnly } from '../../components/BrowserOnly'
+import { Fiche } from '../../types/models'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await listAllFichesSlugs()
@@ -11,8 +12,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: true,
   })
 }
-export const getStaticProps: GetStaticProps = async ({ preview, params }) => {
-  const fiche = await findAFiche(params.slug as string, preview)
+type Props = { fiche: Fiche | null }
+
+export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({ preview, params }) => {
+  const fiche = await findAFiche(params!.slug, preview)
 
   return ({
     props: {
@@ -23,7 +26,7 @@ export const getStaticProps: GetStaticProps = async ({ preview, params }) => {
   })
 }
 
-export default function ShowFiche({ fiche }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function ShowFiche({ fiche }: Props) {
   if (!fiche) return null
 
   return (

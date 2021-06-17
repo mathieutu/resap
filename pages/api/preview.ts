@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { secret, slug } = req.query
+  const { secret } = req.query
 
   if (process.env.NODE_ENV === 'production' && secret !== process.env.CONTENTFUL_PREVIEW_SECRET /* || !slug*/) {
     return res.status(401).json({ message: 'Invalid token' })

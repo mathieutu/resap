@@ -1,9 +1,14 @@
 import { createClient } from 'contentful'
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
-import { richTextFromMarkdown } from '@contentful/rich-text-from-markdown'
 import { map, pluck } from 'ramda'
 import type { Document } from '@contentful/rich-text-types'
 import { Fiche } from '../types/models'
+
+const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN } = process.env
+
+if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_PREVIEW_ACCESS_TOKEN || !CONTENTFUL_ACCESS_TOKEN) {
+  throw new Error('CONTENTFUL env vars needed (SPACE_ID, PREVIEW_ACCESS_TOKEN, ACCESS_TOKEN).')
+}
 
 const CONTENT_TYPES = {
   auteur: 'auteur',
@@ -15,12 +20,12 @@ const CONTENT_TYPES = {
 type ContentType = typeof CONTENT_TYPES[keyof typeof CONTENT_TYPES]
 
 type GetEntriesOptions = {
-  preview ?: boolean,
+  preview?: boolean,
   select?: string[],
   where?: Record<string, string>,
 }
 
-const parseContentfulEntries = (element: any) => {
+const parseContentfulEntries = (element: any): any => {
   if (typeof element !== 'object') return element
 
   if (element.sys) {
@@ -44,8 +49,8 @@ const getEntries = async <T extends Record<string, unknown>>(
   const { preview = false, select = [], where = {} } = options
 
   const entries = await createClient({
-    space: process.env.CONTENTFUL_SPACE_ID,
-    accessToken: preview ? process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN : process.env.CONTENTFUL_ACCESS_TOKEN,
+    space: CONTENTFUL_SPACE_ID,
+    accessToken: preview ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
     host: preview ? 'preview.contentful.com' : 'cdn.contentful.com',
   }).getEntries({
     content_type: contentType,
@@ -55,27 +60,19 @@ const getEntries = async <T extends Record<string, unknown>>(
 
   return parseContentfulEntries(entries.items)
 }
+// TODO Pas besoin ? La description ne sera pas en markdown.
+// const markdownToHtmlString = async (markdown: string) => (
+//   documentToHtmlString(await richTextFromMarkdown(markdown))
+// )
 
-const markdownToHtmlString = async (markdown: string) => (
-  documentToHtmlString(await richTextFromMarkdown(markdown))
-)
-
-export const listAllFiches = async (preview = false): Promise<Fiche[]> => {
-  const entries = await getEntries<Fiche>(
+export const listAllFiches = async (preview = false): Promise<Fiche[]> => (
+  getEntries<Fiche>(
     CONTENT_TYPES.fiche,
     { preview, select: ['fields.slug', 'sys.createdAt', 'fields.titre', 'fields.illustration', 'fields.description'] },
   )
-
-  return Promise.all(
-    entries.map(async fields => ({
-      ...fields,
-      description: await markdownToHtmlString(fields.description),
-    })),
-  )
-}
-
+)
 export const listAllFichesSlugs = async (preview = false): Promise<string[]> => {
-  const fiches = await getEntries<{slug: string}>(
+  const fiches = await getEntries<{ slug: string }>(
     CONTENT_TYPES.fiche,
     { preview, select: ['fields.slug'] },
   )
@@ -94,7 +91,6 @@ export const findAFiche = async (slug: string, preview = false): Promise<Fiche |
 
   return {
     ...fiche,
-    description: await markdownToHtmlString(fiche.description),
     contenu: documentToHtmlString(fiche.contenu as unknown as Document),
   }
 }
