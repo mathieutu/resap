@@ -57,7 +57,7 @@ module.exports = {
       },
     },
     {
-      files: ['pages/**/*'],
+      files: ['src/pages/**/*'],
       rules: {
         'import/no-default-export': 'off',
         'import/prefer-default-export': 'error',
