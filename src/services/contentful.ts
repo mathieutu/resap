@@ -1,5 +1,6 @@
 import { createClient } from 'contentful'
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
+import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { map, pluck } from 'ramda'
 import type { Document } from '@contentful/rich-text-types'
 import { Fiche } from '../types/models'
@@ -23,6 +24,10 @@ type GetEntriesOptions = {
   preview?: boolean,
   select?: string[],
   where?: Record<string, string>,
+}
+
+type FicheEntry = Fiche & {
+  contenu: Document,
 }
 
 const parseContentfulEntries = (element: any): any => {
@@ -65,8 +70,8 @@ const getEntries = async <T extends Record<string, unknown>>(
 //   documentToHtmlString(await richTextFromMarkdown(markdown))
 // )
 
-export const listAllFiches = async (preview = false): Promise<Fiche[]> => (
-  getEntries<Fiche>(
+export const listAllFiches = (preview = false): Promise<Fiche[]> => (
+  getEntries<FicheEntry>(
     CONTENT_TYPES.fiche,
     { preview, select: ['fields.slug', 'sys.createdAt', 'fields.titre', 'fields.illustration', 'fields.description'] },
   )
@@ -80,7 +85,7 @@ export const listAllFichesSlugs = async (preview = false): Promise<string[]> => 
 }
 
 export const findAFiche = async (slug: string, preview = false): Promise<Fiche | null> => {
-  const entries = await getEntries<Fiche>(
+  const entries = await getEntries<FicheEntry>(
     CONTENT_TYPES.fiche,
     { preview, where: { 'fields.slug': slug } },
   )
@@ -91,6 +96,22 @@ export const findAFiche = async (slug: string, preview = false): Promise<Fiche |
 
   return {
     ...fiche,
-    contenu: documentToHtmlString(fiche.contenu as unknown as Document),
+    contenu: documentToHtmlString(fiche.contenu),
+  }
+}
+
+export const findAFicheForIndexing = async (id: string, preview = false): Promise<Fiche | null> => {
+  const entries = await getEntries<FicheEntry>(
+    CONTENT_TYPES.fiche,
+    { preview, where: { 'sys.id': id } },
+  )
+
+  if (!entries.length) return null
+
+  const fiche = entries[0]
+
+  return {
+    ...fiche,
+    contenu: documentToPlainTextString(fiche.contenu),
   }
 }

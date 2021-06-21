@@ -15,8 +15,10 @@
   "dependencies": {
     "@contentful/rich-text-from-markdown": "^15.0.0",
     "@contentful/rich-text-html-renderer": "^15.0.0",
+    "@contentful/rich-text-plain-text-renderer": "^15.0.0",
     "@headlessui/react": "^1.2.0",
     "@heroicons/react": "^1.0.1",
+    "algoliasearch": "^4.9.3",
     "contentful": "^8.4.2",
     "next": "^11.0.0",
     "ramda": "^0.27.1",
