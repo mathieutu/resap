@@ -32,7 +32,7 @@ const features = [
 const headline: headlineProps = {
     title: "Une meilleure façon <br/> d’accèder à l’information",
     text: "Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.",
-    tag: '',
+    tag: 'PRATIQUE',
 }
 
 type featureSectionProps = {} & ClassNameProp

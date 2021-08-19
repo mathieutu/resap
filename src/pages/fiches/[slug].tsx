@@ -12,6 +12,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: true,
   })
 }
+
 type Props = { fiche: Fiche | null }
 
 export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({ preview, params }) => {
