@@ -5,6 +5,9 @@ import {listAllFiches} from '../../services/contentful'
 import {Fiche} from '../../types/models'
 import {Prose} from '../../components/Prose'
 import {Layout} from "../../components/Layout/Layout";
+import {FicheCard} from "../../components/Card/FicheCard";
+import {SimpleHeader} from "../../components/Layout/SimpleHeader";
+import {PrimaryButton} from "../../components/Buttons/Primary";
 
 export const getStaticProps: GetStaticProps = async ({preview}) => ({
     props: {
@@ -15,33 +18,27 @@ export const getStaticProps: GetStaticProps = async ({preview}) => ({
 
 export default function ListFiches({fiches}: { fiches: Fiche[] }) {
     return (
-        <Layout header={"navbar"}>
-            <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <Layout className="bg-gray-50" header={"navbar"}>
+            <SimpleHeader className="h-[475px]" title={"Fiches pratiques"} tag={"FICHES"}>
+                <form action="#" method="POST" className="w-full block md:w-1/2 mx-auto mt-20 sm:flex">
+                    <label htmlFor="email" className="sr-only">
+                        Recherchez parmis nos 400+ fiches
+                    </label>
+                    <input
+                        type="text"
+                        name="email"
+                        id="email"
+                        size={33}
+                        className="block w-full py-3 text-base rounded-md placeholder-gray-500 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:flex-1 border-gray-300"
+                        placeholder="Recherchez parmis nos 400+ fiches"
+                    />
+                    <PrimaryButton type={"submit"} text={"Recherche"}/>
+                </form>
+            </SimpleHeader>
+            <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 -mt-24">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {fiches.map((fiche) => (
-                        <div
-                            key={fiche.slug}
-                            className="relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                        >
-                            <div className="flex-shrink-0 h-10 w-10 relative">
-                                <Image
-                                    layout="fill"
-                                    objectFit="cover"
-                                    className="rounded-full"
-                                    src={fiche.illustration.file.url}
-                                    alt={fiche.illustration.title}
-                                />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <Link href={`/fiches/${fiche.slug}`}>
-                                    <a className="focus:outline-none">
-                                        <span className="absolute inset-0" aria-hidden="true"/>
-                                        <p className="text-sm font-medium text-gray-900">{fiche.titre}</p>
-                                        <Prose className="text-sm text-gray-500 truncate" html={fiche.description}/>
-                                    </a>
-                                </Link>
-                            </div>
-                        </div>
+                        <FicheCard fiche={fiche}/>
                     ))}
                 </div>
             </div>

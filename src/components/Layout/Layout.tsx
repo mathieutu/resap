@@ -9,8 +9,7 @@ type layoutProps = {
 } & PropsWithChildren<any>
 
 export const Layout = ({header, className, ...props}: layoutProps) => (
-    <div>
-
+    <div className={className}>
         {header === "home" && <HomeHeader/>}
         {header === "navbar" && <Navbar/>}
         {props.children}
