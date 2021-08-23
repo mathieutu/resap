@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from './Link'
 
 export const PreviewAlert = () => (
   <div className="relative bg-indigo-600">
@@ -10,11 +10,9 @@ export const PreviewAlert = () => (
             Attention ! Vous êtes en mode brouillon, et pouvez voir les modifications non publiées.
           </span>
           <span className="block sm:ml-2 sm:inline-block">
-            <Link href="/api/exit-preview">
-              <a className="text-white font-bold underline">
-                {' '}
-                Revenir à la normal <span aria-hidden="true">&rarr;</span>
-              </a>
+            <Link href="/api/exit-preview" className="text-white font-bold underline">
+              {' '}
+              Revenir à la normal <span aria-hidden="true">&rarr;</span>
             </Link>
           </span>
         </p>

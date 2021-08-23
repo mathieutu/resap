@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext js,ts,jsx,tsx --ignore-path .gitignore",
     "lint:fix": "yarn lint --fix",
-    "contentful-typing": "contentful-typescript-codegen --output types/contentful.d.ts",
+    "contentful-typing": "contentful-typescript-codegen --output src/types/contentful.d.ts",
     "tailwind:viewer": "tailwind-config-viewer -o"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "@headlessui/react": "^1.2.0",
     "@heroicons/react": "^1.0.1",
     "algoliasearch": "^4.9.3",
+    "classnames": "^2.3.1",
     "contentful": "^8.4.2",
     "next": "^11.0.0",
     "ramda": "^0.27.1",

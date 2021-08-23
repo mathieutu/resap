@@ -1,9 +1,8 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { AnnotationIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon } from '@heroicons/react/outline'
-import { DotsVerticalIcon } from '@heroicons/react/solid'
-import { ChartBarIcon, ShieldCheckIcon, CursorClickIcon, RefreshIcon } from '@heroicons/react/outline'
+import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon } from '@heroicons/react/outline'
+import classNames from 'classnames'
 import { Headline, headlineProps } from '../Headline'
 import { ClassNameProp } from '../../types/react'
+import { Link } from '../Link'
 
 const projects = [
   { name: 'Santé', description: 'Description de la thématique', icon: ChartBarIcon, href: '#', bgColor: 'bg-pink-600' },
@@ -12,19 +11,15 @@ const projects = [
   { name: 'Social', description: 'Description de la thématique', icon: RefreshIcon, href: '#', bgColor: 'bg-green-500' },
 ]
 
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(' ')
-}
-
 const headline: headlineProps = {
   title: 'Nos différentes thématique',
   text: 'Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.',
   tag: '',
 }
 
-type themeSectionProps = {} & ClassNameProp
+type Props = ClassNameProp
 
-export const ThemeSection = ({ className }: themeSectionProps) => (
+export const ThemeSection = ({ className }: Props) => (
   <div className={`${className} py-12 bg-white`}>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Headline
@@ -33,7 +28,7 @@ export const ThemeSection = ({ className }: themeSectionProps) => (
         text={headline.text}
       />
       <div className="mt-10">
-        <ul role="list" className="mt-3 grid grid-rows-2 gap-5 sm:gap-6 grid-flow-col w-1/2 mx-auto">
+        <ul className="mt-3 grid grid-rows-2 gap-5 sm:gap-6 grid-flow-col w-1/2 mx-auto">
           {projects.map((project) => (
             <li key={project.name} className="col-span-1 flex shadow-sm rounded-md">
               <div
@@ -46,9 +41,9 @@ export const ThemeSection = ({ className }: themeSectionProps) => (
               </div>
               <div className="flex-1 flex items-center justify-between truncate">
                 <div className="flex-1 px-4 py-2 text-sm truncate">
-                  <a href={project.href} className="text-gray-900 font-medium hover:text-gray-600">
+                  <Link href={project.href} className="text-gray-900 font-medium hover:text-gray-600">
                     {project.name}
-                  </a>
+                  </Link>
                   <p className="text-gray-500">{project.description}</p>
                 </div>
               </div>

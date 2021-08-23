@@ -1,9 +1,10 @@
 /* eslint-disable react/no-danger */
+// TODO à reprendre ? (virer html et utiliser du jsx)
 import { ClassNameProp } from '../types/react'
 
 export type headlineProps = { title: string, text: string, tag?: string } & ClassNameProp
 
-export const Headline = ({ title, text, tag, className }: headlineProps) => (
+export const Headline = ({ title, text, tag }: headlineProps) => (
   <div className="lg:text-center">
     <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">{tag}</h2>
     <p

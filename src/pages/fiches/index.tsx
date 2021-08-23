@@ -15,11 +15,11 @@ export const getStaticProps: GetStaticProps = async ({ preview }) => ({
 
 export default function ListFiches({ fiches }: { fiches: Fiche[] }) {
   return (
-    <Layout className="bg-gray-50" header="navbar">
-      <SimpleHeader className="h-[475px]" title="Fiches pratiques" tag="FICHES">
+    <Layout className="bg-gray-50">
+      <SimpleHeader className="h-[475px]" title="Fiches pratiques">
         <form action="#" method="POST" className="w-full block md:w-1/2 mx-auto mt-20 sm:flex">
           <label htmlFor="email" className="sr-only">
-            Recherchez parmis nos 400+ fiches
+            Recherchez parmis nos {fiches.length} fiches
           </label>
           <input
             type="text"
@@ -27,16 +27,14 @@ export default function ListFiches({ fiches }: { fiches: Fiche[] }) {
             id="email"
             size={33}
             className="block w-full py-3 text-base rounded-md placeholder-gray-500 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:flex-1 border-gray-300"
-            placeholder="Recherchez parmis nos 400+ fiches"
+            placeholder={`Recherchez parmis nos ${fiches.length} fiches`}
           />
-          <PrimaryButton type="submit" text="Recherche" />
+          <PrimaryButton type="submit">Rechercher</PrimaryButton>
         </form>
       </SimpleHeader>
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 -mt-24">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {fiches.map((fiche) => (
-            <FicheCard fiche={fiche} />
-          ))}
+          {fiches.map(fiche => <FicheCard fiche={fiche} key={fiche.id} />)}
         </div>
       </div>
     </Layout>

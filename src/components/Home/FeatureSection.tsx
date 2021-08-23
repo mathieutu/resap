@@ -35,9 +35,9 @@ const headline: headlineProps = {
   tag: 'PRATIQUE',
 }
 
-type featureSectionProps = {} & ClassNameProp
+type Props = ClassNameProp
 
-export const FeatureSection = ({ className }: featureSectionProps) => (
+export const FeatureSection = ({ className }: Props) => (
   <div className={`${className} py-12 bg-white`}>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Headline

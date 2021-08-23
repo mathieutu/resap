@@ -1,4 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
+import { Link } from '../Link'
+
 const navigation = {
   solutions: [
     { name: 'Marketing', href: '#' },
@@ -109,10 +111,10 @@ export const Footer = () => (
           </p>
           <div className="flex space-x-6">
             {navigation.social.map((item) => (
-              <a key={item.name} href={item.href} className="text-gray-400 hover:text-gray-500">
+              <Link key={item.name} href={item.href} className="text-gray-400 hover:text-gray-500">
                 <span className="sr-only">{item.name}</span>
                 <item.icon className="h-6 w-6" aria-hidden="true" />
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -123,9 +125,9 @@ export const Footer = () => (
               <ul className="mt-4 space-y-4">
                 {navigation.solutions.map((item) => (
                   <li key={item.name}>
-                    <a href={item.href} className="text-base text-gray-500 hover:text-gray-900">
+                    <Link href={item.href} className="text-base text-gray-500 hover:text-gray-900">
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -135,9 +137,9 @@ export const Footer = () => (
               <ul className="mt-4 space-y-4">
                 {navigation.support.map((item) => (
                   <li key={item.name}>
-                    <a href={item.href} className="text-base text-gray-500 hover:text-gray-900">
+                    <Link href={item.href} className="text-base text-gray-500 hover:text-gray-900">
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -149,9 +151,9 @@ export const Footer = () => (
               <ul className="mt-4 space-y-4">
                 {navigation.company.map((item) => (
                   <li key={item.name}>
-                    <a href={item.href} className="text-base text-gray-500 hover:text-gray-900">
+                    <Link href={item.href} className="text-base text-gray-500 hover:text-gray-900">
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -161,9 +163,9 @@ export const Footer = () => (
               <ul className="mt-4 space-y-4">
                 {navigation.legal.map((item) => (
                   <li key={item.name}>
-                    <a href={item.href} className="text-base text-gray-500 hover:text-gray-900">
+                    <Link href={item.href} className="text-base text-gray-500 hover:text-gray-900">
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -172,7 +174,7 @@ export const Footer = () => (
         </div>
       </div>
       <div className="mt-12 border-t border-gray-200 pt-8">
-        <p className="text-base text-gray-400 xl:text-center">&copy; 2021 Resap</p>
+        <p className="text-base text-gray-400 xl:text-center">&copy; {new Date().getFullYear()} RESAP</p>
       </div>
     </div>
   </footer>
