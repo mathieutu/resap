@@ -1,15 +1,8 @@
-import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon } from '@heroicons/react/outline'
 import classNames from 'classnames'
 import { Headline, headlineProps } from '../Headline'
 import { ClassNameProp } from '../../types/react'
 import { Link } from '../Link'
-
-const projects = [
-  { name: 'Santé', description: 'Description de la thématique', icon: ChartBarIcon, href: '#', bgColor: 'bg-pink-600' },
-  { name: 'Besoins Primaires', description: 'Description de la thématique', icon: ShieldCheckIcon, href: '#', bgColor: 'bg-purple-600' },
-  { name: 'Interprenariat', description: 'Description de la thématique', icon: CursorClickIcon, href: '#', bgColor: 'bg-yellow-500' },
-  { name: 'Social', description: 'Description de la thématique', icon: RefreshIcon, href: '#', bgColor: 'bg-green-500' },
-]
+import { categories } from '../../services/categories'
 
 const headline: headlineProps = {
   title: 'Nos différentes thématique',
@@ -29,22 +22,22 @@ export const ThemeSection = ({ className }: Props) => (
       />
       <div className="mt-10">
         <ul className="mt-3 grid grid-rows-2 gap-5 sm:gap-6 grid-flow-col w-1/2 mx-auto">
-          {projects.map((project) => (
-            <li key={project.name} className="col-span-1 flex shadow-sm rounded-md">
+          {Object.values(categories).map((categorie) => (
+            <li key={categorie.name} className="col-span-1 flex shadow-sm rounded-md">
               <div
                 className={classNames(
-                  project.bgColor,
+                  categorie.bgColor,
                   'flex-shrink-0 flex items-center justify-center p-4 text-white text-sm font-medium rounded-md',
                 )}
               >
-                <project.icon className="w-6" />
+                <categorie.icon className="w-6" />
               </div>
               <div className="flex-1 flex items-center justify-between truncate">
                 <div className="flex-1 px-4 py-2 text-sm truncate">
-                  <Link href={project.href} className="text-gray-900 font-medium hover:text-gray-600">
-                    {project.name}
+                  <Link href={categorie.href} className="text-gray-900 font-medium hover:text-gray-600">
+                    {categorie.name}
                   </Link>
-                  <p className="text-gray-500">{project.description}</p>
+                  <p className="text-gray-500">{categorie.description}</p>
                 </div>
               </div>
             </li>

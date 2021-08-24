@@ -1,10 +1,49 @@
-import { Fragment } from 'react'
+import { FormEvent, Fragment, useState } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import { PrimaryButton } from '../Buttons/Primary'
+import { useRouter } from 'next/router'
+import { SearchIcon } from '@heroicons/react/solid'
 import { Logo } from '../Logo'
 import { navigationEntries } from './Navbar'
 import { Link } from '../Link'
+
+const SearchForm = () => {
+  const router = useRouter()
+  const [search, setSearch] = useState('')
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    return router.push(`/fiches?query=${search}`)
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="mt-3 sm:flex w-3/4">
+      <label htmlFor="search" className="sr-only">
+        Recherchez parmi nos fiches...
+      </label>
+      <div className="mt-1 flex rounded-md shadow-sm w-full">
+        <div className="relative flex items-stretch flex-grow focus-within:z-10">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+          </div>
+          <input
+            type="search"
+            id="search"
+            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-l-md pl-10 py-3 text-base border-gray-300"
+            placeholder="Recherchez parmi nos fiches..."
+            value={search}
+            onChange={e => setSearch(e.currentTarget.value)}
+          />
+        </div>
+        <button
+          type="submit"
+          className="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-transparent text-base font-medium rounded-r-md text-white hover:bg-gray-900 bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Rechercher
+        </button>
+      </div>
+    </form>
+  )
+}
 
 export const HomeHeader = () => (
   <div className="relative bg-white overflow-hidden">
@@ -125,20 +164,7 @@ export const HomeHeader = () => (
               fugiat veniam occaecat fugiat aliqua.
             </p>
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-              <form action="#" method="POST" className="mt-3 sm:flex">
-                <label htmlFor="email" className="sr-only">
-                  Recherchez parmis nos 400+ fiches
-                </label>
-                <input
-                  type="text"
-                  name="email"
-                  id="email"
-                  size={33}
-                  className="block w-full py-3 text-base rounded-md placeholder-gray-500 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:flex-1 border-gray-300"
-                  placeholder="Recherchez parmis nos 400+ fiches"
-                />
-                <PrimaryButton type="submit">Recherche</PrimaryButton>
-              </form>
+              <SearchForm />
             </div>
           </div>
         </main>

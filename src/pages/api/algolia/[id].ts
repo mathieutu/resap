@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { findAFicheForIndexing } from '../../../services/contentful'
-import { deleteFiche, saveFiche } from '../../../services/algolia'
+import { deleteFiche, saveFiche } from '../../../services/algolia.server'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const ficheId = req.query.id as string

@@ -8,16 +8,20 @@ type Props = {
   href: string,
   activeClassName?: string,
   inactiveClassName?: string,
+  exact?: boolean,
+  scroll ?: boolean,
 } & ClassNameProp & ChildrenProp
 
-const InternalLink = ({ href, children, className, activeClassName, inactiveClassName }: Props) => {
-  const { pathname } = useRouter()
+const InternalLink = ({ href, children, className, activeClassName, inactiveClassName, exact, scroll }: Props) => {
+  const { pathname } = useRouter() ?? {}
 
   const sanitizedHref = `/${href.replace(/^\//, '')}`
 
+  const isActive = exact ? pathname === sanitizedHref : pathname?.startsWith(sanitizedHref)
+
   return (
-    <NextLink href={sanitizedHref}>
-      <a className={classNames(className, pathname === sanitizedHref ? activeClassName : inactiveClassName)}>
+    <NextLink href={sanitizedHref} scroll={scroll}>
+      <a className={classNames(className, isActive ? activeClassName : inactiveClassName)}>
         {children}
       </a>
     </NextLink>
