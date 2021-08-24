@@ -14,8 +14,8 @@ export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
   return (
     <Layout className="bg-gray-50">
       <SearchContext {...algoliaProps}>
-        <SimpleHeader className="h-[475px]" title="Fiches pratiques" titleClassName="text-indigo-600">
-          <div className="w-full block md:w-1/2 mx-auto mt-20 sm:flex">
+        <SimpleHeader className="h-[475px]" title="Fiches pratiques" titleClassName="text-indigo-600" subTitle="">
+          <div className="w-full block md:w-1/2 mx-auto mt-16 sm:flex">
             <div className="mt-1 relative rounded-md shadow-sm w-full">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -27,7 +27,7 @@ export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
             </div>
           </div>
           <ul className="flex gap-4 justify-center my-4">
-            {Object.values(categories).map(categorie => <li key={categorie.href}><CategorieLink categorie={categorie} /></li>)}
+            {Object.values(categories).map(categorie => <li key={categorie.href}><CategorieLink categorie={categorie} scroll={false} /></li>)}
           </ul>
         </SimpleHeader>
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 -mt-24">

@@ -3,8 +3,8 @@ import { ArrowLeftIcon } from '@heroicons/react/solid'
 import { Link } from './Link'
 import { Categorie } from '../services/categories'
 
-export const CategorieLink = ({ categorie }: { categorie: Categorie }) => (
-  <Link href={categorie.href} className="text-sm font-medium group">
+export const CategorieLink = ({ categorie, scroll = true }: { categorie: Categorie, scroll?: boolean }) => (
+  <Link href={categorie.href} className="text-sm font-medium group" scroll={scroll} shallow>
     <div
       className={classNames(categorie.borderColor, categorie.groupHoverBgColor, 'inline-flex justify-center items-center rounded-xl px-[10px] border')}
     >
@@ -15,7 +15,7 @@ export const CategorieLink = ({ categorie }: { categorie: Categorie }) => (
 )
 
 export const BackToHomeLink = () => (
-  <Link href="/fiches" className="text-sm font-medium">
+  <Link href="/fiches" className="text-sm font-medium" scroll={false} shallow>
     <div
       className="border-gray-400 text-gray-400 hover:bg-gray-400 hover:text-white inline-flex justify-center items-center rounded-xl px-[10px] border"
     >
