@@ -4,7 +4,7 @@ import { PrimaryLink } from '../Link'
 type Props = ClassNameProp;
 
 export const BannerContact = ({ className }: Props) => (
-  <div className={`${className} bg-gray-50`}>
+  <div className={`${className} bg-gray-100`}>
     <div
       className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between"
     >

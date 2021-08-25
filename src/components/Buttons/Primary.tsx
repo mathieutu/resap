@@ -7,5 +7,5 @@ export const primaryClassName = 'mt-3 w-full px-6 py-3 border border-transparent
 type ButtonProps = ButtonHTMLAttributes<any> & { type: 'submit' | 'reset' | 'button' }
 
 export const PrimaryButton = (props: ButtonProps) => (
-  <button {...props} className={primaryClassName} />
+  <button {...props} className={primaryClassName}>{props.children}</button>
 )

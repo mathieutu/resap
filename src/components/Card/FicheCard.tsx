@@ -4,7 +4,7 @@ import { Link } from '../Link'
 type Props = { fiche: Fiche }
 
 export const FicheCard = ({ fiche }: Props) => (
-  <div className="flex flex-col rounded-lg shadow-lg overflow-hidden">
+  <div className="flex flex-col rounded-lg shadow-lg overflow-hidden  bg-white">
     <div className="flex-shrink-0">
       <img className="h-48 w-full object-cover" src={fiche.illustration.file.url} alt={fiche.illustration.title} />
     </div>
