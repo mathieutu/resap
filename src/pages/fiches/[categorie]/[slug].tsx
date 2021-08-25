@@ -1,14 +1,14 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
-import { findAFiche, listAllFichesSlugs } from '../../services/contentful'
-import { BrowserOnly } from '../../components/BrowserOnly'
-import { Fiche } from '../../types/models'
+import { findAFiche, listAllFichesSlugs } from '../../../services/contentful'
+import { BrowserOnly } from '../../../components/BrowserOnly'
+import { Fiche } from '../../../types/models'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await listAllFichesSlugs()
 
   return ({
-    paths: slugs.map(slug => ({ params: { slug } })),
+    paths: slugs.map(params => ({ params })),
     fallback: true,
   })
 }

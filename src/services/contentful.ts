@@ -2,9 +2,10 @@ import { createClient } from 'contentful'
 // @ts-ignore TODO https://github.com/contentful/rich-text/issues/252
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
-import { map, pluck } from 'ramda'
+import { map } from 'ramda'
 import type { Document } from '@contentful/rich-text-types'
 import { Fiche } from '../types/models'
+import { CategorieSlug } from './categories'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN } = process.env
 
@@ -66,10 +67,6 @@ const getEntries = async <T extends Record<string, unknown>>(
 
   return parseContentfulEntries(entries.items)
 }
-// TODO Pas besoin ? La description ne sera pas en markdown.
-// const markdownToHtmlString = async (markdown: string) => (
-//   documentToHtmlString(await richTextFromMarkdown(markdown))
-// )
 
 export const listAllFiches = (preview = false): Promise<Fiche[]> => (
   getEntries<FicheEntry>(
@@ -77,13 +74,12 @@ export const listAllFiches = (preview = false): Promise<Fiche[]> => (
     { preview, select: ['fields.slug', 'sys.createdAt', 'fields.titre', 'fields.illustration', 'fields.description'] },
   )
 )
-export const listAllFichesSlugs = async (preview = false): Promise<string[]> => {
-  const fiches = await getEntries<{ slug: string }>(
+export const listAllFichesSlugs = async (preview = false) => (
+  getEntries<{ slug: string, categorie: CategorieSlug }>(
     CONTENT_TYPES.fiche,
-    { preview, select: ['fields.slug'] },
+    { preview, select: ['fields.slug', 'fields.categorie'] },
   )
-  return pluck('slug', fiches)
-}
+)
 
 export const findAFiche = async (slug: string, preview = false): Promise<Fiche | null> => {
   const entries = await getEntries<FicheEntry>(

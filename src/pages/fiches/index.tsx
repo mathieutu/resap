@@ -1,42 +1,48 @@
-import { GetStaticProps } from 'next'
-import { listAllFiches } from '../../services/contentful'
-import { Fiche } from '../../types/models'
+import { GetServerSideProps } from 'next'
+import { SearchIcon } from '@heroicons/react/solid'
 import { Layout } from '../../components/Layout/Layout'
 import { FicheCard } from '../../components/Card/FicheCard'
 import { SimpleHeader } from '../../components/Layout/SimpleHeader'
-import { PrimaryButton } from '../../components/Buttons/Primary'
+import { SearchInput } from '../../components/Search/SearchInput'
+import { SearchResults } from '../../components/Search/SearchResults'
+import { SearchContext } from '../../components/Search/SearchContext'
+import { AlgoliaSSRProps, findResultsStateForSSR } from '../../services/algolia.browser'
+import { categories } from '../../services/categories'
+import { CategorieLink } from '../../components/CategorieLink'
 
-export const getStaticProps: GetStaticProps = async ({ preview }) => ({
-  props: {
-    fiches: await listAllFiches(preview),
-    preview: Boolean(preview),
-  },
-})
-
-export default function ListFiches({ fiches }: { fiches: Fiche[] }) {
+export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
   return (
     <Layout className="bg-gray-50">
-      <SimpleHeader className="h-[475px]" title="Fiches pratiques">
-        <form action="#" method="POST" className="w-full block md:w-1/2 mx-auto mt-20 sm:flex">
-          <label htmlFor="email" className="sr-only">
-            Recherchez parmis nos {fiches.length} fiches
-          </label>
-          <input
-            type="text"
-            name="email"
-            id="email"
-            size={33}
-            className="block w-full py-3 text-base rounded-md placeholder-gray-500 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:flex-1 border-gray-300"
-            placeholder={`Recherchez parmis nos ${fiches.length} fiches`}
+      <SearchContext {...algoliaProps}>
+        <SimpleHeader className="h-[475px]" title="Fiches pratiques" titleClassName="text-indigo-600">
+          <div className="w-full block md:w-1/2 mx-auto mt-20 sm:flex">
+            <div className="mt-1 relative rounded-md shadow-sm w-full">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+              </div>
+              <SearchInput
+                className="block w-full pl-10 py-3 text-base rounded-md placeholder-gray-500 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:flex-1 border-gray-300"
+                label="Recherchez parmi nos fiches..."
+              />
+            </div>
+          </div>
+          <ul className="flex gap-4 justify-center my-4">
+            {Object.values(categories).map(categorie => <li key={categorie.href}><CategorieLink categorie={categorie} /></li>)}
+          </ul>
+        </SimpleHeader>
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 -mt-24">
+          <SearchResults
+            className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            renderHit={(hit) => <FicheCard fiche={hit} />}
           />
-          <PrimaryButton type="submit">Rechercher</PrimaryButton>
-        </form>
-      </SimpleHeader>
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 -mt-24">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {fiches.map(fiche => <FicheCard fiche={fiche} key={fiche.id} />)}
         </div>
-      </div>
+      </SearchContext>
     </Layout>
   )
 }
+
+export const getServerSideProps: GetServerSideProps<AlgoliaSSRProps> = async ({ query }) => ({
+  props: {
+    resultsState: await findResultsStateForSSR(ListFiches, query),
+  },
+})

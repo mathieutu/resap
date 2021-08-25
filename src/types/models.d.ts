@@ -1,3 +1,5 @@
+import { categories } from '../services/categories'
+
 export type Image = {
   width: number,
   height: number,
@@ -47,6 +49,7 @@ export type Structure = {
 
 export type Fiche = {
   id: string,
+  categorie: keyof typeof categories,
   createdAt: Date,
   titre: string,
   slug: string,
