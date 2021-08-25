@@ -13,7 +13,7 @@ export const Layout = ({ header, children, ...props }: Props) => (
   <div {...props}>
     {header ?? <Navbar />}
     {children}
-    <BannerContact className="mt-20" />
+    <BannerContact/>
     <Footer />
   </div>
 )

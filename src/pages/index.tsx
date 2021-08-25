@@ -5,7 +5,7 @@ import { HomeHeader } from '../components/Layout/HomeHeader'
 
 export default function Home() {
   return (
-    <div>
+    <div className="bg-gray-50">
       <Layout header={<HomeHeader />}>
         <FeatureSection className="mt-20" />
         <ThemeSection className="mt-20" />

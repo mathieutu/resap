@@ -38,7 +38,7 @@ const headline: headlineProps = {
 type Props = ClassNameProp
 
 export const FeatureSection = ({ className }: Props) => (
-  <div className={`${className} py-12 bg-white`}>
+  <div className={`${className} py-12`}>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Headline
         tag={headline.tag}
