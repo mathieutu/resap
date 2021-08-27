@@ -7,7 +7,7 @@ import { Link } from '../Link'
 export const navigationEntries = [
   { name: 'Fiches pratiques', href: 'fiches' },
   { name: 'Annuaires', href: '#' },
-  { name: 'Contact', href: '#' },
+  { name: 'Contact', href: 'contact' },
 ]
 
 export const Navbar = () => (

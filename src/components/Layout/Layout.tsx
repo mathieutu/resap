@@ -6,14 +6,15 @@ import { ClassNameProp } from '../../types/react'
 
 type Props = {
   header?: ReactElement,
+  withoutContactBanner?: boolean,
   children: ReactNode,
 } & ClassNameProp
 
-export const Layout = ({ header, children, ...props }: Props) => (
+export const Layout = ({ header, children, withoutContactBanner, ...props }: Props) => (
   <div {...props}>
     {header ?? <Navbar />}
     {children}
-    <BannerContact/>
+    {withoutContactBanner ? null : <BannerContact />}
     <Footer />
   </div>
 )
