@@ -1,10 +1,10 @@
 import algoliaSearch from 'algoliasearch'
 import { Fiche } from '../types/models'
 
-const { NEXT_PUBLIC_ALGOLIA_APP_ID: appId, ALGOLIA_ADMIN_KEY: apiKey } = process.env
+const { NEXT_PUBLIC_ALGOLIA_APP_ID: appId, ALGOLIA_ADMIN_API_KEY: apiKey } = process.env
 
 if (!appId || !apiKey) {
-  throw new Error('Algolia env vars needed (NEXT_PUBLIC_ALGOLIA_APP_ID, ALGOLIA_ADMIN_KEY).')
+  throw new Error('Algolia env vars needed (NEXT_PUBLIC_ALGOLIA_APP_ID, ALGOLIA_ADMIN_API_KEY).')
 }
 
 const algoliaClient = algoliaSearch(appId, apiKey)
