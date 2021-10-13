@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { findAFiche, listAllFichesSlugs } from '../../../services/contentful'
 import { BrowserOnly } from '../../../components/BrowserOnly'
 import { Fiche } from '../../../types/models'
+import { Prose } from '../../../components/Prose'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await listAllFichesSlugs()
@@ -35,6 +36,7 @@ export default function ShowFiche({ fiche }: Props) {
       <Head>
         <title>{fiche.titre}</title>
       </Head>
+      <Prose html={fiche.contenu} />
       <BrowserOnly>
         {() => {
           // eslint-disable-next-line global-require
