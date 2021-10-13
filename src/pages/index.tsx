@@ -1,3 +1,4 @@
+import { GetStaticProps } from 'next'
 import { FeatureSection } from '../components/Home/FeatureSection'
 import { Layout } from '../components/Layout/Layout'
 import { ThemeSection } from '../components/Home/ThemeSection'
@@ -13,3 +14,9 @@ export default function Home() {
     </div>
   )
 }
+
+export const getStaticProps: GetStaticProps = async ({ preview }) => ({
+  props: {
+    preview: !!preview,
+  },
+})

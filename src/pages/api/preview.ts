@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { secret } = req.query
+  const { secret, slug, categorie } = req.query
 
   if (process.env.NODE_ENV === 'production' && secret !== process.env.CONTENTFUL_PREVIEW_SECRET /* || !slug*/) {
     return res.status(401).json({ message: 'Invalid token' })
@@ -15,5 +15,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   // Redirect to the path from the fetched post
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
 
-  return res.redirect('/fiches')
+  return res.redirect(`/fiches/${categorie}/${slug}`)
 }

@@ -41,8 +41,9 @@ export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<AlgoliaSSRProps> = async ({ query }) => ({
+export const getServerSideProps: GetServerSideProps<AlgoliaSSRProps> = async ({ query, preview }) => ({
   props: {
+    preview: !!preview,
     resultsState: await findResultsStateForSSR(ListFiches, query),
   },
 })

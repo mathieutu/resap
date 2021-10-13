@@ -47,11 +47,12 @@ export default function ListFichesByCategory({ categorieSlug, ...algoliaProps }:
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props, { categorie: CategorieSlug }> = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps<Props, { categorie: CategorieSlug }> = async ({ params, preview }) => {
   const categorieSlug = params!.categorie
 
   return ({
     props: {
+      preview: !!preview,
       categorieSlug,
       resultsState: await findResultsStateForSSR(
         (props) => <ListFichesByCategory categorieSlug={categorieSlug} {...props} />,
