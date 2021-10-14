@@ -4,6 +4,9 @@ import { findAFiche, listAllFichesSlugs } from '../../../services/contentful'
 import { BrowserOnly } from '../../../components/BrowserOnly'
 import { Fiche } from '../../../types/models'
 import { Prose } from '../../../components/Prose'
+import {Layout} from "../../../components/Layout/Layout";
+import {HeaderFiche} from "../../../components/Layout/HeaderFiche";
+import {categories} from "../../../services/categories";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await listAllFichesSlugs()
@@ -23,6 +26,8 @@ export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({ 
     return { notFound: true }
   }
 
+  const category = categories[fiche.categorie]
+
   return ({
     props: {
       fiche,
@@ -34,11 +39,10 @@ export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({ 
 export default function ShowFiche({ fiche }: Props) {
   if (!fiche) return null
 
+  const category = categories[fiche.categorie]
+
   return (
-    <>
-      <Head>
-        <title>{fiche.titre}</title>
-      </Head>
+    <Layout subheader={<HeaderFiche fiche={fiche} category={category}/>}>
       <Prose html={fiche.contenu} />
       <BrowserOnly>
         {() => {
@@ -47,6 +51,6 @@ export default function ShowFiche({ fiche }: Props) {
           return <ReactJson src={fiche} indentWidth={2} />
         }}
       </BrowserOnly>
-    </>
+    </Layout>
   )
 }
