@@ -50,6 +50,12 @@ export default function ListFichesByCategory({ categorieSlug, ...algoliaProps }:
 export const getServerSideProps: GetServerSideProps<Props, { categorie: CategorieSlug }> = async ({ params, preview }) => {
   const categorieSlug = params!.categorie
 
+  if (!categories[categorieSlug]) {
+    return {
+      notFound: true,
+    }
+  }
+
   return ({
     props: {
       preview: !!preview,

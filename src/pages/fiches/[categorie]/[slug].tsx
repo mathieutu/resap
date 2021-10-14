@@ -19,12 +19,15 @@ type Props = { fiche: Fiche | null }
 export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({ preview, params }) => {
   const fiche = await findAFiche(params!.slug, preview)
 
+  if (!fiche) {
+    return { notFound: true }
+  }
+
   return ({
     props: {
       fiche,
       preview: !!preview,
     },
-    notFound: !fiche,
   })
 }
 
