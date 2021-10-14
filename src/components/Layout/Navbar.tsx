@@ -3,6 +3,7 @@ import { SearchIcon } from '@heroicons/react/solid'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Logo } from '../Logo'
 import { Link } from '../Link'
+import {Container} from "./Container";
 
 export const navigationEntries = [
   { name: 'Fiches pratiques', href: 'fiches' },
@@ -14,7 +15,7 @@ export const Navbar = () => (
   <Disclosure as="header" className="bg-white shadow">
     {({ open }) => (
       <>
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+        <Container>
           <div className="flex justify-between h-16">
             <div className="flex px-2 lg:px-0">
               <Link href="/" className="flex-shrink-0 flex items-center">
@@ -66,7 +67,7 @@ export const Navbar = () => (
               </Disclosure.Button>
             </div>
           </div>
-        </div>
+        </Container>
 
         <Disclosure.Panel className="lg:hidden">
           <nav className="pt-2 pb-3 space-y-1">
