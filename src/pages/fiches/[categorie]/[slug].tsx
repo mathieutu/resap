@@ -42,7 +42,8 @@ export default function ShowFiche({ fiche }: Props) {
   const category = categories[fiche.categorie]
 
   return (
-    <Layout subheader={<HeaderFiche fiche={fiche} category={category}/>}>
+    <Layout>
+      <HeaderFiche fiche={fiche} category={category}/>
       <Prose html={fiche.contenu} />
       <BrowserOnly>
         {() => {
