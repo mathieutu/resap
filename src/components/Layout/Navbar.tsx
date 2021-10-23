@@ -1,9 +1,9 @@
 import { Disclosure } from '@headlessui/react'
 import { SearchIcon } from '@heroicons/react/solid'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import { Logo } from '../Logo'
 import { Link } from '../Link'
 import {Container} from "./Container";
+import {LogoBlue} from "../LogoBlue";
 
 export const navigationEntries = [
   { name: 'Fiches pratiques', href: 'fiches' },
@@ -19,7 +19,7 @@ export const Navbar = () => (
           <div className="flex justify-between h-16">
             <div className="flex px-2 lg:px-0">
               <Link href="/" className="flex-shrink-0 flex items-center">
-                <Logo />
+                <LogoBlue />
               </Link>
               <nav className="hidden lg:ml-6 lg:flex lg:space-x-8">
                 {navigationEntries.map((item) => (

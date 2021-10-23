@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <div className="bg-gray-50">
       <Layout header={<HomeHeader />}>
-        <FeatureSection className="mt-20" />
-        <ThemeSection className="mt-20" />
+        <ThemeSection className="" />
+        <FeatureSection />
       </Layout>
     </div>
   )

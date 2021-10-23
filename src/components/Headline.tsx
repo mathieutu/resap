@@ -1,16 +1,17 @@
 /* eslint-disable react/no-danger */
 // TODO à reprendre ? (virer html et utiliser du jsx)
 import { ClassNameProp } from '../types/react'
+import classNames from "classnames";
 
 export type headlineProps = { title: string, text: string, tag?: string } & ClassNameProp
 
-export const Headline = ({ title, text, tag }: headlineProps) => (
-  <div className="lg:text-center">
-    <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">{tag}</h2>
-    <p
+export const Headline = ({ title, text, tag, className }: headlineProps) => (
+  <div className={classNames(className, "lg:text-center")}>
+    <span className="text-sm text-grey-default font-semibold mb-12 block tracking-wide uppercase">{tag}</span>
+    <div
       dangerouslySetInnerHTML={{ __html: title }}
-      className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl"
+      className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-blue-default sm:text-4xl"
     />
-    <p dangerouslySetInnerHTML={{ __html: text }} className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto" />
+    <p dangerouslySetInnerHTML={{ __html: text }} className="mt-4 max-w-2xl text-xl text-blue-default lg:mx-auto" />
   </div>
 )

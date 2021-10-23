@@ -6,6 +6,9 @@ import { SearchIcon } from '@heroicons/react/solid'
 import { Logo } from '../Logo'
 import { navigationEntries } from './Navbar'
 import { Link } from '../Link'
+import {PrimaryButton} from "../Buttons/Primary";
+import {LogoBlue} from "../LogoBlue";
+import {Shape} from "../Shape";
 
 const SearchForm = () => {
   const router = useRouter()
@@ -28,18 +31,13 @@ const SearchForm = () => {
           <input
             type="search"
             id="search"
-            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-l-md pl-10 py-3 text-base border-gray-300"
+            className="focus:ring-green-default focus:border-green-default block w-full rounded-md pl-10 py-2 text-base border-gray-300"
             placeholder="Recherchez parmi nos fiches..."
             value={search}
             onChange={e => setSearch(e.currentTarget.value)}
           />
         </div>
-        <button
-          type="submit"
-          className="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-transparent text-base font-medium rounded-r-md text-white hover:bg-gray-900 bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Rechercher
-        </button>
+        <PrimaryButton>Rechercher</PrimaryButton>
       </div>
     </form>
   )
@@ -49,16 +47,6 @@ export const HomeHeader = () => (
   <div className="relative bg-white overflow-hidden">
     <div className="max-w-7xl mx-auto">
       <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-        <svg
-          className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
-          fill="currentColor"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <polygon points="50,0 100,0 50,100 0,100" />
-        </svg>
-
         <Popover>
           <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
             <nav
@@ -68,11 +56,11 @@ export const HomeHeader = () => (
               <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
                 <div className="flex items-center justify-between w-full md:w-auto">
                   <Link href="/">
-                    <Logo />
+                    <LogoBlue />
                   </Link>
                   <div className="-mr-2 flex items-center md:hidden">
                     <Popover.Button
-                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-default"
                     >
                       <span className="sr-only">Open main menu</span>
                       <MenuIcon className="h-6 w-6" aria-hidden="true" />
@@ -112,15 +100,11 @@ export const HomeHeader = () => (
               >
                 <div className="px-5 pt-4 flex items-center justify-between">
                   <div>
-                    <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                      alt=""
-                    />
+                    <LogoBlue/>
                   </div>
                   <div className="-mr-2">
                     <Popover.Button
-                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-default"
                     >
                       <span className="sr-only">Close main menu</span>
                       <XIcon className="h-6 w-6" aria-hidden="true" />
@@ -152,9 +136,9 @@ export const HomeHeader = () => (
 
         <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
           <div className="sm:text-center lg:text-left">
-            <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-              <span className="block">Ressources Santé et Précarité</span>
-              <span className="block text-4xl text-indigo-600 ">Auvergne Rhône Alpes</span>
+            <h1 className="text-4xl tracking-tight font-extrabold text-blue-default sm:text-5xl md:text-6xl">
+              <span className="block">Ressources <br/>Santé et Précarité</span>
+              <span className="block text-4xl text-green-default mt-4 ">Auvergne Rhône Alpes</span>
             </h1>
             <p
               className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
@@ -170,12 +154,8 @@ export const HomeHeader = () => (
         </main>
       </div>
     </div>
-    <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-      <img
-        className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-        src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
-        alt=""
-      />
+    <div className="lg:absolute lg:right-0 lg:w-1/2 pl-10 -top-10 -bottom-10">
+      <Shape/>
     </div>
   </div>
 )
