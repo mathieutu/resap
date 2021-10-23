@@ -154,7 +154,7 @@ export const HomeHeader = () => (
         </main>
       </div>
     </div>
-    <div className="lg:absolute lg:right-0 lg:w-1/2 pl-10 -top-10 -bottom-10">
+    <div className="lg:absolute lg:right-0 lg:w-1/2 pl-10 -top-10 -bottom-10 hidden lg:block">
       <Shape/>
     </div>
   </div>
