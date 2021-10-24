@@ -12,7 +12,7 @@ export const navigationEntries = [
 ]
 
 export const Navbar = () => (
-  <Disclosure as="header" className="bg-white shadow">
+  <Disclosure as="header" className="bg-white shadow print:hidden">
     {({ open }) => (
       <>
         <Container>

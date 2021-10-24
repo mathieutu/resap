@@ -76,8 +76,8 @@ export default function ShowFiche({fiche}: Props) {
           <h1 className="text-2xl lg:text-7xl text-blue-default">{fiche.titre}</h1>
         </div>
         <div className="flex lg:-mx-4 flex-wrap">
-          <div className="w-full lg:w-8/12 px-4 pb-10 lg:pb-20">
-            <Prose className={} html={fiche.contenu}/>
+          <div className="w-full  print:w-full lg:w-8/12 px-4 pb-10 lg:pb-20">
+            <Prose html={fiche.contenu}/>
             {/*<BrowserOnly>*/}
             {/*  {() => {*/}
             {/*    // eslint-disable-next-line global-require*/}
@@ -86,7 +86,7 @@ export default function ShowFiche({fiche}: Props) {
             {/*  }}*/}
             {/*</BrowserOnly>*/}
           </div>
-          <div className="w-full lg:w-4/12 px-4">
+          <div className="w-full lg:w-4/12 px-4 print:hidden">
             <Box title={"<h3>QUELQUES OUTILS</h3>"}>
               {fiche.pourEnSavoirPlus?.map((link) => (
                 <Fragment>

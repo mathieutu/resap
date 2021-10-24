@@ -55,7 +55,7 @@ const navigation = {
 }
 
 export const Footer = () => (
-  <footer className="bg-blue-default" aria-labelledby="footer-heading">
+  <footer className="bg-blue-default print:hidden" aria-labelledby="footer-heading">
     <h2 id="footer-heading" className="sr-only">
       Footer
     </h2>
