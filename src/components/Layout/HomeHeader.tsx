@@ -37,7 +37,7 @@ const SearchForm = () => {
             onChange={e => setSearch(e.currentTarget.value)}
           />
         </div>
-        <PrimaryButton>Rechercher</PrimaryButton>
+        <PrimaryButton type={'submit'}>Rechercher</PrimaryButton>
       </div>
     </form>
   )

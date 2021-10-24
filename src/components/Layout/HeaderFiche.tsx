@@ -4,6 +4,7 @@ import {Fiche} from "../../types/models";
 import {Categorie} from "../../services/categories";
 import {Container} from "./Container";
 import {CategorieLink} from "../CategorieLink";
+import {FloatingPrintButton} from "../FloatingPrintButton";
 
 type Props = { fiche: Fiche, category: Categorie } & ClassNameProp
 

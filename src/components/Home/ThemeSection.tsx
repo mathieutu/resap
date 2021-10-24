@@ -36,7 +36,7 @@ export const ThemeSection = ({className}: Props) => (
         </div>
         <div className="flex justify-center mt-12">
           <Link href={"/fiches"}>
-            <PrimaryButton>Toutes nos fiches</PrimaryButton>
+            <PrimaryButton type={'button'}>Toutes nos fiches</PrimaryButton>
           </Link>
         </div>
       </div>
