@@ -30,6 +30,51 @@ module.exports = {
         },
         cyan,
       },
+      typography: (theme) =>  ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.grey.default'),
+            h1 : {
+              color: theme('colors.green.default'),
+            },
+            h2 : {
+              color: theme('colors.green.default'),
+              fontSize: "2.25rem",
+            },
+            h3 : {
+              color: theme('colors.blue.default')
+            },
+            h4 : {
+              color: theme('colors.blue.default')
+            },
+            h5 : {
+              color: theme('colors.blue.default')
+            },
+            h6 : {
+              color: theme('colors.blue.default')
+            },
+            blockquote: {
+              color: theme('colors.green.default'),
+              borderLeftColor: theme('colors.green.default'),
+              paddingTop: "0.375rem",
+              paddingBottom: "0.375rem"
+            },
+            ul : {
+              li: {
+                "&:before": {
+                  backgroundColor: theme('colors.green.default'),
+                }
+              },
+            },
+            a: {
+              color: '#3182ce',
+              '&:hover': {
+                color: '#2c5282',
+              },
+            },
+          },
+        },
+      })
     },
   },
   variants: {
