@@ -19,11 +19,11 @@ const SearchForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-3 sm:flex w-3/4">
+    <form onSubmit={handleSubmit} className="mt-3 sm:flex lg:w-3/4">
       <label htmlFor="search" className="sr-only">
         Recherchez parmi nos fiches...
       </label>
-      <div className="mt-1 flex rounded-md shadow-sm w-full">
+      <div className="mt-1 flex rounded-md shadow-sm w-full flex-wrap">
         <div className="relative flex items-stretch flex-grow focus-within:z-10">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -122,13 +122,6 @@ export const HomeHeader = () => (
                     </Link>
                   ))}
                 </div>
-                <a
-                  href="#"
-                  className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100"
-                >
-                  {/* TODO à virer ?! */}
-                  Log in
-                </a>
               </div>
             </Popover.Panel>
           </Transition>

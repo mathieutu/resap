@@ -27,7 +27,7 @@ export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
               />
             </div>
           </div>
-          <ul className="flex gap-4 justify-center my-4">
+          <ul className="flex flex-wrap gap-4 justify-center my-4">
             {Object.values(categories).map(categorie => <li key={categorie.href}><CategorieLink categorie={categorie} scroll={false} /></li>)}
           </ul>
         </SimpleHeader>

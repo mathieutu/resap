@@ -3,16 +3,18 @@ import {ArrowLeftIcon} from '@heroicons/react/solid'
 import {Link} from './Link'
 import {Categorie} from '../services/categories'
 
-type TypeProps = { categorie: Categorie, scroll?: boolean, unstyled?: boolean}
+type TypeProps = { categorie: Categorie, scroll?: boolean, unstyled?: boolean }
 
 export const CategorieLink = ({categorie, scroll = true, unstyled = false}: TypeProps) => {
   return (
     <Link href={categorie.href} className="text-sm font-medium group" scroll={scroll} shallow>
       <div
-        className={classNames({[categorie.borderColor]: !unstyled, [categorie.groupHoverBgColor]: !unstyled,}, 'inline-flex justify-center items-center rounded-xl px-[10px] border')}
+        className={classNames({
+          [categorie.borderColor]: !unstyled,
+          [categorie.groupHoverBgColor]: !unstyled,
+        }, 'inline-flex justify-center items-center rounded-xl px-[10px] border')}
       >
-        <span
-          className={classNames({[categorie.bgColor]: !unstyled, 'bg-white': unstyled}, 'group-hover:bg-white block w-[6px] h-[6px] rounded-full mr-2')}/>
+        <categorie.icon className={classNames({[categorie.textColor]: !unstyled}, "group-hover:text-white w-5 h-5 mr-1")}/>
         <span
           className={classNames({[categorie.textColor]: !unstyled}, 'group-hover:text-white text-sm font-medium')}>{categorie.name}</span>
       </div>

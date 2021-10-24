@@ -24,7 +24,7 @@ export const ThemeSection = ({className}: Props) => (
       <div className="mt-10">
         <div className="flex flex-wrap justify-between w-full">
           {Object.values(categories).map((categorie) => (
-            <div className={"w-full md:w-6/12 lg:w-2/12 px-4 flex"}>
+            <div key={categorie.name} className={"w-full md:w-6/12 lg:w-2/12 px-4 flex"}>
               <div className={"mb-6 w-full bg-white rounded-xl py-8 px-4 flex flex-col items-center "}>
                 <categorie.icon className="w-[75px] h-[75px]"/>
                 <span className={classNames(categorie.textColor, 'uppercase text-sm')}>

@@ -35,9 +35,9 @@ export const Navbar = () => (
                 ))}
               </nav>
             </div>
-            <div className="flex-1 flex items-center justify-center px-2  lg:justify-end">
+            <div className="lg:flex-1 flex items-center justify-center px-2  lg:justify-end">
               <label htmlFor="search" className="sr-only">
-                Search
+                Rechercher
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -46,7 +46,7 @@ export const Navbar = () => (
                 <input
                   id="search"
                   name="search"
-                  className="block pl-10 l-10  py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="w-full block pl-10 l-10  py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="Recherchez parmis les fiches et structures"
                   type="search"
                   size={42}

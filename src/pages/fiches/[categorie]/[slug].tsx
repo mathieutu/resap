@@ -72,11 +72,11 @@ export default function ShowFiche({fiche}: Props) {
     <Layout>
       <HeaderFiche fiche={fiche} category={category}/>
       <Container>
-        <div className="w-full py-20">
-          <h1 className="text-7xl text-blue-default">{fiche.titre}</h1>
+        <div className="w-full py-10 lg:py-20">
+          <h1 className="text-2xl lg:text-7xl text-blue-default">{fiche.titre}</h1>
         </div>
-        <div className="flex -mx-4">
-          <div className="w-full lg:w-8/12 px-4 pb-20">
+        <div className="flex lg:-mx-4 flex-wrap">
+          <div className="w-full lg:w-8/12 px-4 pb-10 lg:pb-20">
             <Prose html={fiche.contenu}/>
             {/*<BrowserOnly>*/}
             {/*  {() => {*/}
@@ -107,7 +107,7 @@ export default function ShowFiche({fiche}: Props) {
                 </Fragment>
               ))}
             </Box>
-            <Box className="mt-10" title={'<h3>Contacter l\'auteur</h3>'}>
+            <Box className="mt-10 mb-10 lg:mb-0" title={'<h3>Contacter l\'auteur</h3>'}>
               <AuthorCard author={fiche.auteur}/>
             </Box>
           </div>
