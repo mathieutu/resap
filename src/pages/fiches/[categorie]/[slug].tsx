@@ -65,7 +65,7 @@ export default function ShowFiche({fiche}: Props) {
               {/*  }}*/}
               {/*</BrowserOnly>*/}
             </div>
-            <div className="w-full lg:w-4/12 px-4 print:hidden">
+            <div className="w-full lg:w-4/12 lg:px-4 print:hidden">
               <Box title={"<h3>QUELQUES OUTILS</h3>"}>
                 {fiche.pourEnSavoirPlus?.map((link) => (
                   <Fragment>
