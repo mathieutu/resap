@@ -26,7 +26,7 @@ export const ThemeSection = ({className}: Props) => (
           {Object.values(categories).map((categorie) => (
             <div key={categorie.name} className={"w-full md:w-6/12 lg:w-2/12 px-4 flex"}>
               <div className={"mb-6 w-full bg-white rounded-xl py-8 px-4 flex flex-col items-center "}>
-                <categorie.icon className="w-[75px] h-[75px]"/>
+                <categorie.icon className={classNames(categorie.textColor, "w-[75px] h-[75px]")}/>
                 <span className={classNames(categorie.textColor, 'uppercase text-sm')}>
                 {categorie.name}
               </span>

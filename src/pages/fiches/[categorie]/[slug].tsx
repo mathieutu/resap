@@ -77,7 +77,7 @@ export default function ShowFiche({fiche}: Props) {
         </div>
         <div className="flex lg:-mx-4 flex-wrap">
           <div className="w-full lg:w-8/12 px-4 pb-10 lg:pb-20">
-            <Prose html={fiche.contenu}/>
+            <Prose className={} html={fiche.contenu}/>
             {/*<BrowserOnly>*/}
             {/*  {() => {*/}
             {/*    // eslint-disable-next-line global-require*/}

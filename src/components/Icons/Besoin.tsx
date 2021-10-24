@@ -3,8 +3,7 @@ import classNames from "classnames";
 
 export const Besoin = ({className}: ClassNameProp) => (
   <svg className={classNames(className, 'fill-current')} xmlns="http://www.w3.org/2000/svg" width="72px" height="72px" viewBox="0 0 72 72">
-        <title>RESAP_02_ICONE_Besoin-Prim_Couleur</title>
-        <g id="_02_ICONES" data-name="02_ICONES">
+        <g>
               <path
                     d="M18.32,62.92h-.26A10.6,10.6,0,0,1,7.48,52.34V23.62a1.51,1.51,0,0,1,.76-1.31L35.89,6.83a1.51,1.51,0,0,1,1.5,0L63.65,22.33a1.49,1.49,0,0,1,.74,1.29v39h-3V24.48L36.61,9.87,10.48,24.5V52.34a7.59,7.59,0,0,0,7.58,7.58h.26a7.59,7.59,0,0,0,7.58-7.58V47.2A10.6,10.6,0,0,1,36.48,36.61h.26A10.6,10.6,0,0,1,47.32,47.2V62.62h-3V47.2a7.59,7.59,0,0,0-7.58-7.59h-.26A7.59,7.59,0,0,0,28.9,47.2v5.13h0v.07h0A10.6,10.6,0,0,1,18.32,62.92Z"/>
               <path

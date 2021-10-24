@@ -3,8 +3,7 @@ import classNames from "classnames";
 
 export const Sante = ({className}: ClassNameProp) => (
   <svg className={classNames(className, 'fill-current')} xmlns="http://www.w3.org/2000/svg" width="72px" height="72px" viewBox="0 0 72 72">
-        <title>RESAP_02_ICONE_Sante_Couleur</title>
-        <g id="_02_ICONES" data-name="02_ICONES">
+        <g>
               <path
                     d="M30.8,63.44h-.26a10.71,10.71,0,0,1-10.7-10.7v-15h3v15a7.71,7.71,0,0,0,7.7,7.7h.26a7.71,7.71,0,0,0,7.71-7.7V40.3a10.71,10.71,0,0,1,10.7-10.71h.26A10.72,10.72,0,0,1,60.18,40.3V54.53h-3V40.3a7.72,7.72,0,0,0-7.71-7.71h-.26a7.72,7.72,0,0,0-7.7,7.71V52.74A10.71,10.71,0,0,1,30.8,63.44Z"/>
               <path

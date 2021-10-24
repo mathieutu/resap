@@ -3,8 +3,7 @@ import classNames from "classnames";
 
 export const Social = ({className}: ClassNameProp) => (
   <svg className={classNames(className, 'fill-current')} xmlns="http://www.w3.org/2000/svg" width="72px" height="72px" viewBox="0 0 72 72">
-        <title>RESAP_02_ICONE_Social_Couleur</title>
-        <g id="_02_ICONES" data-name="02_ICONES">
+        <g>
               <path
                     d="M36,62.84h-.25A10.44,10.44,0,0,1,25.31,52.41V40.35a7.43,7.43,0,0,0-7.42-7.42h-.25a7.43,7.43,0,0,0-7.42,7.42v21h-3v-21A10.43,10.43,0,0,1,17.64,29.93h.25A10.43,10.43,0,0,1,28.31,40.35V52.41a7.43,7.43,0,0,0,7.42,7.43H36a7.43,7.43,0,0,0,7.43-7.43V40.35A10.43,10.43,0,0,1,53.83,29.93h.25A10.44,10.44,0,0,1,64.51,40.35v21h-3v-21a7.43,7.43,0,0,0-7.43-7.42h-.25a7.43,7.43,0,0,0-7.42,7.42V52.41A10.44,10.44,0,0,1,36,62.84Z"/>
               <path
