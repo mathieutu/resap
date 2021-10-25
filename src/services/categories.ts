@@ -1,10 +1,14 @@
 import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon } from '@heroicons/react/outline'
+import {Sante} from "../components/Icons/Sante";
+import {Besoin} from "../components/Icons/Besoin";
+import {Interpretariat} from "../components/Icons/Interpretariat";
+import {Social} from "../components/Icons/Social";
 
 export const categories = {
   sante: {
     name: 'Santé',
     description: 'Description de la thématique',
-    icon: ChartBarIcon,
+    icon: Sante,
     href: 'fiches/sante',
     bgColor: 'bg-pink-600',
     groupHoverBgColor: 'group-hover:bg-pink-600',
@@ -14,7 +18,7 @@ export const categories = {
   'besoins-primaires': {
     name: 'Besoins Primaires',
     description: 'Description de la thématique',
-    icon: ShieldCheckIcon,
+    icon: Besoin,
     href: 'fiches/besoins-primaires',
     bgColor: 'bg-cyan-600',
     groupHoverBgColor: 'group-hover:bg-cyan-600',
@@ -24,7 +28,7 @@ export const categories = {
   interpretariat: {
     name: 'Interprétariat',
     description: 'Description de la thématique',
-    icon: CursorClickIcon,
+    icon: Interpretariat,
     href: 'fiches/interpretariat',
     bgColor: 'bg-yellow-500',
     groupHoverBgColor: 'group-hover:bg-yellow-500',
@@ -34,7 +38,7 @@ export const categories = {
   social: {
     name: 'Social',
     description: 'Description de la thématique',
-    icon: RefreshIcon,
+    icon: Social,
     href: 'fiches/social',
     bgColor: 'bg-green-500',
     groupHoverBgColor: 'group-hover:bg-green-500',

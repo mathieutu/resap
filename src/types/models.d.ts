@@ -60,4 +60,12 @@ export type Fiche = {
   date: string,
   tags: string[],
   structures: Structure[],
+  pourEnSavoirPlus: Url[]
+}
+
+export type Url = {
+  id: string,
+  titre: string,
+  url: string,
+  createdAt: Date
 }

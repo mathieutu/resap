@@ -4,7 +4,7 @@ import { ChildrenProp, ClassNameProp } from '../../types/react'
 type Props = { title: string, subTitle?: string, titleClassName?: string } & ClassNameProp & ChildrenProp
 
 export const SimpleHeader = ({ title, subTitle, titleClassName = 'text-gray-900', className, children }: Props) => (
-  <div className={classNames('bg-gradient-to-b from-transparent to-white', className)}>
+  <div className={classNames(' bg-white lg:bg-transparent lg:bg-gradient-to-b lg:from-transparent lg:to-white', className)}>
     <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
       <div className="text-center">
         {subTitle
