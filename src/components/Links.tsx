@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import classNames from 'classnames'
 import NextLink from 'next/link'
 import { ChildrenProp, ClassNameProp } from '../types/react'
-import { primaryClassName } from './Buttons/Primary'
+import { primaryClassName, secondaryClassName } from './Buttons'
 
 type Props = {
   href: string,
@@ -11,9 +11,10 @@ type Props = {
   exact?: boolean,
   scroll ?: boolean,
   shallow ?: boolean,
+  title ?: string,
 } & ClassNameProp & ChildrenProp
 
-const InternalLink = ({ href, children, className, activeClassName, inactiveClassName, exact, scroll, shallow }: Props) => {
+const InternalLink = ({ href, children, className, activeClassName, inactiveClassName, exact, scroll, shallow, ...props }: Props) => {
   const { pathname } = useRouter() ?? {}
 
   const sanitizedHref = `/${href.replace(/^\//, '')}`
@@ -22,7 +23,7 @@ const InternalLink = ({ href, children, className, activeClassName, inactiveClas
 
   return (
     <NextLink href={sanitizedHref} scroll={scroll} shallow={shallow}>
-      <a className={classNames(className, isActive ? activeClassName : inactiveClassName)}>
+      <a {...props} className={classNames(className, isActive ? activeClassName : inactiveClassName)}>
         {children}
       </a>
     </NextLink>
@@ -30,7 +31,7 @@ const InternalLink = ({ href, children, className, activeClassName, inactiveClas
 }
 
 export const Link = (props: Props) => {
-  if (props.href.startsWith('http')) {
+  if (props.href.includes(':')) {
     // eslint-disable-next-line jsx-a11y/anchor-has-content
     return <a {...props} target="_blank" rel="nofollow noopener" />
   }
@@ -38,6 +39,10 @@ export const Link = (props: Props) => {
   return <InternalLink {...props} />
 }
 
-export const PrimaryLink = (props: { href: string } & ChildrenProp) => (
+export const PrimaryLink = (props: Props) => (
   <Link {...props} className={primaryClassName} />
+)
+
+export const SecondaryLink = (props: Props) => (
+  <Link {...props} className={secondaryClassName} />
 )

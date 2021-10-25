@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { ArrowLeftIcon } from '@heroicons/react/solid'
-import { Link } from './Link'
+import { Link } from './Links'
 import { Categorie } from '../services/categories'
 
 type TypeProps = { categorie: Categorie, scroll?: boolean, unstyled?: boolean }

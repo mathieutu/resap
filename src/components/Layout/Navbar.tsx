@@ -1,7 +1,7 @@
 import { Disclosure } from '@headlessui/react'
 import { SearchIcon } from '@heroicons/react/solid'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import { Link } from '../Link'
+import { Link } from '../Links'
 import { Container } from './Container'
 import { LogoBlue } from '../LogoBlue'
 

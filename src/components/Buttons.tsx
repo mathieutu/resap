@@ -9,3 +9,10 @@ type ButtonProps = ButtonHTMLAttributes<any> & { type: 'submit' | 'reset' | 'but
 export const PrimaryButton = (props: ButtonProps) => (
   <button {...props} className={primaryClassName} />
 )
+
+// eslint-disable-next-line max-len
+export const secondaryClassName = 'mt-3 w-full px-6 py-3 border border-green-default text-base font-medium rounded-md text-green-default bg-transparent hover:bg-green-default hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-default'
+
+export const SecondaryButton = (props: ButtonProps) => (
+  <button {...props} className={secondaryClassName} />
+)

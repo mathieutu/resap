@@ -8,7 +8,7 @@ import { HeaderFiche } from '../../../components/Layout/HeaderFiche'
 import { categories } from '../../../services/categories'
 import { Container } from '../../../components/Layout/Container'
 import { Box } from '../../../components/Layout/Box'
-import { Link } from '../../../components/Link'
+import { Link } from '../../../components/Links'
 import { AuthorCard } from '../../../components/Card/AuthorCard'
 import { FloatingPrintButton } from '../../../components/FloatingPrintButton'
 
@@ -78,7 +78,7 @@ export default function ShowFiche({ fiche }: Props) {
                 ))}
               </Box>
               <Box className="mt-10 mb-10 lg:mb-0" title="Contacter l'auteur">
-                <AuthorCard author={fiche.auteur} />
+                <AuthorCard auteur={fiche.auteur} />
               </Box>
             </div>
           </div>

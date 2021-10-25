@@ -1,36 +1,36 @@
 import { Auteur } from '../../types/models'
-import { SecondaryButton } from '../Buttons/Secondary'
+import { Link, SecondaryLink } from '../Links'
 
-type Props = { author: Auteur }
+type Props = { auteur: Auteur }
 
-export const AuthorCard = ({ author }: Props) => {
-  const fullName = `${author.prenom} ${author.nom}`
+export const AuthorCard = ({ auteur }: Props) => {
+  const fullName = `${auteur.prenom} ${auteur.nom}`
+
   return (
     <div>
       <div className="flex flex-row">
         <div
           className="h-16 w-16 flex-shrink-0 rounded-full bg-cover bg-center"
           // TODO mettre une image pour l'auteur ?
-          style={{ backgroundImage: 'url(https://picsum.photos/200/300)' }}
+          style={{ backgroundImage: `url(${auteur.photo})` }}
         />
         <div className="ml-4 flex flex-col">
           <span>{fullName}</span>
-          <span className="text-grey-default">Chargée de mission en travail social Fédération des Acteurs de la Solidarité</span>
+          <span className="text-grey-default">{auteur.titre} ({auteur.structure})</span>
         </div>
       </div>
       <hr className="my-5" />
-      <a
+      <Link
         className="text-blue-default font-normal"
-        target="_blank"
         title={`Envoyer un mail à ${fullName}`}
-        href={`mailto:${author.email}`}
-        rel="noreferrer"
-      >{author.email}
-      </a>
+        href={`mailto:${auteur.email}`}
+      >
+        {auteur.email}
+      </Link>
       <hr className="my-5" />
-      <SecondaryButton type="submit">
+      <SecondaryLink href="/contact">
         Nous contacter
-      </SecondaryButton>
+      </SecondaryLink>
     </div>
   )
 }

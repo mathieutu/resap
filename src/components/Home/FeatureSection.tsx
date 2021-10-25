@@ -1,6 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { AnnotationIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon } from '@heroicons/react/outline'
-import { Headline, headlineProps } from '../Headline'
+import { Headline } from '../Headline'
 import { ClassNameProp } from '../../types/react'
 
 const features = [
@@ -29,11 +29,6 @@ const features = [
     icon: AnnotationIcon,
   },
 ]
-const headline: headlineProps = {
-  title: 'Une meilleure façon <br/> d’accèder à l’information',
-  text: 'Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.',
-  tag: 'PRATIQUE',
-}
 
 type Props = ClassNameProp
 
@@ -41,10 +36,11 @@ export const FeatureSection = ({ className }: Props) => (
   <div className={`${className} py-12`}>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Headline
-        tag={headline.tag}
-        title={headline.title}
-        text={headline.text}
-      />
+        tag="PRATIQUE"
+        title="Une meilleure façon <br/> d’accèder à l’information"
+      >
+        Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.
+      </Headline>
       <div className="mt-10">
         <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
           {features.map((feature) => (

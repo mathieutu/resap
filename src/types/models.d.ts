@@ -29,6 +29,8 @@ export type Auteur = {
   createdAt: Date,
   nom: string,
   prenom: string,
+  titre: string,
+  photo: string,
   structure: string,
   email: string,
 }

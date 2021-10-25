@@ -1,5 +1,5 @@
 import { Fiche } from '../../types/models'
-import { Link } from '../Link'
+import { Link } from '../Links'
 import { categories } from '../../services/categories'
 import { CategorieLink } from '../CategorieLink'
 

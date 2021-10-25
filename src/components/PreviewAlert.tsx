@@ -1,4 +1,4 @@
-import { Link } from './Link'
+import { Link } from './Links'
 
 export const PreviewAlert = () => (
   <div className="relative bg-indigo-600">
