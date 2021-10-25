@@ -1,8 +1,7 @@
-import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon } from '@heroicons/react/outline'
-import {Sante} from "../components/Icons/Sante";
-import {Besoin} from "../components/Icons/Besoin";
-import {Interpretariat} from "../components/Icons/Interpretariat";
-import {Social} from "../components/Icons/Social";
+import { Sante } from '../components/Icons/Sante'
+import { Besoin } from '../components/Icons/Besoin'
+import { Interpretariat } from '../components/Icons/Interpretariat'
+import { Social } from '../components/Icons/Social'
 
 export const categories = {
   sante: {

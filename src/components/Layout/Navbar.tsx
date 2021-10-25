@@ -2,8 +2,8 @@ import { Disclosure } from '@headlessui/react'
 import { SearchIcon } from '@heroicons/react/solid'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Link } from '../Link'
-import {Container} from "./Container";
-import {LogoBlue} from "../LogoBlue";
+import { Container } from './Container'
+import { LogoBlue } from '../LogoBlue'
 
 export const navigationEntries = [
   { name: 'Fiches pratiques', href: 'fiches' },

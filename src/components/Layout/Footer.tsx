@@ -1,5 +1,5 @@
 import { Link } from '../Link'
-import {Logo} from "../Logo";
+import { Logo } from '../Logo'
 
 const navigation = {
   solutions: [
@@ -62,7 +62,7 @@ export const Footer = () => (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
       <div className="xl:grid xl:grid-cols-3 xl:gap-8">
         <div className="space-y-8 xl:col-span-1">
-          <Logo/>
+          <Logo />
           <p className="text-white text-base">
             Making the world a better place through constructing elegant hierarchies.
           </p>

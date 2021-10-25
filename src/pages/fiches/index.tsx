@@ -9,7 +9,7 @@ import { SearchContext } from '../../components/Search/SearchContext'
 import { AlgoliaSSRProps, findResultsStateForSSR } from '../../services/algolia.browser'
 import { categories } from '../../services/categories'
 import { CategorieLink } from '../../components/CategorieLink'
-import {Container} from "../../components/Layout/Container";
+import { Container } from '../../components/Layout/Container'
 
 export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
   return (
@@ -31,7 +31,7 @@ export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
             {Object.values(categories).map(categorie => <li key={categorie.href}><CategorieLink categorie={categorie} scroll={false} /></li>)}
           </ul>
         </SimpleHeader>
-        <Container className={'-mt-24'}>
+        <Container className="-mt-24">
           <SearchResults
             className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
             renderHit={(hit) => <FicheCard fiche={hit} />}

@@ -1,12 +1,12 @@
 /* eslint-disable react/no-danger */
 // TODO à reprendre ? (virer html et utiliser du jsx)
+import classNames from 'classnames'
 import { ClassNameProp } from '../types/react'
-import classNames from "classnames";
 
 export type headlineProps = { title: string, text: string, tag?: string } & ClassNameProp
 
 export const Headline = ({ title, text, tag, className }: headlineProps) => (
-  <div className={classNames(className, "lg:text-center")}>
+  <div className={classNames(className, 'lg:text-center')}>
     <span className="text-sm text-grey-default font-semibold mb-12 block tracking-wide uppercase">{tag}</span>
     <div
       dangerouslySetInnerHTML={{ __html: title }}

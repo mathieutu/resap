@@ -47,6 +47,13 @@ export type Structure = {
   email: string,
 }
 
+export type Url = {
+  id: string,
+  titre: string,
+  url: string,
+  createdAt: Date,
+}
+
 export type Fiche = {
   id: string,
   categorie: keyof typeof categories,
@@ -60,12 +67,5 @@ export type Fiche = {
   date: string,
   tags: string[],
   structures: Structure[],
-  pourEnSavoirPlus: Url[]
-}
-
-export type Url = {
-  id: string,
-  titre: string,
-  url: string,
-  createdAt: Date
+  pourEnSavoirPlus: Url[],
 }

@@ -10,7 +10,7 @@ import { SearchContext } from '../../../components/Search/SearchContext'
 import { AlgoliaSSRProps, findResultsStateForSSR } from '../../../services/algolia.browser'
 import { categories, CategorieSlug } from '../../../services/categories'
 import { BackToHomeLink } from '../../../components/CategorieLink'
-import {Container} from "../../../components/Layout/Container";
+import { Container } from '../../../components/Layout/Container'
 
 type Props = AlgoliaSSRProps & { categorieSlug: CategorieSlug }
 
@@ -37,7 +37,7 @@ export default function ListFichesByCategory({ categorieSlug, ...algoliaProps }:
             <BackToHomeLink />
           </div>
         </SimpleHeader>
-        <Container className={'-mt-24'}>
+        <Container className="-mt-24">
           <SearchResults
             className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
             renderHit={(hit) => <FicheCard fiche={hit} />}

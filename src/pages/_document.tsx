@@ -1,19 +1,20 @@
-import Document, {Head, Html, Main, NextScript} from 'next/document'
+import Document, { Head, Html, Main, NextScript } from 'next/document'
 
 class MyDocument extends Document {
   render() {
     return (
       <Html>
         <Head>
-          <link rel="preconnect" href="https://fonts.googleapis.com"/>
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
           <link
             href="https://fonts.googleapis.com/css2?family=Dosis:wght@700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap"
-            rel="stylesheet"/>
+            rel="stylesheet"
+          />
         </Head>
         <body>
-        <Main/>
-        <NextScript/>
+          <Main />
+          <NextScript />
         </body>
       </Html>
     )

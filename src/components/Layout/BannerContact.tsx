@@ -1,6 +1,6 @@
 import { ClassNameProp } from '../../types/react'
-import {Link, PrimaryLink} from '../Link'
-import {SecondaryButton} from "../Buttons/Secondary";
+import { Link } from '../Link'
+import { SecondaryButton } from '../Buttons/Secondary'
 
 type Props = ClassNameProp;
 
@@ -16,7 +16,7 @@ export const BannerContact = ({ className }: Props) => (
       <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
         <div className="inline-flex rounded-md">
           <Link href="/contact">
-            <SecondaryButton type={'submit'}>Nous contacter</SecondaryButton>
+            <SecondaryButton type="submit">Nous contacter</SecondaryButton>
           </Link>
         </div>
       </div>
