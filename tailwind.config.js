@@ -43,6 +43,7 @@ module.exports = {
               fontSize: '2.25rem',
               borderTopWidth: '1px',
               borderTopColor: theme('colors.grey.300'),
+              pageBreakBefore: 'always',
               paddingTop: '2rem',
             },
             h3: {

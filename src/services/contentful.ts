@@ -40,6 +40,7 @@ const parseContentfulEntries = (element: any): any => {
     return ({
       id: element.sys.id,
       createdAt: element.sys.createdAt,
+      updatedAt: element.sys.updatedAt,
       ...parseContentfulEntries(element.fields),
     })
   }

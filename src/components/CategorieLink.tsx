@@ -3,20 +3,29 @@ import { ArrowLeftIcon } from '@heroicons/react/solid'
 import { Link } from './Links'
 import { Categorie } from '../services/categories'
 
-type TypeProps = { categorie: Categorie, scroll?: boolean, unstyled?: boolean }
+type TypeProps = { categorie: Categorie, scroll?: boolean, inverted?: boolean }
 
-export const CategorieLink = ({ categorie, scroll = true, unstyled = false }: TypeProps) => (
+export const CategorieLink = ({ categorie, scroll = true, inverted = false }: TypeProps) => (
   <Link href={categorie.href} className="text-sm font-medium group" scroll={scroll} shallow>
     <div
-      className={classNames({
-        [categorie.borderColor]: !unstyled,
-        [categorie.groupHoverBgColor]: !unstyled,
-      }, 'inline-flex justify-center items-center rounded-xl px-[10px] border')}
+      className={classNames(
+        inverted ? ['border-white', 'group-hover:bg-white'] : [categorie.borderColor, categorie.groupHoverBgColor],
+        'inline-flex justify-center items-center rounded-xl px-[10px] border',
+      )}
     >
-      <categorie.icon className={classNames({ [categorie.textColor]: !unstyled }, 'group-hover:text-white w-5 h-5 mr-1')} />
+      <categorie.icon
+        className={classNames(
+          inverted ? ['text-white', categorie.groupHoverTextColor] : [categorie.textColor, 'group-hover:text-white'],
+          'w-5 h-5 mr-1',
+        )}
+      />
       <span
-        className={classNames({ [categorie.textColor]: !unstyled }, 'group-hover:text-white text-sm font-medium')}
-      >{categorie.name}
+        className={classNames(
+          inverted ? ['text-white', categorie.groupHoverTextColor] : [categorie.textColor, 'group-hover:text-white'],
+          'text-sm font-medium',
+        )}
+      >
+        {categorie.name}
       </span>
     </div>
   </Link>

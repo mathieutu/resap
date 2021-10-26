@@ -43,7 +43,7 @@ type Adresse = {
 
 export type Structure = {
   id: string,
-  createdAt: Date,
+  createdAt: string,
   nom: string,
   specialites: string[],
   adresse: Adresse,
@@ -54,13 +54,14 @@ type Link = {
   id: string,
   titre: string,
   url: string,
-  createdAt: Date,
+  createdAt: string,
 }
 
 export type Fiche = {
   id: string,
   categorie: keyof typeof categories,
-  createdAt: Date,
+  createdAt: string,
+  updatedAt: string,
   titre: string,
   slug: string,
   illustration: Image,
