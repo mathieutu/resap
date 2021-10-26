@@ -31,7 +31,7 @@ export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
             {Object.values(categories).map(categorie => <li key={categorie.href}><CategorieLink categorie={categorie} scroll={false} /></li>)}
           </ul>
         </SimpleHeader>
-        <Container className="-mt-24">
+        <Container className="-mt-24 pb-12">
           <SearchResults
             className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
             renderHit={(hit) => <FicheCard fiche={hit} />}

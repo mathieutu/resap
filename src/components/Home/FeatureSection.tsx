@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import { Headline } from '../Headline'
 import { ClassNameProp } from '../../types/react'
 
@@ -27,7 +28,7 @@ const features = [
 type Props = ClassNameProp
 
 export const FeatureSection = ({ className }: Props) => (
-  <div className={`${className} py-12`}>
+  <div className={classNames(className, 'py-12')}>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Headline
         tag="PRATIQUE"
