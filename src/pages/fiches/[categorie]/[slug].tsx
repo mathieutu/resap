@@ -73,11 +73,9 @@ const AuthorCard = ({ auteur }: { auteur: Auteur }) => {
         </div>
       </div>
       <div className="py-5 text-center">
-        <div className="inline-flex">
-          <SecondaryLink href="/contact">
-            Nous contacter
-          </SecondaryLink>
-        </div>
+        <SecondaryLink href="/contact" className="block">
+          Nous contacter
+        </SecondaryLink>
       </div>
     </Box>
   )
@@ -90,7 +88,7 @@ export default function FichePage({ fiche }: Props) {
   return (
     <Layout>
       <HeaderFiche fiche={fiche} category={category} />
-      <div className="relative">
+      <div className="relative pb-12">
         <Container>
           <FloatingPrintButton className=" absolute top-5 2xl:top-20 xl:left-8" />
           <div className="w-full py-10 lg:py-20">
