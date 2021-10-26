@@ -1,26 +1,26 @@
-import {Disclosure, Popover, Transition} from '@headlessui/react'
-import {SearchIcon} from '@heroicons/react/solid'
-import {MenuIcon, XIcon} from '@heroicons/react/outline'
-import {Link} from '../Links'
-import {Container} from './Container'
-import {LogoBlue} from '../LogoBlue'
-import {Fragment} from "react";
+import { Popover, Transition } from '@headlessui/react'
+import { SearchIcon } from '@heroicons/react/solid'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import { Fragment } from 'react'
+import { Link } from '../Links'
+import { Container } from './Container'
+import { LogoBlue } from '../LogoBlue'
 
 export const navigationEntries = [
-  {name: 'Fiches pratiques', href: 'fiches'},
-  {name: 'Annuaires', href: '#'},
-  {name: 'Contact', href: 'contact'},
+  { name: 'Fiches pratiques', href: 'fiches' },
+  { name: 'Annuaires', href: '#' },
+  { name: 'Contact', href: 'contact' },
 ]
 
 export const Navbar = () => (
   <Popover as="header" className="bg-white shadow print:hidden">
-    {({open}) => (
+    {({ open }) => (
       <>
         <Container>
           <div className="flex justify-between h-16">
             <div className="flex px-2 lg:px-0">
               <Link href="/" className="flex-shrink-0 flex items-center">
-                <LogoBlue/>
+                <LogoBlue />
               </Link>
               <nav className="hidden lg:ml-6 lg:flex lg:space-x-8">
                 {navigationEntries.map((item) => (
@@ -42,7 +42,7 @@ export const Navbar = () => (
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true"/>
+                  <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                 </div>
                 <input
                   id="search"
@@ -61,9 +61,9 @@ export const Navbar = () => (
               >
                 <span className="sr-only">Open main menu</span>
                 {open ? (
-                  <XIcon className="block h-6 w-6" aria-hidden="true"/>
+                  <XIcon className="block h-6 w-6" aria-hidden="true" />
                 ) : (
-                  <MenuIcon className="block h-6 w-6" aria-hidden="true"/>
+                  <MenuIcon className="block h-6 w-6" aria-hidden="true" />
                 )}
               </Popover.Button>
             </div>
@@ -106,7 +106,7 @@ export const Navbar = () => (
                     href={item.href}
                     activeClassName="bg-grey-light border-green-default text-blue-default"
                     className="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-default hover:bg-grey-light"
-                    inactiveClassName={"text-grey-default"}
+                    inactiveClassName="text-grey-default"
                   >
                     {item.name}
                   </Link>

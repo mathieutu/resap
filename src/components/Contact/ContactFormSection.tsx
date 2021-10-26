@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import axios from 'axios'
 import { ToastProvider, useToasts } from 'react-toast-notifications'
-import { PrimaryLink } from '../Links'
 import { PrimaryButton } from '../Buttons'
 
 // @see https://www.emailregex.com

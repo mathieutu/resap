@@ -1,8 +1,8 @@
+import classNames from 'classnames'
 import { Fiche } from '../../types/models'
 import { Link } from '../Links'
 import { categories } from '../../services/categories'
 import { CategorieLink } from '../CategorieLink'
-import classNames from "classnames";
 
 type Props = { fiche: Fiche }
 
@@ -13,7 +13,7 @@ export const FicheCard = ({ fiche }: Props) => {
     <div className="flex flex-col rounded-lg shadow-lg overflow-hidden bg-white ">
       <div className="flex-shrink-0">
         <img className="h-48 w-full object-cover" src={fiche.illustration.file.url} alt={fiche.illustration.title} />
-        <div className={classNames(category.bgColor, "h-[6px] w-full")}/>
+        <div className={classNames(category.bgColor, 'h-[6px] w-full')} />
       </div>
       <div className="flex-1 px-6 pt-6 flex flex-col justify-between">
         <div className="flex-1">
