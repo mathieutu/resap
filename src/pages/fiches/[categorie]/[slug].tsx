@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { findAFiche, listAllFichesSlugs } from '../../../services/contentful'
-import { Auteur, Fiche, Link as FicheLink } from '../../../types/models'
+import { Auteur, Fiche } from '../../../types/models'
 import { Prose } from '../../../components/Prose'
 import { Layout } from '../../../components/Layout/Layout'
 import { HeaderFiche } from '../../../components/Layout/HeaderFiche'
@@ -36,8 +36,8 @@ export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({ 
   })
 }
 
-const LinksCard = ({ links, title }: {title: string, links: FicheLink[]}) => {
-  if (!links.length) {
+const LinksCard = ({ links, title }: {title: string, links: Fiche['pourEnSavoirPlus']}) => {
+  if (!links?.length) {
     return null
   }
 
@@ -101,9 +101,7 @@ export default function FichePage({ fiche }: Props) {
               <Prose html={fiche.contenu} />
             </div>
             <div className="w-full lg:w-4/12 lg:px-4 print:hidden space-y-10">
-              {/* TODO Changer pour outils */}
-              <LinksCard title="Quelques outils" links={fiche.pourEnSavoirPlus} />
-              {/* TODO Changer pour PourAllerPlusloin */}
+              <LinksCard title="Quelques outils" links={fiche.outils} />
               <LinksCard title="Pour aller plus loin" links={fiche.pourEnSavoirPlus} />
               <AuthorCard auteur={fiche.auteur} />
             </div>

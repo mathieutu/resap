@@ -8,14 +8,10 @@ import { Link } from '../Links'
 import { PrimaryButton } from '../Buttons'
 import { LogoBlue } from '../LogoBlue'
 import { Shape } from '../Shape'
+import { useSearchFichesForm } from '../../utils/hooks'
 
 const SearchForm = () => {
-  const router = useRouter()
-  const [search, setSearch] = useState('')
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    return router.push(`/fiches?query=${search}`)
-  }
+  const { handleSubmit, onChange, value } = useSearchFichesForm()
 
   return (
     <form onSubmit={handleSubmit} className="mt-3 sm:flex lg:w-3/4">
@@ -32,8 +28,8 @@ const SearchForm = () => {
             id="search"
             className="focus:ring-green-default focus:border-green-default block w-full rounded-md pl-10 py-2 text-base border-gray-300"
             placeholder="Recherchez parmi nos fiches..."
-            value={search}
-            onChange={e => setSearch(e.currentTarget.value)}
+            value={value}
+            onChange={onChange}
           />
         </div>
         <PrimaryButton type="submit">Rechercher</PrimaryButton>

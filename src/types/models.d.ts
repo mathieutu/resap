@@ -50,7 +50,7 @@ export type Structure = {
   email: string,
 }
 
-export type Link = {
+type Link = {
   id: string,
   titre: string,
   url: string,
@@ -69,6 +69,7 @@ export type Fiche = {
   auteur: Auteur,
   date: string,
   tags: string[],
-  structures: Structure[],
-  pourEnSavoirPlus: Link[],
+  structures?: Structure[],
+  pourEnSavoirPlus?: Link[],
+  outils?: Link[],
 }
