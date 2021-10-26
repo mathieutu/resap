@@ -13,16 +13,16 @@ import { Container } from '../../components/Layout/Container'
 
 export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
   return (
-    <Layout className="bg-gray-50">
+    <Layout className="bg-grey-light">
       <SearchContext {...algoliaProps}>
-        <SimpleHeader className="h-[475px]" title="Fiches pratiques" titleClassName="text-indigo-600" subTitle="">
+        <SimpleHeader className="h-[475px]" title="Fiches pratiques" titleClassName="text-blue-default" subTitle="">
           <div className="w-full block md:w-1/2 mx-auto mt-16 sm:flex">
             <div className="mt-1 relative rounded-md shadow-sm w-full">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                <SearchIcon className="h-5 w-5  text-grey-default " aria-hidden="true" />
               </div>
               <SearchInput
-                className="block w-full pl-10 py-3 text-base rounded-md placeholder-gray-500 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:flex-1 border-gray-300"
+                className="block w-full pl-10 py-3 text-base rounded-md placeholder-grey-default shadow-sm focus:ring-blue-default focus:border-blue-default sm:flex-1 border-gray-default"
                 label="Recherchez parmi nos fiches..."
               />
             </div>

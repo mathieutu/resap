@@ -18,7 +18,7 @@ export const ThemeSection = ({ className }: Props) => (
       <div className="mt-10">
         <div className="flex flex-wrap justify-between w-full">
           {Object.values(categories).map((categorie) => (
-            <Link key={categorie.name} href={categorie.href} className="w-full md:w-6/12 lg:w-2/12 px-4 flex group">
+            <Link key={categorie.name} href={categorie.href} className="w-full md:w-6/12 lg:w-2/12 lg:px-4 flex group">
               <CategorieCard categorie={categorie} />
             </Link>
           ))}
