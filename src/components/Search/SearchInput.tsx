@@ -12,6 +12,10 @@ export const SearchInput = connectSearchBox(({ label, refine, id = 'search', cla
     refine(debouncedValue)
   }, [debouncedValue])
 
+  useEffect(() => {
+    setValue(currentRefinement)
+  }, [currentRefinement])
+
   return (
     <>
       <label htmlFor={id} className="sr-only">
