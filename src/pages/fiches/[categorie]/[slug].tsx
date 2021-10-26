@@ -82,7 +82,7 @@ const AuthorCard = ({ auteur }: { auteur: Auteur }) => {
     </Box>
   )
 }
-export default function ShowFiche({ fiche }: Props) {
+export default function FichePage({ fiche }: Props) {
   if (!fiche) return null
 
   const category = categories[fiche.categorie]
