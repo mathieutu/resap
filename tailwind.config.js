@@ -36,11 +36,14 @@ module.exports = {
           css: {
             color: theme('colors.grey.default'),
             h1: {
-              color: theme('colors.green.default'),
+              display: 'none',
             },
             h2: {
               color: theme('colors.green.default'),
               fontSize: '2.25rem',
+              borderTopWidth: '1px',
+              borderTopColor: theme('colors.grey.300'),
+              paddingTop: '2rem',
             },
             h3: {
               color: theme('colors.blue.default'),
