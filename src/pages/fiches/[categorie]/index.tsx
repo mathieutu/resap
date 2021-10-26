@@ -28,7 +28,7 @@ export default function ListFichesByCategory({ categorieSlug, ...algoliaProps }:
                 <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </div>
               <SearchInput
-                className="block w-full pl-10 py-3 text-base rounded-md placeholder-gray-500 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:flex-1 border-gray-300"
+                className="block w-full pl-10 py-3 text-base rounded-md placeholder-grey-default shadow-sm focus:ring-blue-default focus:border-blue-default sm:flex-1 border-grey-default"
                 label={`Recherchez parmi nos fiches "${categorie.name}"...`}
               />
             </div>

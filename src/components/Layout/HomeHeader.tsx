@@ -30,7 +30,7 @@ const SearchForm = () => {
           <input
             type="search"
             id="search"
-            className="focus:ring-green-default focus:border-green-default block w-full rounded-md pl-10 py-2 text-base border-gray-300"
+            className="focus:ring-blue-default focus:border-blue-default block w-full rounded-md pl-10 py-2 text-base border-gray-default"
             placeholder="Recherchez parmi nos fiches..."
             value={search}
             onChange={e => setSearch(e.currentTarget.value)}
@@ -59,7 +59,7 @@ export const HomeHeader = () => (
                   </Link>
                   <div className="-mr-2 flex items-center md:hidden">
                     <Popover.Button
-                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-default"
+                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-grey-default hover:bg-grey-light focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default"
                     >
                       <span className="sr-only">Open main menu</span>
                       <MenuIcon className="h-6 w-6" aria-hidden="true" />
@@ -72,7 +72,7 @@ export const HomeHeader = () => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="font-medium text-gray-500 hover:text-gray-900"
+                    className="font-medium text-grey-default hover:text-blue-default"
                   >
                     {item.name}
                   </Link>
@@ -103,7 +103,7 @@ export const HomeHeader = () => (
                   </div>
                   <div className="-mr-2">
                     <Popover.Button
-                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-default"
+                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default"
                     >
                       <span className="sr-only">Close main menu</span>
                       <XIcon className="h-6 w-6" aria-hidden="true" />
@@ -115,7 +115,7 @@ export const HomeHeader = () => (
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                      className="block px-3 py-2 rounded-md text-base font-medium text-grey-default hover:text-blue-default hover:bg-grey-light"
                     >
                       {item.name}
                     </Link>

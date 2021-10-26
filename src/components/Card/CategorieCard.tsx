@@ -5,7 +5,7 @@ type Props = { categorie: Categorie }
 
 export const CategorieCard = ({ categorie }: Props) => (
   <div
-    className={classNames(categorie.groupHoverBgColor, 'mb-6 w-full bg-white rounded-xl py-8 px-4 flex flex-col items-center')}
+    className={classNames(categorie.groupHoverBgColor, 'mb-6 w-full bg-white rounded-xl py-4 px-2 lg:py-8 lg:px-4 flex flex-col items-center')}
   >
     <categorie.icon
       className={classNames(categorie.textColor, 'group-hover:text-white w-[75px] h-[75px]')}
