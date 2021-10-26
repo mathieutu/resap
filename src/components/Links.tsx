@@ -40,9 +40,9 @@ export const Link = (props: Props) => {
 }
 
 export const PrimaryLink = (props: Props) => (
-  <Link {...props} className={primaryClassName} />
+  <Link {...props} className={classNames(primaryClassName, props.className)} />
 )
 
 export const SecondaryLink = (props: Props) => (
-  <Link {...props} className={secondaryClassName} />
+  <Link {...props} className={classNames(secondaryClassName, props.className)} />
 )

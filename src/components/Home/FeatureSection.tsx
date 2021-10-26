@@ -37,7 +37,7 @@ export const FeatureSection = ({ className }: Props) => (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Headline
         tag="PRATIQUE"
-        title="Une meilleure façon <br/> d’accèder à l’information"
+        title="Une meilleure façon d’accèder à l’information"
       >
         Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.
       </Headline>

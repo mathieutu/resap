@@ -2,6 +2,8 @@ import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import axios from 'axios'
 import { ToastProvider, useToasts } from 'react-toast-notifications'
+import { PrimaryLink } from '../Links'
+import { PrimaryButton } from '../Buttons'
 
 // @see https://www.emailregex.com
 // eslint-disable-next-line no-control-regex
@@ -53,7 +55,7 @@ const Form = () => {
           <textarea
             id="message"
             rows={4}
-            className={classNames(errors.message && 'border-red-500 focus:ring-red-500 focus:border-red-500', 'py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border border-gray-300 rounded-md')}
+            className={classNames(errors.message && 'border-red-500 focus:ring-red-500 focus:border-red-500', 'py-3 px-4 block w-full shadow-sm focus:ring-blue-default focus:border-blue-default border border-gray-300 rounded-md')}
             defaultValue=""
             {...register('message', { required: true })}
           />
@@ -68,7 +70,7 @@ const Form = () => {
             type="text"
             id="firstName"
             autoComplete="given-name"
-            className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+            className="py-3 px-4 block w-full shadow-sm focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
             {...register('firstName')}
           />
         </div>
@@ -82,7 +84,7 @@ const Form = () => {
             type="text"
             id="lastName"
             autoComplete="family-name"
-            className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+            className="py-3 px-4 block w-full shadow-sm focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
             {...register('lastName')}
           />
         </div>
@@ -96,7 +98,7 @@ const Form = () => {
             type="tel"
             id="phone"
             autoComplete="tel"
-            className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+            className="py-3 px-4 block w-full shadow-sm focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
             {...register('phone')}
           />
         </div>
@@ -117,7 +119,7 @@ const Form = () => {
             id="email"
             type="email"
             autoComplete="email"
-            className={classNames(errors.email && 'border-red-500 focus:ring-red-500 focus:border-red-500', 'py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border border-gray-300 rounded-md')}
+            className={classNames(errors.email && 'border-red-500 focus:ring-red-500 focus:border-red-500', 'py-3 px-4 block w-full shadow-sm focus:ring-blue-default focus:border-blue-default border border-gray-300 rounded-md')}
             {...register('email', { pattern: emailRegexp })}
           />
         </div>
@@ -131,7 +133,7 @@ const Form = () => {
             type="text"
             id="organization"
             autoComplete="organization"
-            className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+            className="py-3 px-4 block w-full shadow-sm focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
             {...register('organization')}
           />
         </div>
@@ -143,15 +145,15 @@ const Form = () => {
         </p>
       </div>
       <div className="sm:col-span-6">
-        <button
+        <PrimaryButton
           type="submit"
           disabled={isSubmitting}
-          className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:cursor-not-allowed"
+          className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium"
         >
           {isSubmitting
             && <span aria-hidden="true" className="-ml-1 mr-3 w-5 h-5 border-2 border-transparent border-l-white rounded-full animate-spin" />}
           Envoyer
-        </button>
+        </PrimaryButton>
       </div>
     </form>
   )

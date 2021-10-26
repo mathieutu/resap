@@ -1,15 +1,13 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { Fragment } from 'react'
 import { findAFiche, listAllFichesSlugs } from '../../../services/contentful'
-import { Fiche } from '../../../types/models'
+import { Auteur, Fiche, Link as FicheLink } from '../../../types/models'
 import { Prose } from '../../../components/Prose'
 import { Layout } from '../../../components/Layout/Layout'
 import { HeaderFiche } from '../../../components/Layout/HeaderFiche'
 import { categories } from '../../../services/categories'
 import { Container } from '../../../components/Layout/Container'
 import { Box } from '../../../components/Layout/Box'
-import { Link } from '../../../components/Links'
-import { AuthorCard } from '../../../components/Card/AuthorCard'
+import { Link, SecondaryLink } from '../../../components/Links'
 import { FloatingPrintButton } from '../../../components/FloatingPrintButton'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -38,6 +36,52 @@ export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({ 
   })
 }
 
+const LinksCard = ({ links, title }: {title: string, links: FicheLink[]}) => {
+  if (!links.length) {
+    return null
+  }
+
+  return (
+    <Box title={title}>
+      {links.map((link) => (
+        <Link
+          key={link.id}
+          href={link.url}
+          className="text-blue-default py-3 block hover:text-gray-600"
+        >
+          {link.titre}
+        </Link>
+      ))}
+    </Box>
+  )
+}
+
+const AuthorCard = ({ auteur }: { auteur: Auteur }) => {
+  const fullName = `${auteur.prenom} ${auteur.nom}`
+  const title = auteur.femme ? 'L\'autrice' : 'L\'auteur'
+
+  return (
+    <Box className="mb-10 lg:mb-0" title={title}>
+      <div className="flex flex-row py-5">
+        <div
+          className="h-16 w-16 flex-shrink-0 rounded-full bg-cover bg-center"
+          style={{ backgroundImage: `url(${auteur.photo.file.url})`, border: '1px solid #eaeaea' }}
+        />
+        <div className="ml-4 flex flex-col">
+          <span>{fullName}</span>
+          <span className="text-grey-default">{auteur.titre}, <br />{auteur.structure}.</span>
+        </div>
+      </div>
+      <div className="py-5 text-center">
+        <div className="inline-flex">
+          <SecondaryLink href="/contact">
+            Nous contacter
+          </SecondaryLink>
+        </div>
+      </div>
+    </Box>
+  )
+}
 export default function ShowFiche({ fiche }: Props) {
   if (!fiche) return null
 
@@ -56,30 +100,12 @@ export default function ShowFiche({ fiche }: Props) {
             <div className="w-full  print:w-full lg:w-8/12 lg:px-4 pb-10 lg:pb-20">
               <Prose html={fiche.contenu} />
             </div>
-            <div className="w-full lg:w-4/12 lg:px-4 print:hidden">
-              <Box title="Quelques outils">
-                {fiche.pourEnSavoirPlus?.map((link) => (
-                  <Fragment key={link.id}>
-                    <Link href={link.url} className="text-blue-default pb-5 block hover:text-gray-600">
-                      {link.titre}
-                    </Link>
-                    <hr />
-                  </Fragment>
-                ))}
-              </Box>
-              <Box className="mt-10" title="Pour aller plus loin">
-                {fiche.pourEnSavoirPlus?.map((link) => (
-                  <Fragment key={link.id}>
-                    <Link href={link.url} className="text-blue-default pb-5 block hover:text-gray-600">
-                      {link.titre}
-                    </Link>
-                    <hr />
-                  </Fragment>
-                ))}
-              </Box>
-              <Box className="mt-10 mb-10 lg:mb-0" title="Contacter l'auteur">
-                <AuthorCard auteur={fiche.auteur} />
-              </Box>
+            <div className="w-full lg:w-4/12 lg:px-4 print:hidden space-y-10">
+              {/* TODO Changer pour outils */}
+              <LinksCard title="Quelques outils" links={fiche.pourEnSavoirPlus} />
+              {/* TODO Changer pour PourAllerPlusloin */}
+              <LinksCard title="Pour aller plus loin" links={fiche.pourEnSavoirPlus} />
+              <AuthorCard auteur={fiche.auteur} />
             </div>
           </div>
         </Container>

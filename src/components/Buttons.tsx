@@ -1,8 +1,10 @@
 /* eslint-disable react/button-has-type */
 import { ButtonHTMLAttributes } from 'react'
 
+// TODO - État hover, active, disabled, etc à gérer !
+
 // eslint-disable-next-line max-len
-export const primaryClassName = 'mt-3 w-full px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-default shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:flex-shrink-0 sm:inline-flex sm:items-center sm:w-auto'
+export const primaryClassName = 'w-full px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-default shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-default sm:flex-shrink-0 sm:inline-flex sm:items-center sm:w-auto'
 
 type ButtonProps = ButtonHTMLAttributes<any> & { type: 'submit' | 'reset' | 'button' }
 
@@ -11,7 +13,7 @@ export const PrimaryButton = (props: ButtonProps) => (
 )
 
 // eslint-disable-next-line max-len
-export const secondaryClassName = 'mt-3 w-full px-6 py-3 border border-green-default text-base font-medium rounded-md text-green-default bg-transparent hover:bg-green-default hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-default'
+export const secondaryClassName = 'w-full px-6 py-3 border border-green-default text-base font-medium rounded-md text-green-default bg-transparent hover:bg-green-default hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-default'
 
 export const SecondaryButton = (props: ButtonProps) => (
   <button {...props} className={secondaryClassName} />

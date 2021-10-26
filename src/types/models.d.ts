@@ -1,23 +1,23 @@
 import { categories } from '../services/categories'
 
-export type Image = {
+type ImageSize = {
   width: number,
   height: number,
 }
 
-export type Details = {
+type Details = {
   size: number,
-  image: Image,
+  image: ImageSize,
 }
 
-export type File = {
+type File = {
   url: string,
   details: Details,
   fileName: string,
   contentType: string,
 }
 
-export type Illustration = {
+type Image = {
   id: string,
   createdAt: Date,
   title: string,
@@ -30,12 +30,13 @@ export type Auteur = {
   nom: string,
   prenom: string,
   titre: string,
-  photo: string,
+  photo: Image,
   structure: string,
   email: string,
+  femme: boolean,
 }
 
-export type Adresse = {
+type Adresse = {
   lon: number,
   lat: number,
 }
@@ -49,7 +50,7 @@ export type Structure = {
   email: string,
 }
 
-export type Url = {
+export type Link = {
   id: string,
   titre: string,
   url: string,
@@ -62,12 +63,12 @@ export type Fiche = {
   createdAt: Date,
   titre: string,
   slug: string,
-  illustration: Illustration,
+  illustration: Image,
   description: string,
   contenu: string,
   auteur: Auteur,
   date: string,
   tags: string[],
   structures: Structure[],
-  pourEnSavoirPlus: Url[],
+  pourEnSavoirPlus: Link[],
 }

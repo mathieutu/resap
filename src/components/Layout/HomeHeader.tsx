@@ -22,7 +22,7 @@ const SearchForm = () => {
       <label htmlFor="search" className="sr-only">
         Recherchez parmi nos fiches...
       </label>
-      <div className="mt-1 flex rounded-md shadow-sm w-full flex-wrap">
+      <div className="mt-1 flex rounded-md shadow-sm w-full flex-wrap gap-3">
         <div className="relative flex items-stretch flex-grow focus-within:z-10">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
