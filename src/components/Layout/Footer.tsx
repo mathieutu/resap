@@ -68,7 +68,7 @@ export const Footer = () => (
           </p>
           <div className="flex space-x-6">
             {navigation.social.map((item) => (
-              <Link key={item.name} href={item.href} className="text-white hover:text-white">
+              <Link key={item.name} href={item.href} className="text-white hover:text-green-default">
                 <span className="sr-only">{item.name}</span>
                 <item.icon className="h-6 w-6" aria-hidden="true" />
               </Link>
@@ -82,7 +82,7 @@ export const Footer = () => (
               <ul className="mt-4 space-y-4">
                 {navigation.solutions.map((item) => (
                   <li key={item.name}>
-                    <Link href={item.href} className="text-base text-white">
+                    <Link href={item.href} className="text-base text-white hover:text-green-default">
                       {item.name}
                     </Link>
                   </li>
@@ -94,7 +94,7 @@ export const Footer = () => (
               <ul className="mt-4 space-y-4">
                 {navigation.support.map((item) => (
                   <li key={item.name}>
-                    <Link href={item.href} className="text-base text-white">
+                    <Link href={item.href} className="text-base text-white hover:text-green-default">
                       {item.name}
                     </Link>
                   </li>
@@ -108,7 +108,7 @@ export const Footer = () => (
               <ul className="mt-4 space-y-4">
                 {navigation.company.map((item) => (
                   <li key={item.name}>
-                    <Link href={item.href} className="text-base text-white">
+                    <Link href={item.href} className="text-base text-white hover:text-green-default">
                       {item.name}
                     </Link>
                   </li>
@@ -120,7 +120,7 @@ export const Footer = () => (
               <ul className="mt-4 space-y-4">
                 {navigation.legal.map((item) => (
                   <li key={item.name}>
-                    <Link href={item.href} className="text-base text-white">
+                    <Link href={item.href} className="text-base text-white hover:text-green-default">
                       {item.name}
                     </Link>
                   </li>

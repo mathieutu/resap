@@ -36,7 +36,7 @@ export const FeatureSection = ({ className }: Props) => (
       >
         Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.
       </Headline>
-      <div className="mt-10">
+      <div className="mt-14 mb-12">
         <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
           {features.map((feature) => (
             <div key={feature.name} className="relative">

@@ -29,6 +29,9 @@ module.exports = {
         green: {
           default: '#6ED8B4',
         },
+        sante: "#D76478",
+        social: "#E6AA50",
+        interpretariat: "#C693C2",
         cyan,
       },
       typography: (theme) => ({
