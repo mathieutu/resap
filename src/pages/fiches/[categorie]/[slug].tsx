@@ -92,7 +92,7 @@ export default function FichePage({ fiche }: Props) {
         <Container>
           <FloatingPrintButton className=" absolute top-5 2xl:top-20 xl:left-8" />
           <div className="w-full py-10 lg:py-20">
-            <h1 className="mt-10 lg:mt-0 text-3xl md:text-5xl lg:text-7xl text-blue-default">{fiche.titre}</h1>
+            <h1 className="mt-10 lg:mt-0 text-3xl md:text-5xl lg:text-6xl text-blue-default">{fiche.titre}</h1>
           </div>
           <div className="flex lg:-mx-4 flex-wrap">
             <div className="w-full  print:w-full lg:w-8/12 lg:px-4 pb-10 lg:pb-20">
