@@ -22,3 +22,13 @@ export const saveFiche = (fiche: Fiche) => {
 
   return fichesIndex.saveObject(objectToIndex)
 }
+
+export const saveFiches = (fiches: Fiche[]) => {
+  const objectsToIndex = fiches.map(fiche => ({
+    ...fiche,
+    url: `/fiches/${fiche.slug}`,
+    objectID: fiche.id,
+  }))
+
+  return fichesIndex.saveObjects(objectsToIndex)
+}

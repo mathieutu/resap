@@ -12,14 +12,20 @@ if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_PREVIEW_ACCESS_TOKEN || !CONTENTFUL_ACCE
   throw new Error('CONTENTFUL env vars needed (SPACE_ID, PREVIEW_ACCESS_TOKEN, ACCESS_TOKEN).')
 }
 
-const CONTENT_TYPES = {
+export const SYS_TYPES = {
+  asset: 'Asset',
+  entry: 'Entry',
+}
+
+export const CONTENT_TYPES = {
   auteur: 'auteur',
   categorie: 'categorie',
   fiche: 'fiche',
   structure: 'structure',
 } as const
 
-type ContentType = typeof CONTENT_TYPES[keyof typeof CONTENT_TYPES]
+export type ContentType = typeof CONTENT_TYPES[keyof typeof CONTENT_TYPES]
+export type SysType = typeof SYS_TYPES[keyof typeof SYS_TYPES]
 
 type GetEntriesOptions = {
   preview?: boolean,
@@ -139,10 +145,10 @@ export const findAFiche = async (slug: string, preview = false): Promise<Fiche |
   }
 }
 
-export const findAFicheForIndexing = async (id: string, preview = false): Promise<Fiche | null> => {
+export const findAFicheForIndexing = async (id: string): Promise<Fiche | null> => {
   const entries = await getEntries<FicheEntry>(
     CONTENT_TYPES.fiche,
-    { preview, where: { 'sys.id': id } },
+    { where: { 'sys.id': id } },
   )
 
   if (!entries.length) return null
@@ -153,4 +159,32 @@ export const findAFicheForIndexing = async (id: string, preview = false): Promis
     ...fiche,
     contenu: documentToPlainTextString(fiche.contenu),
   }
+}
+
+export const findAllFichesLinkedToAssetForIndexing = async (assetId: string): Promise<Fiche[] | null> => {
+  const entries = await getEntries<FicheEntry>(
+    CONTENT_TYPES.fiche,
+    { where: { links_to_asset: assetId } },
+  )
+
+  if (!entries.length) return null
+
+  return entries.map(fiche => ({
+    ...fiche,
+    contenu: documentToPlainTextString(fiche.contenu),
+  }))
+}
+
+export const findAllFichesLinkedToEntryForIndexing = async (entryId: string): Promise<Fiche[] | null> => {
+  const entries = await getEntries<FicheEntry>(
+    CONTENT_TYPES.fiche,
+    { where: { links_to_entry: entryId } },
+  )
+
+  if (!entries.length) return null
+
+  return entries.map(fiche => ({
+    ...fiche,
+    contenu: documentToPlainTextString(fiche.contenu),
+  }))
 }
