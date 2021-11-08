@@ -10,10 +10,10 @@ export const ThemeSection = ({ className }: Props) => (
   <div className={`${className} py-12 bg-grey-light`}>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Headline
-        tag="FICHES"
-        title="Nos différentes thématique"
+        tag="FICHES PRATIQUES"
+        title="Nos différentes thématiques"
       >
-        Lorem ipsum dolor sit amet consect adipisicing elit.Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.
+        Retrouver pour chacune de ces thématiques, une multitude de fiches pratiques qui vous aideront à orienter et accompagner les patients.
       </Headline>
       <div className="mt-14">
         <div className="flex flex-wrap justify-between w-full">
