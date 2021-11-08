@@ -11,9 +11,9 @@ export const ThemeSection = ({ className }: Props) => (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Headline
         tag="FICHES"
-        title="Nos différentes thématique"
+        title="Nos différentes thématiques"
       >
-        Lorem ipsum dolor sit amet consect adipisicing elit.Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.
+        [A REMPLIR]
       </Headline>
       <div className="mt-14">
         <div className="flex flex-wrap justify-between w-full">

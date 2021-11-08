@@ -22,7 +22,8 @@ export default function ListFichesByCategory({ categorieSlug, ...algoliaProps }:
       <SearchContext {...algoliaProps}>
         <Configure filters={`categorie:${categorieSlug}`} />
         <SimpleHeader className="h-[475px]" subTitle="Fiches pratiques" title={categorie.name} titleClassName={categorie.textColor}>
-          <div className="w-full block md:w-1/2 mx-auto mt-16 sm:flex">
+          <p className="text-sm text-gray-400 text-thin mt-4 w-3/4 mx-auto">{categorie.description}</p>
+          <div className="w-full block md:w-1/2 mx-auto mt-8 sm:flex">
             <div className="mt-1 relative rounded-md shadow-sm w-full">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />

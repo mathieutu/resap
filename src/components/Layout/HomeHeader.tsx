@@ -130,9 +130,7 @@ export const HomeHeader = () => (
             <p
               className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
             >
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat
-              commodo. Elit sunt amet
-              fugiat veniam occaecat fugiat aliqua.
+              Ce site se veut être un outil pratique à destination des professionnels de santé. Il permet d’améliorer la lisibilité des dispositifs de soins intermédiaires et dispositifs d’accès aux soins de droits communs sur la région Auvergne Rhône Alpes pour faciliter la prise en charge globale du public sans domicile fixe ou en centre d’hébergement. Par un système de mots clés, vous serez orientés vers des fiches thématiques.
             </p>
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
               <SearchForm />
