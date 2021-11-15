@@ -32,3 +32,14 @@ export const saveFiches = (fiches: Fiche[]) => {
 
   return fichesIndex.saveObjects(objectsToIndex)
 }
+
+export const refreshFiches = async (fiches: Fiche[]) => {
+  const objectsToIndex = fiches.map(fiche => ({
+    ...fiche,
+    url: `/fiches/${fiche.slug}`,
+    objectID: fiche.id,
+  }))
+
+  await fichesIndex.clearObjects()
+  return fichesIndex.saveObjects(objectsToIndex)
+}

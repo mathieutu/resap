@@ -188,3 +188,16 @@ export const findAllFichesLinkedToEntryForIndexing = async (entryId: string): Pr
     contenu: documentToPlainTextString(fiche.contenu),
   }))
 }
+
+export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
+  const entries = await getEntries<FicheEntry>(
+    CONTENT_TYPES.fiche,
+  )
+
+  if (!entries.length) return null
+
+  return entries.map(fiche => ({
+    ...fiche,
+    contenu: documentToPlainTextString(fiche.contenu),
+  }))
+}

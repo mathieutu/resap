@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { NextApiRequest, NextApiResponse } from 'next'
-import { ContentType, CONTENT_TYPES, findAFicheForIndexing, findAllFichesLinkedToAssetForIndexing, findAllFichesLinkedToEntryForIndexing, SysType, SYS_TYPES } from '../../services/contentful'
-import { deleteFiche, saveFiche, saveFiches } from '../../services/algolia.server'
+import { ContentType, CONTENT_TYPES, fetchAllFichesForIndexing, findAFicheForIndexing, findAllFichesLinkedToAssetForIndexing, findAllFichesLinkedToEntryForIndexing, SysType, SYS_TYPES } from '../../services/contentful'
+import { deleteFiche, refreshFiches, saveFiche, saveFiches } from '../../services/algolia.server'
 
 const deleteFicheFromAlgolia = async (ficheId: string, res: NextApiResponse) => {
   console.log(`Deleting ${ficheId}`)
@@ -47,10 +47,25 @@ const updateAllFichesLinkedToEntry = async (entryId: string, res: NextApiRespons
   return res.json(savedObjectResponse)
 }
 
+const refreshFichesIndex = async (res: NextApiResponse) => {
+  console.log('Refreshing all the fiches')
+  const fiches = await fetchAllFichesForIndexing()
+
+  if (!fiches) return res.status(404).json({ error: 'No fiche found in contentful.' })
+
+  console.log(`Found ${fiches.length} fiches in contentful.`)
+
+  const savedObjectResponse = await refreshFiches(fiches)
+
+  return res.json(savedObjectResponse)
+}
+
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const body = req.body as { id: string, sysType: SysType, contentType: ContentType }
 
   if (req.method === 'DELETE') return deleteFicheFromAlgolia(body.id, res)
+
+  if (req.method === 'GET') return refreshFichesIndex(res)
 
   if (req.method === 'PUT') {
     if (body.sysType === SYS_TYPES.asset) return updateAllFichesLinkedToAsset(body.id, res)
