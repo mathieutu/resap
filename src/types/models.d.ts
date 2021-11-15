@@ -17,7 +17,7 @@ type File = {
   contentType: string,
 }
 
-type Image = {
+type Asset = {
   id: string,
   createdAt: Date,
   title: string,
@@ -30,7 +30,7 @@ export type Auteur = {
   nom: string,
   prenom: string,
   titre: string,
-  photo: Image,
+  photo: Asset,
   structure: string,
   email: string,
   femme: boolean,
@@ -53,9 +53,8 @@ export type Structure = {
 type Link = {
   id: string,
   titre: string,
-  url: string,
   createdAt: string,
-}
+} & ({ url: string} | { fichier: Asset })
 
 export type Fiche = {
   id: string,
@@ -64,7 +63,7 @@ export type Fiche = {
   updatedAt: string,
   titre: string,
   slug: string,
-  illustration: Image,
+  illustration: Asset,
   description: string,
   contenu: string,
   auteur: Auteur,

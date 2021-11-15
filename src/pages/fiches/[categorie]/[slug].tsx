@@ -46,7 +46,7 @@ const LinksCard = ({ links, title }: {title: string, links: Fiche['pourEnSavoirP
       {links.map((link) => (
         <Link
           key={link.id}
-          href={link.url}
+          href={'fichier' in link ? link.fichier.file.url : link.url}
           className="text-blue-default py-3 block hover:text-gray-600"
         >
           {link.titre}
