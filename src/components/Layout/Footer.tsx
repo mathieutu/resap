@@ -1,5 +1,4 @@
 import { Link } from '../Links'
-import { Logo } from '../Logo'
 import { LogoFull } from '../Logos'
 
 const socialIcons = [

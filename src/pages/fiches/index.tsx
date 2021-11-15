@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next'
 import { SearchIcon } from '@heroicons/react/solid'
+import { NextSeo } from 'next-seo'
 import { Layout } from '../../components/Layout/Layout'
 import { FicheCard } from '../../components/Card/FicheCard'
 import { SimpleHeader } from '../../components/Layout/SimpleHeader'
@@ -14,6 +15,7 @@ import { Container } from '../../components/Layout/Container'
 export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
   return (
     <Layout className="bg-grey-light">
+      <NextSeo title="Fiches pratiques" />
       <SearchContext {...algoliaProps}>
         <SimpleHeader className="h-[475px]" title="Fiches pratiques" titleClassName="text-blue-default" subTitle="">
           <div className="w-full block md:w-1/2 mx-auto mt-16 sm:flex">

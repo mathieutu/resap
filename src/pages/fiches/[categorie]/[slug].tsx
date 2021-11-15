@@ -1,10 +1,11 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { NextSeo, ArticleJsonLd } from 'next-seo'
 import { findAFiche, listAllFichesSlugs } from '../../../services/contentful'
 import { Auteur, Fiche } from '../../../types/models'
 import { Prose } from '../../../components/Prose'
 import { Layout } from '../../../components/Layout/Layout'
 import { HeaderFiche } from '../../../components/Layout/HeaderFiche'
-import { categories } from '../../../services/categories'
+import { Categorie, categories } from '../../../services/categories'
 import { Container } from '../../../components/Layout/Container'
 import { Box } from '../../../components/Layout/Box'
 import { Link, SecondaryLink } from '../../../components/Links'
@@ -36,7 +37,7 @@ export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({ 
   })
 }
 
-const LinksCard = ({ links, title }: {title: string, links: Fiche['pourEnSavoirPlus']}) => {
+const LinksCard = ({ links, title }: { title: string, links: Fiche['pourEnSavoirPlus'] }) => {
   if (!links?.length) {
     return null
   }
@@ -53,6 +54,51 @@ const LinksCard = ({ links, title }: {title: string, links: Fiche['pourEnSavoirP
         </Link>
       ))}
     </Box>
+  )
+}
+
+const SEO = ({ fiche, categorie }: { fiche: Fiche, categorie: Categorie }) => {
+  const ficheUrl = `https://www.resap.fr/${categorie.href}/${fiche.slug}`
+
+  return (
+    <>
+      <ArticleJsonLd
+        url={ficheUrl}
+        title={fiche.titre}
+        images={[fiche.illustration.file.url]}
+        datePublished={fiche.createdAt}
+        dateModified={fiche.updatedAt}
+        authorName={`${fiche.auteur.prenom} ${fiche.auteur.nom}`}
+        publisherName="Ressources Santé et Précarité"
+        publisherLogo="https://www.resap.fr/logo.svg"
+        description={fiche.description}
+      />
+      <NextSeo
+        title={fiche.titre}
+        description={fiche.description}
+        canonical={ficheUrl}
+        openGraph={{
+          type: 'article',
+          images: [{
+            url: fiche.illustration.file.url,
+            width: fiche.illustration.file.details.image.width,
+            height: fiche.illustration.file.details.image.height,
+            alt: fiche.illustration.title,
+            type: fiche.illustration.file.contentType,
+
+          }],
+          article: {
+            publishedTime: fiche.createdAt,
+            modifiedTime: fiche.updatedAt,
+            authors: [`${fiche.auteur.prenom} ${fiche.auteur.nom}`],
+            tags: [categorie.name, ...fiche.tags],
+            section: categorie.name,
+          },
+          locale: 'fr_FR',
+          site_name: 'Ressources Santé et Précarité',
+        }}
+      />
+    </>
   )
 }
 
@@ -83,11 +129,12 @@ const AuthorCard = ({ auteur }: { auteur: Auteur }) => {
 export default function FichePage({ fiche }: Props) {
   if (!fiche) return null
 
-  const category = categories[fiche.categorie]
+  const categorie = categories[fiche.categorie]
 
   return (
     <Layout>
-      <HeaderFiche fiche={fiche} category={category} />
+      <SEO fiche={fiche} categorie={categorie} />
+      <HeaderFiche fiche={fiche} categorie={categorie} />
       <div className="relative pb-12">
         <Container>
           <FloatingPrintButton className=" absolute top-5 2xl:top-20 xl:left-8" />

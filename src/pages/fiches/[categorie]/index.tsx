@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next'
 import { SearchIcon } from '@heroicons/react/solid'
 import { Configure } from 'react-instantsearch-dom'
+import { NextSeo } from 'next-seo'
 import { Layout } from '../../../components/Layout/Layout'
 import { FicheCard } from '../../../components/Card/FicheCard'
 import { SimpleHeader } from '../../../components/Layout/SimpleHeader'
@@ -19,6 +20,7 @@ export default function ListFichesByCategory({ categorieSlug, ...algoliaProps }:
 
   return (
     <Layout className="bg-gray-50">
+      <NextSeo title={categorie.name} />
       <SearchContext {...algoliaProps}>
         <Configure filters={`categorie:${categorieSlug}`} />
         <SimpleHeader className="h-[475px]" subTitle="Fiches pratiques" title={categorie.name} titleClassName={categorie.textColor}>

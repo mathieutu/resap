@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 643.7 801.6">
+  <!-- <path fill="none" stroke="#6ED8B4" stroke-miterlimit="10" stroke-width="45" d="M330.3 16 60.8 285.3a130.7 130.7 0 0 0 0 184.9l2.6 2.6a130.7 130.7 0 0 0 184.8 0l73.6-73.6 73.5-73.5a130.7 130.7 0 0 1 184.9 0l2.6 2.6c44.7 44.7 57.4 127.5 0 184.8L310.4 785.8"></path> -->
+  <!-- Version pour petits affichages, avec stroke-width doublé pour mieux le voir -->
+  <path fill="none" stroke="#6ED8B4" stroke-miterlimit="10" stroke-width="90" d="M330.3 16 60.8 285.3a130.7 130.7 0 0 0 0 184.9l2.6 2.6a130.7 130.7 0 0 0 184.8 0l73.6-73.6 73.5-73.5a130.7 130.7 0 0 1 184.9 0l2.6 2.6c44.7 44.7 57.4 127.5 0 184.8L310.4 785.8"></path>
+</svg>
