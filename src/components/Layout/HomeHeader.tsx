@@ -5,9 +5,8 @@ import { SearchIcon } from '@heroicons/react/solid'
 import { navigationEntries } from './Navbar'
 import { Link } from '../Links'
 import { PrimaryButton } from '../Buttons'
-import { LogoBlue } from '../LogoBlue'
-import { Shape } from '../Shape'
 import { useSearchFichesForm } from '../../utils/hooks'
+import { LogoFull, LogoIcon } from '../Logos'
 
 const SearchForm = () => {
   const { handleSubmit, onChange, value } = useSearchFichesForm()
@@ -50,7 +49,7 @@ export const HomeHeader = () => (
               <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
                 <div className="flex items-center justify-between w-full md:w-auto">
                   <Link href="/">
-                    <LogoBlue />
+                    <LogoFull className="text-blue-default w-14" />
                   </Link>
                   <div className="-mr-2 flex items-center md:hidden">
                     <Popover.Button
@@ -94,7 +93,7 @@ export const HomeHeader = () => (
               >
                 <div className="px-5 pt-4 flex items-center justify-between">
                   <div>
-                    <LogoBlue />
+                    <LogoFull className="text-blue-default w-14" />
                   </div>
                   <div className="-mr-2">
                     <Popover.Button
@@ -130,7 +129,7 @@ export const HomeHeader = () => (
             <p
               className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
             >
-              Ce site se veut être un outil pratique à destination des professionnels de santé. 
+              Ce site se veut être un outil pratique à destination des professionnels de santé.
               Par un système de mots clés, vous serez orientés vers des fiches thématiques.
             </p>
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
@@ -141,7 +140,7 @@ export const HomeHeader = () => (
       </div>
     </div>
     <div className="lg:absolute lg:right-0 lg:w-1/2 pl-10 -top-10 -bottom-10 hidden lg:block">
-      <Shape />
+      <LogoIcon className="w-full 2xl:w-9/12 text-green-default" />
     </div>
   </div>
 )

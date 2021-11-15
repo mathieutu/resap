@@ -4,8 +4,8 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Fragment } from 'react'
 import { Link } from '../Links'
 import { Container } from './Container'
-import { LogoBlue } from '../LogoBlue'
 import { useSearchFichesForm } from '../../utils/hooks'
+import { LogoFull } from '../Logos'
 
 export const navigationEntries = [
   { name: 'Fiches pratiques', href: 'fiches' },
@@ -24,7 +24,7 @@ export const Navbar = () => {
             <div className="flex justify-between h-16">
               <div className="flex px-2 lg:px-0">
                 <Link href="/" className="flex-shrink-0 flex items-center">
-                  <LogoBlue />
+                  <LogoFull className="text-blue-default w-14" />
                 </Link>
                 <nav className="hidden lg:ml-6 lg:flex lg:space-x-8">
                   {navigationEntries.map((item) => (
@@ -94,7 +94,7 @@ export const Navbar = () => {
               >
                 <div className="px-5 pt-4 flex items-center justify-between">
                   <div>
-                    <LogoBlue />
+                    <LogoFull className="text-blue-default" />
                   </div>
                   <div className="-mr-2">
                     <Popover.Button

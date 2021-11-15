@@ -1,5 +1,6 @@
 import { Link } from '../Links'
 import { Logo } from '../Logo'
+import { LogoFull } from '../Logos'
 
 const socialIcons = [
   {
@@ -72,7 +73,7 @@ export const Footer = () => (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
       <div className="xl:grid xl:grid-cols-3 xl:gap-8">
         <div className="space-y-8 xl:col-span-1">
-          <Logo />
+          <LogoFull className="text-white w-20" />
           <p className="text-white text-base">
             [A REMPLIR]
           </p>
