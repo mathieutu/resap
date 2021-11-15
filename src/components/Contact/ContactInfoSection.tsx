@@ -1,23 +1,23 @@
 const organizations = [{
-  title: 'Médecins du Monde',
-  address: '1 rue de la Part Dieu, 69003 Lyon',
-  email: 'contact@mdm.com',
-  phone: '01 23 45 67 89',
+  title: 'Coordination régionale des dispositifs PASS, ARS Auvergne-Rhône-Alpes',
+  address: 'ARHM, 290 route de Vienne, BP 8252, 69355 LYON Cedex 08',
+  email: '[Email A REMPLIR]',
+  phone: '[Tel A REMPLIR]',
 }, {
-  title: 'Fédération des Acteurs de la Solidarité',
-  address: '51 rue Smith, 69002 Lyon',
-  email: 'contact@fas.org',
-  phone: '01 23 45 67 89',
-}, {
-  title: 'Fédération des Acteurs de la Solidarité',
-  address: '51 rue Smith, 69002 Lyon',
-  email: 'contact@fas.org',
-  phone: '01 23 45 67 89',
+  title: 'Fédération des Acteurs de la Solidarité Auvergne Rhône Alpes',
+  address: '63 rue Smith, 69002 Lyon',
+  email: '[Email A REMPLIR]',
+  phone: '[Tel A REMPLIR]',
 }, {
   title: 'Médecins du Monde',
-  address: '1 rue de la Part Dieu, 69003 Lyon',
-  email: 'contact@mdm.com',
-  phone: '01 23 45 67 89',
+  address: '15 Bd Marius Vivier Merle, 69003 Lyon',
+  email: '[Email A REMPLIR]',
+  phone: '[Tel A REMPLIR]',
+}, {
+  title: 'Réseau social rue hopital',
+  address: '',
+  email: '[Email A REMPLIR]',
+  phone: '[Tel A REMPLIR]',
 }]
 
 export const ContactInfoSection = () => (

@@ -55,7 +55,7 @@ export const HomeHeader = () => (
                     <Popover.Button
                       className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-grey-default hover:bg-grey-light focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default"
                     >
-                      <span className="sr-only">Open main menu</span>
+                      <span className="sr-only">Menu principal</span>
                       <MenuIcon className="h-6 w-6" aria-hidden="true" />
                     </Popover.Button>
                   </div>
@@ -123,7 +123,7 @@ export const HomeHeader = () => (
         <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
           <div className="sm:text-center lg:text-left">
             <h1 className="text-4xl tracking-tight font-extrabold text-blue-default sm:text-5xl md:text-6xl">
-              <span className="block">Ressources <br />Santé et Précarité</span>
+              <span className="block">Ressources <br />Santé et Précarité </span>
               <span className="block text-4xl text-green-default mt-4 ">Auvergne Rhône Alpes</span>
             </h1>
             <p

@@ -9,7 +9,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
       additionalLinkTags={[{ rel: 'icon', href: '/logo.svg' }]}
       titleTemplate="%s | Ressources Santé et Précarité"
       defaultTitle="Ressources Santé et Précarité"
-      description="Dispositifs sociaux et médico-sociaux pour les professionnels de santé afin d'améliorer l'accès aux soins pour tous."
+      description="Dispositifs sociaux et médico-sociaux pour les professionnels de santé dans le but d'améliorer l'accès aux soins pour tous."
       canonical="https://www.resap.fr"
       openGraph={{
         type: 'website',
