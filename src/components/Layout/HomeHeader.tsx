@@ -123,7 +123,7 @@ export const HomeHeader = () => (
         <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
           <div className="sm:text-center lg:text-left">
             <h1 className="text-4xl tracking-tight font-extrabold text-blue-default sm:text-5xl md:text-6xl">
-              <span className="block">Ressources <br />Santé et Précarité </span>
+              <span className="block">Ressources <br />Santé et Précarité</span>{' '}
               <span className="block text-4xl text-green-default mt-4 ">Auvergne Rhône Alpes</span>
             </h1>
             <p
