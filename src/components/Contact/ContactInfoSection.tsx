@@ -1,23 +1,15 @@
 const organizations = [{
   title: 'Coordination régionale des dispositifs PASS, ARS Auvergne-Rhône-Alpes',
-  address: 'ARHM, 290 route de Vienne, BP 8252, 69355 LYON Cedex 08',
-  email: '[Email A REMPLIR]',
-  phone: '[Tel A REMPLIR]',
+  address: <span>ARHM, 290 route de Vienne, BP 8252, <br />69355 LYON Cedex 08</span>,
 }, {
   title: 'Fédération des Acteurs de la Solidarité Auvergne Rhône Alpes',
-  address: '63 rue Smith, 69002 Lyon',
-  email: '[Email A REMPLIR]',
-  phone: '[Tel A REMPLIR]',
+  address: <span>63 rue Smith, <br />69002 Lyon</span>,
 }, {
   title: 'Médecins du Monde',
-  address: '15 Bd Marius Vivier Merle, 69003 Lyon',
-  email: '[Email A REMPLIR]',
-  phone: '[Tel A REMPLIR]',
+  address: <span>15 Bd Marius Vivier Merle, <br />69003 Lyon</span>,
 }, {
   title: 'Réseau social rue hopital',
-  address: '',
-  email: '[Email A REMPLIR]',
-  phone: '[Tel A REMPLIR]',
+  address: <span>20 Quai Claude Bernard, <br />69007 Lyon</span>,
 }]
 
 export const ContactInfoSection = () => (
@@ -35,14 +27,6 @@ export const ContactInfoSection = () => (
                   <div>
                     <dt className="sr-only">Adresse</dt>
                     <dd>{organization.address}</dd>
-                  </div>
-                  <div>
-                    <dt className="sr-only">Email</dt>
-                    <dd>{organization.email}</dd>
-                  </div>
-                  <div>
-                    <dt className="sr-only">Téléphone</dt>
-                    <dd>{organization.phone}</dd>
                   </div>
                 </dl>
               </div>

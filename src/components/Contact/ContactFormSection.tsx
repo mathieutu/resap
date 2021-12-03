@@ -140,7 +140,7 @@ const Form = () => {
       <div className="sm:col-span-6">
         <p className="text-sm text-gray-500">
           Nous vous remercions de renseigner vos informations de contact si vous souhaitez que nous revenions vers vous.
-          N&apos;hésitez pas à préciser dans le corps du message toute information utile au traitement de votre demande.
+          N&apos;hésitez pas à préciser dans le corps du message toute information qui pourrait être utile au traitement de votre demande.
         </p>
       </div>
       <div className="sm:col-span-6">
@@ -206,9 +206,9 @@ export const ContactFormSection = () => (
         <rect width={404} height={404} fill="url(#85737c0e-0916-41d7-917f-596dc7edfa27)" />
       </svg>
       <div className="text-center">
-        <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Nous contacter</h1>
+        <h1 className="text-3xl font-extrabold tracking-tight text-blue-default sm:text-4xl">Nous contacter</h1>
         <p className="mt-4 text-lg leading-6 text-gray-500">
-          [À REMPLIR]
+          Vous avez une remarque ou une question, n’hésitez pas à remplir le formulaire ci-dessous, les porteurs du projet RESAP vous répondront.
         </p>
       </div>
       <div className="mt-12">

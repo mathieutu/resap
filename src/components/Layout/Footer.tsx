@@ -37,32 +37,11 @@ const socialIcons = [
   },
 ]
 
-const navigation = {
-  solutions: [
-    { name: 'Marketing', href: '#' },
-    { name: 'Analytics', href: '#' },
-    { name: 'Commerce', href: '#' },
-    { name: 'Insights', href: '#' },
-  ],
-  support: [
-    { name: 'Pricing', href: '#' },
-    { name: 'Documentation', href: '#' },
-    { name: 'Guides', href: '#' },
-    { name: 'API Status', href: '#' },
-  ],
-  company: [
-    { name: 'About', href: '#' },
-    { name: 'Blog', href: '#' },
-    { name: 'Jobs', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Partners', href: '#' },
-  ],
-  legal: [
-    { name: 'Claim', href: '#' },
-    { name: 'Privacy', href: '#' },
-    { name: 'Terms', href: '#' },
-  ],
-}
+const navigation = [
+  { label: 'Mentions Légales', href: '/mentions' },
+  { label: 'Qui sommes nous ?', href: '/a-propos' },
+  { label: 'Contact', href: '/contact' },
+]
 
 export const Footer = () => (
   <footer className="bg-blue-default print:hidden" aria-labelledby="footer-heading">
@@ -70,11 +49,11 @@ export const Footer = () => (
       Pied de page
     </h2>
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-      <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-        <div className="space-y-8 xl:col-span-1">
-          <LogoFull className="text-white w-20" />
+      <LogoFull className="text-white w-20" />
+      <div className="md:grid md:grid-cols-2 md:gap-8 mt-8">
+        <div className="space-y-8">
           <p className="text-white text-base">
-            [A REMPLIR]
+            Ce site se destine en première intention aux professionnels de santé, mais peut aussi être utile aux travailleurs sociaux, bénévoles et toutes personnes susceptibles d'accompagner vers la santé une personne en situation de précarité.
           </p>
           <div className="flex space-x-6">
             {socialIcons.map((item) => (
@@ -85,59 +64,16 @@ export const Footer = () => (
             ))}
           </div>
         </div>
-        <div className="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
-          <div className="md:grid md:grid-cols-2 md:gap-8">
-            <div>
-              <h3 className="text-sm font-semibold text-green-default tracking-wider uppercase">A REMPLIR</h3>
-              <ul className="mt-4 space-y-4">
-                {navigation.solutions.map((item) => (
-                  <li key={item.name}>
-                    <Link href={item.href} className="text-base text-white hover:text-green-default">
-                      A REMPLIR
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="mt-12 md:mt-0">
-              <h3 className="text-sm font-semibold text-green-default tracking-wider uppercase">A REMPLIR</h3>
-              <ul className="mt-4 space-y-4">
-                {navigation.support.map((item) => (
-                  <li key={item.name}>
-                    <Link href={item.href} className="text-base text-white hover:text-green-default">
-                      A REMPLIR
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="md:grid md:grid-cols-2 md:gap-8">
-            <div>
-              <h3 className="text-sm font-semibold text-green-default tracking-wider uppercase">A REMPLIR</h3>
-              <ul className="mt-4 space-y-4">
-                {navigation.company.map((item) => (
-                  <li key={item.name}>
-                    <Link href={item.href} className="text-base text-white hover:text-green-default">
-                      A REMPLIR
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="mt-12 md:mt-0">
-              <h3 className="text-sm font-semibold text-green-default tracking-wider uppercase">A REMPLIR</h3>
-              <ul className="mt-4 space-y-4">
-                {navigation.legal.map((item) => (
-                  <li key={item.name}>
-                    <Link href={item.href} className="text-base text-white hover:text-green-default">
-                      A REMPLIR
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+        <div className="mt-12 md:mt-0">
+          <ul className="md:text-right space-y-4">
+            {navigation.map((item) => (
+              <li key={item.label}>
+                <Link href={item.href} className="text-base text-white hover:text-green-default">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
       <div className="mt-12 border-t border-gray-200 pt-8">
