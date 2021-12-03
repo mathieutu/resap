@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import { Headline } from '../Headline'
 import { ChildrenProp, ClassNameProp } from '../../types/react'
+import { PrimaryLink } from '../Links'
 
 type Props = ClassNameProp
 
@@ -42,6 +43,10 @@ export const InformationsSection = ({ className }: Props) => (
               78% des  médecins déplorent un manque de coordination entre le secteur médical et le secteur social (étude nationale menée par la Direction de la Recherche, des Etudes et de l’Evaluation et des Statistiques entre mars et mai 2017 « Prise en charge des patients en situation de vulnérabilité sociale : opinions et pratiques des médecins généralistes »)
             </p>
           </Block>
+
+          <div className="flex justify-center">
+            <PrimaryLink href="/a-propos">En savoir plus sur les associations à l'origine du projet</PrimaryLink>
+          </div>
         </dl>
       </div>
     </div>
