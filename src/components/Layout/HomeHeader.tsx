@@ -48,7 +48,7 @@ export const HomeHeader = () => (
             >
               <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
                 <div className="flex items-center justify-between w-full md:w-auto">
-                  <Link href="/">
+                  <Link href="/" title="Page d'accueil">
                     <LogoFull className="text-blue-default w-14" />
                   </Link>
                   <div className="-mr-2 flex items-center md:hidden">

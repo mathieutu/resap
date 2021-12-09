@@ -23,7 +23,7 @@ export const Navbar = () => {
           <Container>
             <div className="flex justify-between h-16">
               <div className="flex px-2 lg:px-0">
-                <Link href="/" className="flex-shrink-0 flex items-center">
+                <Link href="/" title="Page d'accueil" className="flex-shrink-0 flex items-center">
                   <LogoFull className="text-blue-default w-14" />
                 </Link>
                 <nav className="hidden lg:ml-6 lg:flex lg:space-x-8">
