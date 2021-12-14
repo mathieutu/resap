@@ -73,7 +73,7 @@ export default function APropos() {
             <p>Quel que soit le territoire, il est rapporté la difficulté, voire l&#39;impossibilité pour les personnes accueillies d&#39;avoir un médecin traitant référent. </p>
             <p>Au-delà de la problématique de la sous densité de médecins, le fait que les patients soient en situation de précarité constitue un frein supplémentaire. En effet, les médecins craignent une prise en charge médicale qui sera plus longue et plus complexe et ont besoin de ressources et de relais locaux pour garantir une prise en charge globale.</p>
 
-            <h3>Les Permanences d'Accès aux Soins de Santé Auvergne Rhône Alpes</h3>
+            <h3>Les Permanences d&#39;Accès aux Soins de Santé Auvergne Rhône Alpes</h3>
             <p>Rattachées aux établissements de santé, ces dispositifs médico-sociaux dédiés à l&#39;accueil et à la prise en charge des personnes en situation de précarité et ayant besoin de soins, ont pour mission de faciliter l&#39;accès au système en accompagnant les personnes dans leurs démarches de reconnaissance de leurs droits. </p>
             <p>Pour accompagner l&#39;ensemble des PASS de la région Auvergne-Rhône-Alpes et assurer l&#39;harmonisation des pratiques, l&#39;Agence Régionale de Santé AURA a positionné deux coordinatrices régionales. </p>
             <p>Les missions spécifiques de ces dernières sont : </p>

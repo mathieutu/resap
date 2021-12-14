@@ -45,7 +45,7 @@ export const InformationsSection = ({ className }: Props) => (
           </Block>
 
           <div className="flex justify-center">
-            <PrimaryLink href="/a-propos">En savoir plus sur les associations à l'origine du projet</PrimaryLink>
+            <PrimaryLink href="/a-propos">En savoir plus sur les associations à l&apos;origine du projet</PrimaryLink>
           </div>
         </dl>
       </div>

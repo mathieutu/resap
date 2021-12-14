@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Link } from '../Links'
 import { LogoFull } from '../Logos'
 
@@ -53,7 +54,7 @@ export const Footer = () => (
       <div className="md:grid md:grid-cols-2 md:gap-8 mt-8">
         <div className="space-y-8">
           <p className="text-white text-base">
-            Ce site se destine en première intention aux professionnels de santé, mais peut aussi être utile aux travailleurs sociaux, bénévoles et toutes personnes susceptibles d'accompagner vers la santé une personne en situation de précarité.
+            Ce site se destine en première intention aux professionnels de santé, mais peut aussi être utile aux travailleurs sociaux, bénévoles et toutes personnes susceptibles d&apos;accompagner vers la santé une personne en situation de précarité.
           </p>
           <div className="flex space-x-6">
             {socialIcons.map((item) => (
@@ -76,8 +77,13 @@ export const Footer = () => (
           </ul>
         </div>
       </div>
-      <div className="mt-12 border-t border-gray-200 pt-8">
-        <p className="text-base text-white xl:text-center">&copy; {new Date().getFullYear()} RESAP</p>
+      <div className="mt-6 border-t border-gray-200 pt-6 flex justify-between items-center flex-wrap gap-4">
+        <p className="flex gap-8 items-center flex-wrap">
+          <img className="h-10 brightness-0 invert" src="/partenaires/logo-ca.png" alt="Logo Crédit agricole" />
+          <img className="h-10 brightness-0 invert" src="/partenaires/logo-ars.png" alt="Logo ARS" />
+          <img className="h-12 brightness-0 invert" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
+        </p>
+        <p className="text-base text-white">&copy; {new Date().getFullYear()} RESAP</p>
       </div>
     </div>
   </footer>
