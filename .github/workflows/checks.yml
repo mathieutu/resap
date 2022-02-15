@@ -18,6 +18,8 @@ jobs:
       with:
         node-version: 16
         cache: 'yarn'
+    - name: Install dependencies
+      run: yarn install
     - name: Type checking
       run: yarn typecheck
     - name: Lint
