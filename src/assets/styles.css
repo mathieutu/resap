@@ -8,12 +8,4 @@ html, body, #__next {
   font-weight: 400;
   @apply h-full;
 }
-div.lg\:absolute > svg{
-  height:100%;
-  width:auto !important;
-}
-
-div.relative.bg-white > div.lg\:absolute {
-  z-index:10
-}
 
