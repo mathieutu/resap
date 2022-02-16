@@ -10,7 +10,7 @@ import { LogoFull } from '../Logos'
 export const navigationEntries = [
   { name: 'Fiches pratiques', href: 'fiches' },
   // { name: 'Annuaires', href: '#' },
-  { name: 'Nous contacter', href: 'contact' },
+  { name: 'Contact', href: 'contact' },
 ]
 
 export const Navbar = () => {
