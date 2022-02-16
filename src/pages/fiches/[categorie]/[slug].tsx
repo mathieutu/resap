@@ -1,5 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { NextSeo, ArticleJsonLd } from 'next-seo'
+import { useState } from 'react'
+import { Transition } from '@headlessui/react'
 import { findAFiche, listAllFichesSlugs } from '../../../services/contentful'
 import { Fiche } from '../../../types/models'
 import { Prose } from '../../../components/Prose'
@@ -10,6 +12,7 @@ import { Container } from '../../../components/Layout/Container'
 import { Box } from '../../../components/Layout/Box'
 import { Link } from '../../../components/Links'
 import { FloatingPrintButton } from '../../../components/FloatingPrintButton'
+import { SecondaryButton } from '../../../components/Buttons'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await listAllFichesSlugs()
@@ -105,6 +108,7 @@ export default function FichePage({ fiche }: Props) {
   if (!fiche) return null
 
   const categorie = categories[fiche.categorie]
+  const [showContenu, setShowContenu] = useState<boolean>(false)
 
   return (
     <Layout>
@@ -117,8 +121,23 @@ export default function FichePage({ fiche }: Props) {
             <h1 className="mt-10 lg:mt-0 text-3xl md:text-5xl lg:text-6xl text-blue-default">{fiche.titre}</h1>
           </div>
           <div className="flex lg:-mx-4 flex-wrap">
-            <div className="w-full  print:w-full lg:w-8/12 lg:px-4 pb-10 lg:pb-20">
-              <Prose html={fiche.contenu} />
+            <div className="w-full print:w-full lg:w-8/12 lg:px-4 pb-10 lg:pb-20">
+              <Prose html={fiche.resume} />
+              {
+                !showContenu && (
+                  <SecondaryButton type="button" className="block my-5 w-1/2 mx-auto" onClick={() => setShowContenu(true)}>
+                    Voir plus
+                  </SecondaryButton>
+                )
+              }
+              <Transition
+                show={showContenu}
+                enter="transition-opacity ease-linear duration-700"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+              >
+                <Prose html={fiche.contenu} />
+              </Transition>
             </div>
             <div className="w-full lg:w-4/12 lg:px-4 print:hidden space-y-10">
               <LinksCard title="Quelques outils" links={fiche.outils} />

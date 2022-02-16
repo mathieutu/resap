@@ -53,6 +53,7 @@ export type Fiche = {
   slug: string,
   illustration: Asset,
   description: string,
+  resume: string,
   contenu: string,
   date: string,
   tags: string[],
