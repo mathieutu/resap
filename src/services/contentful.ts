@@ -34,6 +34,7 @@ type GetEntriesOptions = {
 }
 
 type FicheEntry = Fiche & {
+  resume: Document,
   contenu: Document,
 }
 
@@ -141,6 +142,7 @@ export const findAFiche = async (slug: string, preview = false): Promise<Fiche |
 
   return {
     ...fiche,
+    resume: convertContentfulContentToHtml(fiche.resume),
     contenu: convertContentfulContentToHtml(fiche.contenu),
   }
 }

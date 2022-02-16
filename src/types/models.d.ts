@@ -65,6 +65,7 @@ export type Fiche = {
   slug: string,
   illustration: Asset,
   description: string,
+  resume: string,
   contenu: string,
   auteur: Auteur,
   date: string,
@@ -72,4 +73,5 @@ export type Fiche = {
   structures?: Structure[],
   pourEnSavoirPlus?: Link[],
   outils?: Link[],
+  patients?: Link[],
 }
