@@ -14,7 +14,7 @@ const SearchForm = () => {
   return (
     <form onSubmit={handleSubmit} className="mt-3 sm:flex lg:w-3/4">
       <label htmlFor="search" className="sr-only">
-        Rechercher par mot clé...
+        Recherchez parmi nos fiches...
       </label>
       <div className="mt-1 flex rounded-md shadow-sm w-full flex-wrap gap-3">
         <div className="relative flex items-stretch flex-grow focus-within:z-10">
@@ -25,7 +25,7 @@ const SearchForm = () => {
             type="search"
             id="search"
             className="focus:ring-blue-default focus:border-blue-default block w-full rounded-md pl-10 py-2 text-base border-gray-default"
-            placeholder="Rechercher par mot clé..."
+            placeholder="Recherchez parmi nos fiches..."
             value={value}
             onChange={onChange}
           />
