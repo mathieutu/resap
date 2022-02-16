@@ -11,6 +11,7 @@ export const navigationEntries = [
   { name: 'Fiches pratiques', href: 'fiches' },
   // { name: 'Annuaires', href: '#' },
   { name: 'Contact', href: 'contact' },
+  { name: 'Qui sommes-nous', href: 'a-propos' },
 ]
 
 export const Navbar = () => {
