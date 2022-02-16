@@ -4,14 +4,14 @@ import { Fragment, useState } from 'react'
 import classNames from 'classnames'
 import { Transition } from '@headlessui/react'
 import { findAFiche, listAllFichesSlugs } from '../../../services/contentful'
-import { Auteur, Fiche } from '../../../types/models'
+import { Fiche } from '../../../types/models'
 import { Prose } from '../../../components/Prose'
 import { Layout } from '../../../components/Layout/Layout'
 import { HeaderFiche } from '../../../components/Layout/HeaderFiche'
 import { Categorie, categories } from '../../../services/categories'
 import { Container } from '../../../components/Layout/Container'
 import { Box } from '../../../components/Layout/Box'
-import { Link, SecondaryLink } from '../../../components/Links'
+import { Link } from '../../../components/Links'
 import { FloatingPrintButton } from '../../../components/FloatingPrintButton'
 import { secondaryClassName } from '../../../components/Buttons'
 
@@ -72,10 +72,10 @@ const SEO = ({ fiche, categorie }: { fiche: Fiche, categorie: Categorie }) => {
         images={[fiche.illustration.file.url]}
         datePublished={fiche.createdAt}
         dateModified={fiche.updatedAt}
-        authorName={`${fiche.auteur.prenom} ${fiche.auteur.nom}`}
         publisherName="Ressources Santé et Précarité"
         publisherLogo="https://www.resap.fr/logo.svg"
         description={fiche.description}
+        authorName="Équipe Resap"
       />
       <NextSeo
         title={fiche.titre}
@@ -94,7 +94,6 @@ const SEO = ({ fiche, categorie }: { fiche: Fiche, categorie: Categorie }) => {
           article: {
             publishedTime: fiche.createdAt,
             modifiedTime: fiche.updatedAt,
-            authors: [`${fiche.auteur.prenom} ${fiche.auteur.nom}`],
             tags: [categorie.name, ...fiche.tags],
             section: categorie.name,
           },
@@ -106,30 +105,6 @@ const SEO = ({ fiche, categorie }: { fiche: Fiche, categorie: Categorie }) => {
   )
 }
 
-const AuthorCard = ({ auteur }: { auteur: Auteur }) => {
-  const fullName = `${auteur.prenom} ${auteur.nom}`
-  const title = auteur.femme ? 'L\'autrice' : 'L\'auteur'
-
-  return (
-    <Box className="mb-10 lg:mb-0" title={title}>
-      <div className="flex flex-row py-5">
-        <div
-          className="h-16 w-16 flex-shrink-0 rounded-full bg-cover bg-center"
-          style={{ backgroundImage: `url(${auteur.photo.file.url})`, border: '1px solid #eaeaea' }}
-        />
-        <div className="ml-4 flex flex-col">
-          <span>{fullName}</span>
-          <span className="text-grey-default">{auteur.titre}, <br />{auteur.structure}.</span>
-        </div>
-      </div>
-      <div className="py-5 text-center">
-        <SecondaryLink href="/contact" className="block">
-          Nous contacter
-        </SecondaryLink>
-      </div>
-    </Box>
-  )
-}
 export default function FichePage({ fiche }: Props) {
   if (!fiche) return null
 
@@ -170,7 +145,6 @@ export default function FichePage({ fiche }: Props) {
             <div className="w-full lg:w-4/12 lg:px-4 print:hidden space-y-10">
               <LinksCard title="Quelques outils" links={fiche.outils} />
               <LinksCard title="Pour aller plus loin" links={fiche.pourEnSavoirPlus} />
-              <AuthorCard auteur={fiche.auteur} />
             </div>
           </div>
         </Container>

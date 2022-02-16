@@ -24,18 +24,6 @@ type Asset = {
   file: File,
 }
 
-export type Auteur = {
-  id: string,
-  createdAt: Date,
-  nom: string,
-  prenom: string,
-  titre: string,
-  photo: Asset,
-  structure: string,
-  email: string,
-  femme: boolean,
-}
-
 type Adresse = {
   lon: number,
   lat: number,
@@ -67,7 +55,6 @@ export type Fiche = {
   description: string,
   resume: string,
   contenu: string,
-  auteur: Auteur,
   date: string,
   tags: string[],
   structures?: Structure[],
