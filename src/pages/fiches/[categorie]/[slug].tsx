@@ -14,6 +14,7 @@ import { Box } from '../../../components/Layout/Box'
 import { Link } from '../../../components/Links'
 import { FloatingPrintButton } from '../../../components/FloatingPrintButton'
 import { secondaryClassName } from '../../../components/Buttons'
+import { SecondaryButton } from '../../../components/Buttons'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await listAllFichesSlugs()
@@ -109,9 +110,7 @@ export default function FichePage({ fiche }: Props) {
   if (!fiche) return null
 
   const categorie = categories[fiche.categorie]
-  const [showContent, setShowContent] = useState<boolean>(false)
-
-  const handleClickOnShow = () => setShowContent((show) => !show)
+  const [showContenu, setShowContenu] = useState<boolean>(false)
 
   return (
     <Layout>
@@ -127,14 +126,14 @@ export default function FichePage({ fiche }: Props) {
             <div className="w-full print:w-full lg:w-8/12 lg:px-4 pb-10 lg:pb-20">
               <Prose html={fiche.resume} />
               {
-                !showContent && (
-                  <button type="button" className={classNames(secondaryClassName, 'block my-5 w-1/2 mx-auto')} onClick={handleClickOnShow}>
+                !showContenu && (
+                  <SecondaryButton className="block my-5 w-1/2 mx-auto" onClick={() => setShowContenu(true)} >
                     Voir plus
-                  </button>
+                  </SecondaryButton>
                 )
               }
               <Transition
-                show={showContent}
+                show={showContenu}
                 enter="transition-opacity ease-linear duration-700"
                 enterFrom="opacity-0"
                 enterTo="opacity-100"
