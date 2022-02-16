@@ -6,7 +6,7 @@ import { Document, BLOCKS } from '@contentful/rich-text-types'
 import { Fiche } from '../types/models'
 import { CategorieSlug } from './categories'
 
-const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN } = process.env
+const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
 
 if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_PREVIEW_ACCESS_TOKEN || !CONTENTFUL_ACCESS_TOKEN) {
   throw new Error('CONTENTFUL env vars needed (SPACE_ID, PREVIEW_ACCESS_TOKEN, ACCESS_TOKEN).')
@@ -65,8 +65,8 @@ const getEntries = async <T extends Record<string, unknown>>(
 
   const entries = await createClient({
     space: CONTENTFUL_SPACE_ID,
-    accessToken: preview ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
-    host: preview ? 'preview.contentful.com' : 'cdn.contentful.com',
+    accessToken: (preview || FORCE_CONTENTFUL_PREVIEW) ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
+    host: (preview || FORCE_CONTENTFUL_PREVIEW) ? 'preview.contentful.com' : 'cdn.contentful.com',
   }).getEntries({
     content_type: contentType,
     select: select.join(','),
