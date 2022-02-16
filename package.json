@@ -2,12 +2,13 @@
   "name": "resap-next",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . --ext js,ts,jsx,tsx --ignore-path .gitignore",
+    "lint": "eslint . --ext js,ts,jsx,tsx",
     "lint:fix": "yarn lint --fix",
     "contentful-typing": "contentful-typescript-codegen --output src/types/contentful.d.ts",
     "tailwind:viewer": "tailwind-config-viewer -o"
