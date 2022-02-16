@@ -4,9 +4,9 @@ import { Categorie } from '../../services/categories'
 import { Container } from './Container'
 import { CategorieLink } from '../CategorieLink'
 
-type Props = { fiche: Fiche, categorie: Categorie } & ClassNameProp
+type Props = { fiche: Fiche, categorie: Categorie }
 
-export const HeaderFiche = ({ fiche, categorie, className }: Props) => {
+export const HeaderFiche = ({ fiche, categorie }: Props) => {
   const date = new Date(fiche.updatedAt)
   const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getUTCFullYear()}`
 
