@@ -2,7 +2,6 @@
 import { ButtonHTMLAttributes } from 'react'
 import classNames from 'classnames'
 import { ClassNameProp } from '../types/react'
-// TODO - État hover, active, disabled, etc à gérer !
 
 // eslint-disable-next-line max-len
 export const primaryClassName = 'px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-default shadow-sm hover:bg-green-default focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-default sm:flex-shrink-0 sm:inline-flex sm:items-center sm:w-auto'
