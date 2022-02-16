@@ -61,7 +61,7 @@ const getEntries = async <T extends Record<string, unknown>>(
   contentType: ContentType,
   options: GetEntriesOptions = {},
 ): Promise<T[]> => {
-  const { preview = Boolean(FORCE_CONTENTFUL_PREVIEW), select = [], where = {} } = options
+  const { preview = false, select = [], where = {} } = options
 
   const entries = await createClient({
     space: CONTENTFUL_SPACE_ID,
