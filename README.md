@@ -35,18 +35,19 @@ Pour tout ce qui concerne les méthodes du langage ou les spécificités des fra
 
 ## ⚙️ Prérequis
 
-⚠️ Une fois que votre fork installé localement sur votre machine, bien penser à exécuter le code suivant :
+⚠️ Une fois que votre fork est installé localement sur votre machine, bien penser à exécuter le code suivant :
 
 ```bash
 cp .env.example .env
 ```
+Ce qui générera les variables d'environnements. 
 
-Installer les dépendances avec Yarn ou NPM en utilisant le code suivant :
+Puis remplir les clés API dans le fichier .env pour pouvoir naviguer sur le serveur de développement.
+
+Installer les dépendances avec Yarn en utilisant le code suivant :
 
 ```bash
 yarn install
-#ou
-npm install
 ```
 
 Puis remplir les clés API dans le fichier .env pour pouvoir naviguer sur le serveur de développement.
@@ -56,8 +57,7 @@ Puis remplir les clés API dans le fichier .env pour pouvoir naviguer sur le ser
 
 | Commande         | Description                                                                           |
 |------------------|-------------------------|
-| npm run build  | Build le projet avec NPM. |
-| yarn build    | Build le projet avec Yarn. |
+| yarn build    | Build le projet. |
 
 
 ## 🚦 Démarrage
@@ -66,26 +66,12 @@ Afin de lancer le serveur de développement:
 
 | Commande         | Description                                                                           |
 |------------------|-------------------------|
-| npm run dev  | Lancer le serveur de développement avec NPM. |
-| yarn dev    | Lancer le serveur de développement avec Yarn. |
+| yarn dev    | Lancer le serveur de développement. |
 
 Puis ouvrir [http://localhost:3000](http://localhost:3000) depuis votre navigateur pour en voir le résultat.
 Les pages modifiées sont automatiquement mises à jour sur l'adresse : http://localhost:3000
 
 ## 📝 Petites règles de contribution
-
-### Les features
-- Quand je prends(/compte prendre) une feature, je passe sa carte notion en Doing, et je m'assigne dessus.
-- Je crée une branche depuis Master nommée feat/XXX ou fix/XXX.
-- Au premier commit, je crée la Pull Request en "Draft", lui donne un titre clair (voir plus bas) et 
-mets l'url de la carte notion en description. Je mets l'url de la PR dans la carte Notion.
-- Un environnement de PR est généré automatiquement.
-- Quand ma PR est prête à être review, je mets l'url de la page à review sur l'env de PR dans la description de PR, 
-et en commentaire de la carte Notion.  
-- J'invite en reviewer les autres devs du projet (et/ou quelqu'un d'extérieur au projet, selon son domaine de compétence)
-- Quand la PR est approve, je peux la merger, en mettant un titre de commit comme indiqué plus bas, en précisant à la fin le numéro de PR.
-(C'est seulement celui qui ouvre la PR qui la merge (et en assume la responsabilité) !)  
-
 
 ### Les commits et noms de PR
 - Doivent commencer par l'emoji correspondant **DIRECTEMENT EN CHARACTÈRE UNICODE** (`🎨` et pas `:art:`),
@@ -161,7 +147,6 @@ Les commits et leurs emoji servent notamment à générer le changelog automatiq
 Le projet utilise les règles ESLint mise en place par Airbnb en version 19.0.4
 
 ## 👽 API
-To learn more about Next.js, take a look at the following resources:
 
 - Contentful : CMS permettant de gérer les fiches pratiques
 - Algolia : Réalise la recherche en temps réel des fiches
