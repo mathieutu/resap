@@ -13,7 +13,7 @@ export const FicheCard = ({ fiche }: Props) => {
   const ficheUrl = `${category.href}/${fiche.slug}`
   return (
     <div className="flex flex-col rounded-lg shadow-lg overflow-hidden bg-white ">
-      <div className="flex-shrink-0">
+      <div className="shrink-0">
         <Link href={ficheUrl}>
           <img
             className="h-48 w-full object-cover"

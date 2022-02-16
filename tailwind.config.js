@@ -2,7 +2,7 @@ const { cyan } = require('tailwindcss/colors');
 
 module.exports = {
   mode: 'jit',
-  purge: [
+  content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/services/categories.ts',
@@ -84,9 +84,6 @@ module.exports = {
         },
       }),
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [
     require('@tailwindcss/forms'),
