@@ -42,7 +42,7 @@ type Link = {
   id: string,
   titre: string,
   createdAt: string,
-} & ({ url: string} | { fichier: Asset })
+} & ({ url: string } | { fichier: Asset })
 
 export type Fiche = {
   id: string,
@@ -59,4 +59,5 @@ export type Fiche = {
   structures?: Structure[],
   pourEnSavoirPlus?: Link[],
   outils?: Link[],
+  patients?: Link[],
 }

@@ -122,6 +122,7 @@ export default function FichePage({ fiche }: Props) {
             </div>
             <div className="w-full lg:w-4/12 lg:px-4 print:hidden space-y-10">
               <LinksCard title="Quelques outils" links={fiche.outils} />
+              <LinksCard title="Pour les patients" links={fiche.patients} />
               <LinksCard title="Pour aller plus loin" links={fiche.pourEnSavoirPlus} />
             </div>
           </div>
