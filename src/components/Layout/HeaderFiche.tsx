@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import { ClassNameProp } from '../../types/react'
 import { Fiche } from '../../types/models'
 import { Categorie } from '../../services/categories'
@@ -12,8 +11,7 @@ export const HeaderFiche = ({ fiche, categorie, className }: Props) => {
   const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getUTCFullYear()}`
 
   return (
-    <div className={classNames('w-full mx-auto h-[450px] relative mb-[40px] bg-cover bg-center', className)} style={{ backgroundImage: `url(${fiche.illustration.file.url})` }}>
-      <div className={`${categorie.bgColor} absolute inset-x-0 bottom-0 translate-y-full`}>
+    <div className={`${categorie.bgColor} inset-x-0 bottom-0`}>
         <Container>
           <div className="flex justify-between py-2 items-center text-white">
             <CategorieLink inverted categorie={categorie} />
@@ -23,6 +21,5 @@ export const HeaderFiche = ({ fiche, categorie, className }: Props) => {
           </div>
         </Container>
       </div>
-    </div>
   )
 }
