@@ -1,7 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { NextSeo, ArticleJsonLd } from 'next-seo'
-import { Fragment, useState } from 'react'
-import classNames from 'classnames'
+import { useState } from 'react'
 import { Transition } from '@headlessui/react'
 import { findAFiche, listAllFichesSlugs } from '../../../services/contentful'
 import { Fiche } from '../../../types/models'
@@ -13,7 +12,6 @@ import { Container } from '../../../components/Layout/Container'
 import { Box } from '../../../components/Layout/Box'
 import { Link } from '../../../components/Links'
 import { FloatingPrintButton } from '../../../components/FloatingPrintButton'
-import { secondaryClassName } from '../../../components/Buttons'
 import { SecondaryButton } from '../../../components/Buttons'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -127,7 +125,7 @@ export default function FichePage({ fiche }: Props) {
               <Prose html={fiche.resume} />
               {
                 !showContenu && (
-                  <SecondaryButton className="block my-5 w-1/2 mx-auto" onClick={() => setShowContenu(true)} >
+                  <SecondaryButton type="button" className="block my-5 w-1/2 mx-auto" onClick={() => setShowContenu(true)}>
                     Voir plus
                   </SecondaryButton>
                 )

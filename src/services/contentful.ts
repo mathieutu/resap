@@ -174,7 +174,7 @@ export const findAllFichesLinkedToAssetForIndexing = async (assetId: string): Pr
 
   if (!entries.length) return null
 
-  return entries.map(fiche => formatFicheForSearch(fiche))
+  return entries.map(formatFicheForSearch)
 }
 
 export const findAllFichesLinkedToEntryForIndexing = async (entryId: string): Promise<Fiche[] | null> => {
@@ -185,7 +185,7 @@ export const findAllFichesLinkedToEntryForIndexing = async (entryId: string): Pr
 
   if (!entries.length) return null
 
-  return entries.map(fiche => formatFicheForSearch(fiche))
+  return entries.map(formatFicheForSearch)
 }
 
 export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
@@ -195,5 +195,5 @@ export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
 
   if (!entries.length) return null
 
-  return entries.map(fiche => formatFicheForSearch(fiche))
+  return entries.map(formatFicheForSearch)
 }
