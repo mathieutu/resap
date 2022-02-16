@@ -59,4 +59,5 @@ export type Fiche = {
   structures?: Structure[],
   pourEnSavoirPlus?: Link[],
   outils?: Link[],
+  patients?: Link[],
 }
