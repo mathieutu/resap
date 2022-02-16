@@ -119,7 +119,14 @@ export const HomeHeader = () => (
             </Popover.Panel>
           </Transition>
         </Popover>
-
+        <div className="relative lg:right-0 px-1 lg:hidden sm:block">
+          <div className="flex justify-center flex-wrap gap-4">
+            <p className="flex gap-8 items-center flex-wrap">
+              <img className="h-10" src="/partenaires/logo-ars.png" alt="Logo ARS" />
+              <img className="h-12" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
+            </p>
+          </div>
+        </div>
         <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
           <div className="sm:text-center lg:text-left">
             <h1 className="text-4xl tracking-tight font-extrabold text-blue-default sm:text-5xl md:text-6xl">
@@ -140,6 +147,14 @@ export const HomeHeader = () => (
       </div>
     </div>
     <div className="lg:absolute lg:right-0 lg:w-1/2 pl-10 -top-10 -bottom-10 hidden lg:block">
+      <div className="absolute lg:right-0 pt-6 px-1">
+        <div className="mt-6 pt-6 flex justify-end flex-wrap gap-4">
+          <p className="flex gap-8 items-center flex-wrap">
+            <img className="h-10" src="/partenaires/logo-ars.png" alt="Logo ARS" />
+            <img className="h-12" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
+          </p>
+        </div>
+      </div>
       <LogoIcon className="w-full 2xl:w-9/12 text-green-default" />
     </div>
   </div>
