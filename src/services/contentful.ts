@@ -65,8 +65,8 @@ const getEntries = async <T extends Record<string, unknown>>(
 
   const entries = await createClient({
     space: CONTENTFUL_SPACE_ID,
-    accessToken: preview ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
-    host: preview ? 'preview.contentful.com' : 'cdn.contentful.com',
+    accessToken: (preview || FORCE_CONTENTFUL_PREVIEW) ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
+    host: (preview || FORCE_CONTENTFUL_PREVIEW) ? 'preview.contentful.com' : 'cdn.contentful.com',
   }).getEntries({
     content_type: contentType,
     select: select.join(','),
