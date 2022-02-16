@@ -6,7 +6,7 @@ import { Document, BLOCKS } from '@contentful/rich-text-types'
 import { Fiche } from '../types/models'
 import { CategorieSlug } from './categories'
 
-const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN } = process.env
+const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
 
 if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_PREVIEW_ACCESS_TOKEN || !CONTENTFUL_ACCESS_TOKEN) {
   throw new Error('CONTENTFUL env vars needed (SPACE_ID, PREVIEW_ACCESS_TOKEN, ACCESS_TOKEN).')
@@ -34,6 +34,7 @@ type GetEntriesOptions = {
 }
 
 type FicheEntry = Fiche & {
+  resume: Document,
   contenu: Document,
 }
 
@@ -61,12 +62,12 @@ const getEntries = async <T extends Record<string, unknown>>(
   contentType: ContentType,
   options: GetEntriesOptions = {},
 ): Promise<T[]> => {
-  const { preview = false, select = [], where = {} } = options
+  const { preview = Boolean(FORCE_CONTENTFUL_PREVIEW), select = [], where = {} } = options
 
   const entries = await createClient({
     space: CONTENTFUL_SPACE_ID,
-    accessToken: preview ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
-    host: preview ? 'preview.contentful.com' : 'cdn.contentful.com',
+    accessToken: (preview || FORCE_CONTENTFUL_PREVIEW) ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
+    host: (preview || FORCE_CONTENTFUL_PREVIEW) ? 'preview.contentful.com' : 'cdn.contentful.com',
   }).getEntries({
     content_type: contentType,
     select: select.join(','),
@@ -129,6 +130,12 @@ const convertContentfulContentToHtml = (content: Document): string => {
   return documentToHtmlString(content, options)
 }
 
+export const formatFicheForSearch = (fiche: FicheEntry): Fiche => ({
+  ...fiche,
+  contenu: documentToPlainTextString(fiche.contenu),
+  resume: documentToPlainTextString(fiche.resume),
+})
+
 export const findAFiche = async (slug: string, preview = false): Promise<Fiche | null> => {
   const entries = await getEntries<FicheEntry>(
     CONTENT_TYPES.fiche,
@@ -141,6 +148,7 @@ export const findAFiche = async (slug: string, preview = false): Promise<Fiche |
 
   return {
     ...fiche,
+    resume: convertContentfulContentToHtml(fiche.resume),
     contenu: convertContentfulContentToHtml(fiche.contenu),
   }
 }
@@ -155,10 +163,7 @@ export const findAFicheForIndexing = async (id: string): Promise<Fiche | null> =
 
   const fiche = entries[0]
 
-  return {
-    ...fiche,
-    contenu: documentToPlainTextString(fiche.contenu),
-  }
+  return formatFicheForSearch(fiche)
 }
 
 export const findAllFichesLinkedToAssetForIndexing = async (assetId: string): Promise<Fiche[] | null> => {
@@ -169,10 +174,7 @@ export const findAllFichesLinkedToAssetForIndexing = async (assetId: string): Pr
 
   if (!entries.length) return null
 
-  return entries.map(fiche => ({
-    ...fiche,
-    contenu: documentToPlainTextString(fiche.contenu),
-  }))
+  return entries.map(formatFicheForSearch)
 }
 
 export const findAllFichesLinkedToEntryForIndexing = async (entryId: string): Promise<Fiche[] | null> => {
@@ -183,10 +185,7 @@ export const findAllFichesLinkedToEntryForIndexing = async (entryId: string): Pr
 
   if (!entries.length) return null
 
-  return entries.map(fiche => ({
-    ...fiche,
-    contenu: documentToPlainTextString(fiche.contenu),
-  }))
+  return entries.map(formatFicheForSearch)
 }
 
 export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
@@ -196,8 +195,5 @@ export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
 
   if (!entries.length) return null
 
-  return entries.map(fiche => ({
-    ...fiche,
-    contenu: documentToPlainTextString(fiche.contenu),
-  }))
+  return entries.map(formatFicheForSearch)
 }

@@ -62,7 +62,7 @@ export const getServerSideProps: GetServerSideProps<Props, { categorie: Categori
 
   return ({
     props: {
-      preview: !!preview,
+      preview: Boolean(preview || process.env.FORCE_CONTENTFUL_PREVIEW),
       categorieSlug,
       resultsState: await findResultsStateForSSR(
         (props) => <ListFichesByCategory categorieSlug={categorieSlug} {...props} />,
