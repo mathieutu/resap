@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({ 
   return ({
     props: {
       fiche,
-      preview: !!preview,
+      preview: Boolean(preview || process.env.FORCE_CONTENTFUL_PREVIEW),
     },
   })
 }
