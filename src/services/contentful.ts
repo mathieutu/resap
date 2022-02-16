@@ -130,6 +130,12 @@ const convertContentfulContentToHtml = (content: Document): string => {
   return documentToHtmlString(content, options)
 }
 
+export const formatFicheForSearch = (fiche: FicheEntry): Fiche => ({
+  ...fiche,
+  contenu: documentToPlainTextString(fiche.contenu),
+  resume: documentToPlainTextString(fiche.resume),
+})
+
 export const findAFiche = async (slug: string, preview = false): Promise<Fiche | null> => {
   const entries = await getEntries<FicheEntry>(
     CONTENT_TYPES.fiche,
@@ -157,10 +163,7 @@ export const findAFicheForIndexing = async (id: string): Promise<Fiche | null> =
 
   const fiche = entries[0]
 
-  return {
-    ...fiche,
-    contenu: documentToPlainTextString(fiche.contenu),
-  }
+  return formatFicheForSearch(fiche)
 }
 
 export const findAllFichesLinkedToAssetForIndexing = async (assetId: string): Promise<Fiche[] | null> => {
@@ -171,10 +174,7 @@ export const findAllFichesLinkedToAssetForIndexing = async (assetId: string): Pr
 
   if (!entries.length) return null
 
-  return entries.map(fiche => ({
-    ...fiche,
-    contenu: documentToPlainTextString(fiche.contenu),
-  }))
+  return entries.map(fiche => formatFicheForSearch(fiche))
 }
 
 export const findAllFichesLinkedToEntryForIndexing = async (entryId: string): Promise<Fiche[] | null> => {
@@ -185,10 +185,7 @@ export const findAllFichesLinkedToEntryForIndexing = async (entryId: string): Pr
 
   if (!entries.length) return null
 
-  return entries.map(fiche => ({
-    ...fiche,
-    contenu: documentToPlainTextString(fiche.contenu),
-  }))
+  return entries.map(fiche => formatFicheForSearch(fiche))
 }
 
 export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
@@ -198,8 +195,5 @@ export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
 
   if (!entries.length) return null
 
-  return entries.map(fiche => ({
-    ...fiche,
-    contenu: documentToPlainTextString(fiche.contenu),
-  }))
+  return entries.map(fiche => formatFicheForSearch(fiche))
 }
