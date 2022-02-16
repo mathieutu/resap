@@ -12,14 +12,14 @@ export const HeaderFiche = ({ fiche, categorie }: Props) => {
 
   return (
     <div className={`${categorie.bgColor} inset-x-0 bottom-0`}>
-        <Container>
-          <div className="flex justify-between py-2 items-center text-white">
-            <CategorieLink inverted categorie={categorie} />
-            <span className="ml-2">Dernière mise à jour le&nbsp;
-              <time dateTime={fiche.updatedAt}>{formattedDate}</time>
-            </span>
-          </div>
-        </Container>
-      </div>
+      <Container>
+        <div className="flex justify-between py-2 items-center text-white">
+          <CategorieLink inverted categorie={categorie} />
+          <span className="ml-2">Dernière mise à jour le&nbsp;
+            <time dateTime={fiche.updatedAt}>{formattedDate}</time>
+          </span>
+        </div>
+      </Container>
+    </div>
   )
 }
