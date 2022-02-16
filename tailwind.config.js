@@ -8,7 +8,7 @@ module.exports = {
     './src/services/categories.ts',
     './src/services/contentful.ts',
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media', // or delete it
   theme: {
     extend: {
       screens: {
