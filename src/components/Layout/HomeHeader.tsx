@@ -140,7 +140,7 @@ export const HomeHeader = () => (
       </div>
     </div>
     <div className="lg:absolute lg:right-0 lg:w-1/2 pl-10 -top-10 -bottom-10 hidden lg:block z-10">
-      <LogoIcon className="h-full 2xl:w-9/12 text-green-default" />
+      <LogoIcon className="h-full text-green-default" />
     </div>
   </div>
 )
