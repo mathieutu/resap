@@ -24,6 +24,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/prefer-interface': 'off',
+    '@next/next/no-img-element': 'off',
     'arrow-parens': 'off', // Erreur avec les generics de TS.
     'import/extensions': 'off',
     'import/no-default-export': 'error',

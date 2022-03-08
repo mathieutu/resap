@@ -7,7 +7,8 @@ type Props = { fiche: Fiche, categorie: Categorie }
 
 export const HeaderFiche = ({ fiche, categorie }: Props) => {
   const date = new Date(fiche.updatedAt)
-  const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getUTCFullYear()}`
+  const formattedDate = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
+    .map(n => (n < 10 ? `0${n}` : `${n}`)).join('/')
 
   return (
     <div className={`${categorie.bgColor} inset-x-0 bottom-0`}>
