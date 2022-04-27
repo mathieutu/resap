@@ -1,14 +1,12 @@
 const { cyan } = require('tailwindcss/colors');
 
 module.exports = {
-  mode: 'jit',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/services/categories.ts',
     './src/services/contentful.ts',
   ],
-  darkMode: 'media', // or delete it
   theme: {
     extend: {
       screens: {

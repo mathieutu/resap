@@ -87,7 +87,7 @@ export const Navbar = () => {
           >
             <Popover.Panel
               focus
-              className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden z-10"
+              className="absolute top-0 inset-x-0 p-2 transition  origin-top-right md:hidden z-10"
             >
               <div
                 className="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
