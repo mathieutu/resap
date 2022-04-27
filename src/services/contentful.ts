@@ -3,8 +3,10 @@ import { documentToHtmlString, Options } from '@contentful/rich-text-html-render
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { map } from 'ramda'
 import { Document, BLOCKS } from '@contentful/rich-text-types'
-import { Fiche } from '../types/models'
+import { Fiche, Structure } from '../types/models'
 import { CategorieSlug } from './categories'
+import { findAdressFromCoordinates } from './address'
+import { IStructureFields } from '../types/contentful'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
 
@@ -34,6 +36,10 @@ type GetEntriesOptions = {
 }
 
 type FicheEntry = Fiche & {
+  contenu: Document,
+}
+
+type StructureEntry = Structure & {
   contenu: Document,
 }
 
@@ -88,6 +94,14 @@ export const listAllFichesSlugs = async (preview = false) => (
     { preview, select: ['fields.slug', 'fields.categorie'] },
   )
 )
+export const listAllStructures = async (preview = false): Promise<Structure[]> => {
+  const structures = await getEntries<StructureEntry>(
+    CONTENT_TYPES.structure,
+    { preview, select: ['fields.nom', 'fields.typeDispositif', 'fields.nomOrganisation', 'fields.adresse', 'fields.telephone', 'fields.email'] },
+  )
+
+  return Promise.all(structures.map(async structure => ({ ...structure, adresse: await findAdressFromCoordinates(structure.adresse.lat, structure.adresse.lon) })))
+}
 
 const convertContentfulContentToHtml = (content: Document): string => {
   const attr = (value: string) => `"${value.replace(/"/g, '&quot;')}"`
