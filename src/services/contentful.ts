@@ -6,7 +6,6 @@ import { Document, BLOCKS } from '@contentful/rich-text-types'
 import { Fiche, Structure } from '../types/models'
 import { CategorieSlug } from './categories'
 import { findAdressFromCoordinates } from './address'
-import { IStructureFields } from '../types/contentful'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
 
