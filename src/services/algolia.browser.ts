@@ -20,5 +20,5 @@ export const searchProps = {
 export type AlgoliaSSRProps = Pick<InstantSearchProps, 'widgetsCollector' | 'resultsState' | 'searchState'>
 
 export const findResultsStateForSSR = async (component: FC<AlgoliaSSRProps>, searchState ?: SearchState) => (
-  JSON.parse(JSON.stringify(await findResultsState(component, { ...searchProps, searchState })))
+  JSON.parse(JSON.stringify(await findResultsState<any>(component, { ...searchProps, searchState })))
 )
