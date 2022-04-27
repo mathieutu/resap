@@ -46,7 +46,7 @@ export const HomeHeader = () => (
               className="relative flex items-center justify-between sm:h-10 lg:justify-start"
               aria-label="Global"
             >
-              <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
+              <div className="flex items-center flex-grow shrink-0 lg:grow-0">
                 <div className="flex items-center justify-between w-full md:w-auto">
                   <Link href="/" title="Page d'accueil">
                     <LogoFull className="text-blue-default w-14" />
@@ -93,7 +93,7 @@ export const HomeHeader = () => (
         >
           <Popover.Panel
             focus
-            className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden z-10"
+            className="absolute top-0 inset-x-0 p-2 transition  origin-top-right md:hidden z-10"
           >
             <div
               className="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
@@ -126,8 +126,8 @@ export const HomeHeader = () => (
           </Popover.Panel>
         </Transition>
       </Popover>
-      <div className="relative lg:z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
 
+      <div className="relative lg:z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
         <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
           <div className="sm:text-center lg:text-left">
             <h1 className="text-4xl tracking-tight font-extrabold text-blue-default sm:text-5xl md:text-6xl">

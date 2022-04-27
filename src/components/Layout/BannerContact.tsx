@@ -13,7 +13,7 @@ export const BannerContact = ({ className }: Props) => (
         <span className="block">Besoin d&apos;information ?</span>
         <span className="block text-white mt-4">Contactez nous aujourd&apos;hui</span>
       </h2>
-      <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+      <div className="mt-8 flex lg:mt-0 lg:shrink-0">
         <div className="inline-flex rounded-md">
           <SecondaryLink href="/contact">
             Nous contacter

@@ -8,7 +8,7 @@ export default function MentionsLegales() {
       <div className="py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
         <div className="relative max-w-3xl mx-auto">
           <svg
-            className="absolute left-full transform translate-x-1/4"
+            className="absolute left-full  translate-x-1/4"
             width={404}
             height={404}
             fill="none"
@@ -30,7 +30,7 @@ export default function MentionsLegales() {
             <rect width={404} height={404} fill="url(#85737c0e-0916-41d7-917f-596dc7edfa27)" />
           </svg>
           <svg
-            className="absolute right-full bottom-0 transform -translate-x-1/4"
+            className="absolute right-full bottom-0  -translate-x-1/4"
             width={404}
             height={404}
             fill="none"

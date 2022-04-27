@@ -54,6 +54,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/require-default-props': 'off',
     'react/state-in-constructor': ['error', 'never'],
+    'react/function-component-definition': ['off'],
     'spaced-comment': ['error', 'always', { markers: ['/'] }],
     indent: 'off',
     semi: ['error', 'never'],

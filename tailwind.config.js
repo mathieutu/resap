@@ -1,14 +1,12 @@
 const { cyan } = require('tailwindcss/colors');
 
 module.exports = {
-  mode: 'jit',
-  purge: [
+  content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/services/categories.ts',
     './src/services/contentful.ts',
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       screens: {
@@ -84,9 +82,6 @@ module.exports = {
         },
       }),
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [
     require('@tailwindcss/forms'),
