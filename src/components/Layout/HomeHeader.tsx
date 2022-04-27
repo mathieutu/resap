@@ -61,7 +61,7 @@ export const HomeHeader = () => (
                   </div>
                 </div>
               </div>
-              <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
+              <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8 lg:whitespace-nowrap">
                 {navigationEntries.map((item) => (
                   <Link
                     key={item.name}

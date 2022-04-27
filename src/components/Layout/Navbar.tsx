@@ -9,7 +9,7 @@ import { LogoFull } from '../Logos'
 
 export const navigationEntries = [
   { name: 'Fiches pratiques', href: 'fiches' },
-  // { name: 'Annuaires', href: '#' },
+  { name: 'Annuaire', href: 'annuaire' },
   { name: 'Qui somme-nous ?', href: 'a-propos' },
   { name: 'Nous contacter', href: 'contact' },
 ]
