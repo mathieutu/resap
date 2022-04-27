@@ -14,7 +14,7 @@ const SearchForm = () => {
   return (
     <form onSubmit={handleSubmit} className="mt-3 sm:flex lg:w-3/4">
       <label htmlFor="search" className="sr-only">
-        Recherchez parmi nos fiches...
+        Rechercher par mots-clefs...
       </label>
       <div className="mt-1 flex rounded-md shadow-sm w-full flex-wrap gap-3">
         <div className="relative flex items-stretch flex-grow focus-within:z-10">
@@ -25,7 +25,7 @@ const SearchForm = () => {
             type="search"
             id="search"
             className="focus:ring-blue-default focus:border-blue-default block w-full rounded-md pl-10 py-2 text-base border-gray-default"
-            placeholder="Recherchez parmi nos fiches..."
+            placeholder="Rechercher par mots-clefs.."
             value={value}
             onChange={onChange}
           />
@@ -39,9 +39,9 @@ const SearchForm = () => {
 export const HomeHeader = () => (
   <div className="relative bg-white overflow-hidden">
     <div className="max-w-7xl mx-auto">
-      <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-        <Popover>
-          <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
+      <Popover>
+        <div className="bg-white flex justify-between lg:px-8 pt-6 px-4 relative sm:px-6 z-30">
+          <div>
             <nav
               className="relative flex items-center justify-between sm:h-10 lg:justify-start"
               aria-label="Global"
@@ -74,52 +74,60 @@ export const HomeHeader = () => (
               </div>
             </nav>
           </div>
+          <div className="flex justify-end flex-wrap gap-4 hidden lg:block">
+            <p className="flex gap-8 items-center flex-wrap">
+              <img className="h-10" src="/partenaires/logo-ars.png" alt="Logo ARS" />
+              <img className="h-12" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
+            </p>
+          </div>
+        </div>
 
-          <Transition
-            as={Fragment}
-            enter="duration-150 ease-out"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
-            leave="duration-100 ease-in"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
+        <Transition
+          as={Fragment}
+          enter="duration-150 ease-out"
+          enterFrom="opacity-0 scale-95"
+          enterTo="opacity-100 scale-100"
+          leave="duration-100 ease-in"
+          leaveFrom="opacity-100 scale-100"
+          leaveTo="opacity-0 scale-95"
+        >
+          <Popover.Panel
+            focus
+            className="absolute top-0 inset-x-0 p-2 transition  origin-top-right md:hidden z-10"
           >
-            <Popover.Panel
-              focus
-              className="absolute top-0 inset-x-0 p-2 transition  origin-top-right md:hidden z-10"
+            <div
+              className="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
             >
-              <div
-                className="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
-              >
-                <div className="px-5 pt-4 flex items-center justify-between">
-                  <div>
-                    <LogoFull className="text-blue-default w-14" />
-                  </div>
-                  <div className="-mr-2">
-                    <Popover.Button
-                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default"
-                    >
-                      <span className="sr-only">Close main menu</span>
-                      <XIcon className="h-6 w-6" aria-hidden="true" />
-                    </Popover.Button>
-                  </div>
+              <div className="px-5 pt-4 flex items-center justify-between">
+                <div>
+                  <LogoFull className="text-blue-default w-14" />
                 </div>
-                <div className="px-2 pt-2 pb-3 space-y-1">
-                  {navigationEntries.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="block px-3 py-2 rounded-md text-base font-medium text-grey-default hover:text-blue-default hover:bg-grey-light"
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
+                <div className="-mr-2">
+                  <Popover.Button
+                    className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default"
+                  >
+                    <span className="sr-only">Close main menu</span>
+                    <XIcon className="h-6 w-6" aria-hidden="true" />
+                  </Popover.Button>
                 </div>
               </div>
-            </Popover.Panel>
-          </Transition>
-        </Popover>
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                {navigationEntries.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-grey-default hover:text-blue-default hover:bg-grey-light"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </Popover.Panel>
+        </Transition>
+      </Popover>
 
+      <div className="relative lg:z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
         <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
           <div className="sm:text-center lg:text-left">
             <h1 className="text-4xl tracking-tight font-extrabold text-blue-default sm:text-5xl md:text-6xl">
@@ -134,6 +142,14 @@ export const HomeHeader = () => (
             </p>
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
               <SearchForm />
+            </div>
+          </div>
+          <div className="relative lg:right-0 px-1 pt-10 lg:hidden md:block">
+            <div className="flex justify-center flex-wrap gap-4">
+              <p className="flex gap-8 items-center flex-wrap">
+                <img className="h-10" src="/partenaires/logo-ars.png" alt="Logo ARS" />
+                <img className="h-12" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
+              </p>
             </div>
           </div>
         </main>

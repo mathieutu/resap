@@ -1,28 +1,25 @@
-import classNames from 'classnames'
-import { ClassNameProp } from '../../types/react'
 import { Fiche } from '../../types/models'
 import { Categorie } from '../../services/categories'
 import { Container } from './Container'
 import { CategorieLink } from '../CategorieLink'
 
-type Props = { fiche: Fiche, categorie: Categorie } & ClassNameProp
+type Props = { fiche: Fiche, categorie: Categorie }
 
-export const HeaderFiche = ({ fiche, categorie, className }: Props) => {
+export const HeaderFiche = ({ fiche, categorie }: Props) => {
   const date = new Date(fiche.updatedAt)
-  const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getUTCFullYear()}`
+  const formattedDate = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
+    .map(n => (n < 10 ? `0${n}` : `${n}`)).join('/')
 
   return (
-    <div className={classNames('w-full mx-auto h-[450px] relative mb-[40px] bg-cover bg-center', className)} style={{ backgroundImage: `url(${fiche.illustration.file.url})` }}>
-      <div className={`${categorie.bgColor} absolute inset-x-0 bottom-0 translate-y-full`}>
-        <Container>
-          <div className="flex justify-between py-2 items-center text-white">
-            <CategorieLink inverted categorie={categorie} />
-            <span className="ml-2">Dernière mise à jour le&nbsp;
-              <time dateTime={fiche.updatedAt}>{formattedDate}</time>
-            </span>
-          </div>
-        </Container>
-      </div>
+    <div className={`${categorie.bgColor} inset-x-0 bottom-0`}>
+      <Container>
+        <div className="flex justify-between py-2 items-center text-white">
+          <CategorieLink inverted categorie={categorie} />
+          <span className="ml-2">Dernière mise à jour le&nbsp;
+            <time dateTime={fiche.updatedAt}>{formattedDate}</time>
+          </span>
+        </div>
+      </Container>
     </div>
   )
 }
