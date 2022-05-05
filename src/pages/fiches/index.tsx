@@ -7,16 +7,17 @@ import { SimpleHeader } from '../../components/Layout/SimpleHeader'
 import { SearchInput } from '../../components/Search/SearchInput'
 import { SearchResults } from '../../components/Search/SearchResults'
 import { SearchContext } from '../../components/Search/SearchContext'
-import { AlgoliaSSRProps, findResultsStateForSSR } from '../../services/algolia.browser'
+import { algoliaSSRProps, AlgoliaSSRProps, indicesNames } from '../../services/algolia.browser'
 import { categories } from '../../services/categories'
 import { CategorieLink } from '../../components/CategorieLink'
 import { Container } from '../../components/Layout/Container'
+import { Fiche } from '../../types/models'
 
 export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
   return (
     <Layout className="bg-grey-light">
       <NextSeo title="Fiches pratiques" />
-      <SearchContext {...algoliaProps}>
+      <SearchContext indexName={indicesNames.fiches} {...algoliaProps}>
         <SimpleHeader className="h-[475px]" title="Fiches pratiques" titleClassName="text-blue-default" subTitle="">
           <div className="w-full block md:w-1/2 mx-auto mt-16 sm:flex">
             <div className="mt-1 relative rounded-md shadow-sm w-full">
@@ -36,7 +37,7 @@ export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
         <Container className="-mt-24 pb-12">
           <SearchResults
             className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
-            renderHit={(hit) => <FicheCard fiche={hit} />}
+            renderHit={(fiche: Fiche) => <FicheCard fiche={fiche} />}
           />
         </Container>
       </SearchContext>
@@ -44,9 +45,9 @@ export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<AlgoliaSSRProps> = async ({ query, preview }) => ({
+export const getServerSideProps: GetServerSideProps<AlgoliaSSRProps> = async ({ preview, req }) => ({
   props: {
     preview: Boolean(preview || process.env.FORCE_CONTENTFUL_PREVIEW),
-    resultsState: await findResultsStateForSSR(ListFiches, query),
+    ...await algoliaSSRProps(req, ListFiches),
   },
 })

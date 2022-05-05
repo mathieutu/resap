@@ -1,27 +1,42 @@
-import { InstantSearch, InstantSearchProps } from 'react-instantsearch-dom'
-import { useRouter } from 'next/router'
-import type { SearchState } from 'react-instantsearch-core'
-import { ChildrenProp } from '../../types/react'
-import { searchProps } from '../../services/algolia.browser'
+import { InstantSearch, InstantSearchSSRProvider } from 'react-instantsearch-hooks'
+import { ReactNode } from 'react'
+import { history } from 'instantsearch.js/es/lib/routers'
+import { AlgoliaSSRProps, indicesNames, searchClient } from '../../services/algolia.browser'
 
-type Props = ChildrenProp & Partial<InstantSearchProps>
+type SearchContextProps = {
+  children: ReactNode,
+  indexName: indicesNames,
+} & AlgoliaSSRProps
 
-export const SearchContext = ({ children, ...props }: Props) => {
-  const router = useRouter() ?? {}
+export const SearchContext = ({
+  children,
+  indexName,
+  url,
+  searchState,
+}: SearchContextProps) => (
+  <InstantSearchSSRProvider {...searchState}>
+    <InstantSearch
+      indexName={indexName}
+      searchClient={searchClient}
+      routing={{
+        router: history({
+          getLocation: () => (typeof window === 'undefined' ? new URL(url) as unknown as Location : window.location),
+        }),
+        stateMapping: {
+          // @ts-expect-error
+          stateToRoute(uiState) {
+            const { query } = uiState[indexName]
 
-  const onSearchStateChange = ({ query }: SearchState) => {
-    const { query: oldSearchQuery, ...nextRouterQuery } = router.query
-
-    if (!query) return router.replace({ query: nextRouterQuery }, undefined, { scroll: false })
-
-    return (
-      router.replace({ query: { ...nextRouterQuery, query } }, undefined, { scroll: false, shallow: true })
-    )
-  }
-
-  return (
-    <InstantSearch {...searchProps} {...props} searchState={router.query} onSearchStateChange={onSearchStateChange}>
+            return { query }
+          },
+          routeToState(routeState) {
+            return {
+              [indexName]: routeState,
+            }
+          },
+        } }}
+    >
       {children}
     </InstantSearch>
-  )
-}
+  </InstantSearchSSRProvider>
+)

@@ -1,11 +1,19 @@
-import { connectSearchBox } from 'react-instantsearch-dom'
 import { InputHTMLAttributes, useEffect, useState } from 'react'
-import type { SearchBoxProvided } from 'react-instantsearch-core'
+import { useSearchBox } from 'react-instantsearch-hooks'
 import { useDebounce } from '../../utils/hooks'
 
-type Props = InputHTMLAttributes<any> & SearchBoxProvided & { label: string }
-export const SearchInput = connectSearchBox(({ label, refine, id = 'search', className, placeholder, currentRefinement }: Props) => {
-  const [value, setValue] = useState(currentRefinement)
+type Props = InputHTMLAttributes<any> & { label: string }
+export const SearchInput = ({
+  label,
+  id = 'search',
+  className,
+  placeholder,
+}: Props) => {
+  const {
+    query,
+    refine,
+  } = useSearchBox()
+  const [value, setValue] = useState(query)
   const debouncedValue = useDebounce(value, 200)
 
   useEffect(() => {
@@ -13,8 +21,8 @@ export const SearchInput = connectSearchBox(({ label, refine, id = 'search', cla
   }, [debouncedValue])
 
   useEffect(() => {
-    setValue(currentRefinement)
-  }, [currentRefinement])
+    setValue(query)
+  }, [query])
 
   return (
     <>
@@ -31,4 +39,4 @@ export const SearchInput = connectSearchBox(({ label, refine, id = 'search', cla
       />
     </>
   )
-})
+}
