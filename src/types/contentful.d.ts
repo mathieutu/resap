@@ -74,9 +74,6 @@ export interface IFicheFields {
   /** Contenu */
   contenu: Document;
 
-  /** Auteur */
-  auteur: IAuteur;
-
   /** Tags */
   tags: string[];
 
@@ -142,6 +139,12 @@ export interface IStructureFields {
   /** Nom */
   nom: string;
 
+  /** Type dispositif */
+  typeDispositif?: string | undefined;
+
+  /** Nom organisation */
+  nomOrganisation?: string | undefined;
+
   /** Description */
   description?: string | undefined;
 
@@ -154,11 +157,17 @@ export interface IStructureFields {
   /** Site web */
   siteWeb?: string | undefined;
 
+  /** Nom contact */
+  nomContact?: string | undefined;
+
   /** Téléphone */
   telephone?: string | undefined;
 
   /** Email */
-  email: string;
+  email?: string | undefined;
+
+  /** Email secondaire */
+  emailSecondaire?: string | undefined;
 }
 
 export interface IStructure extends Entry<IStructureFields> {

@@ -24,17 +24,27 @@ type Asset = {
   file: File,
 }
 
-type Adresse = {
-  lon: number,
+export type Adresse = {
+  housenumber: string,
+  postcode: string,
+  city: string,
+  street: string,
+  lat:number,
+  lon:number,
+} | {
   lat: number,
+  lon: number,
 }
 
 export type Structure = {
   id: string,
-  createdAt: string,
-  nom: string,
-  specialites: string[],
+  nomStructure: string,
+  typeDispositif: string,
+  nomOrganisation: string,
   adresse: Adresse,
+  siteWeb: string,
+  contact: string,
+  tel: string,
   email: string,
 }
 
