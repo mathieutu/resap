@@ -2,9 +2,10 @@ import { createClient } from 'contentful'
 import { documentToHtmlString, Options } from '@contentful/rich-text-html-renderer'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { map } from 'ramda'
-import { Document, BLOCKS } from '@contentful/rich-text-types'
-import { Fiche } from '../types/models'
+import { BLOCKS, Document } from '@contentful/rich-text-types'
+import { Fiche, Structure } from '../types/models'
 import { CategorieSlug } from './categories'
+import { dump } from '../utils/logs'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
 
@@ -38,8 +39,10 @@ type FicheEntry = Fiche & {
   contenu: Document,
 }
 
+type StructureEntry = Structure
+
 const parseContentfulEntries = (element: any): any => {
-  if (typeof element !== 'object') return element
+  if (!element || typeof element !== 'object') return element
 
   if (element.nodeType === BLOCKS.DOCUMENT) return element
 
@@ -58,37 +61,41 @@ const parseContentfulEntries = (element: any): any => {
   return map(parseContentfulEntries, element)
 }
 
+export const isPreviewForced = ['true', '1'].includes(FORCE_CONTENTFUL_PREVIEW!)
+
 const getEntries = async <T extends Record<string, unknown>>(
   contentType: ContentType,
   options: GetEntriesOptions = {},
 ): Promise<T[]> => {
-  const { preview = Boolean(FORCE_CONTENTFUL_PREVIEW), select = [], where = {} } = options
+  const { preview, select = [], where = {} } = options
 
-  const entries = await createClient({
+  const client = createClient({
     space: CONTENTFUL_SPACE_ID,
-    accessToken: (preview || FORCE_CONTENTFUL_PREVIEW) ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
-    host: (preview || FORCE_CONTENTFUL_PREVIEW) ? 'preview.contentful.com' : 'cdn.contentful.com',
-  }).getEntries({
-    content_type: contentType,
-    select: select.join(','),
-    ...where,
+    accessToken: (preview || isPreviewForced) ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
+    host: (preview || isPreviewForced) ? 'preview.contentful.com' : 'cdn.contentful.com',
   })
 
-  return parseContentfulEntries(entries.items)
-}
+  const getAllItems = async (offset = 0): Promise<any[]> => {
+    const limit = 1000
 
-export const listAllFiches = (preview = false): Promise<Fiche[]> => (
-  getEntries<FicheEntry>(
-    CONTENT_TYPES.fiche,
-    { preview, select: ['fields.slug', 'sys.createdAt', 'fields.titre', 'fields.illustration', 'fields.description'] },
-  )
-)
-export const listAllFichesSlugs = async (preview = false) => (
-  getEntries<{ slug: string, categorie: CategorieSlug }>(
-    CONTENT_TYPES.fiche,
-    { preview, select: ['fields.slug', 'fields.categorie'] },
-  )
-)
+    const response = await client.getEntries({
+      content_type: contentType,
+      select: select.join(','),
+      order: 'sys.createdAt',
+      limit,
+      skip: offset,
+      ...where,
+    })
+
+    if (response.total > limit) {
+      return [...response.items, ...await getAllItems(offset + limit)]
+    }
+
+    return response.items
+  }
+
+  return parseContentfulEntries(await getAllItems())
+}
 
 const convertContentfulContentToHtml = (content: Document): string => {
   const attr = (value: string) => `"${value.replace(/"/g, '&quot;')}"`
@@ -129,6 +136,20 @@ const convertContentfulContentToHtml = (content: Document): string => {
 
   return documentToHtmlString(content, options)
 }
+
+export const listAllFiches = (preview = false): Promise<Fiche[]> => (
+  getEntries<FicheEntry>(
+    CONTENT_TYPES.fiche,
+    { preview, select: ['fields.slug', 'sys.createdAt', 'fields.titre', 'fields.illustration', 'fields.description'] },
+  )
+)
+
+export const listAllFichesSlugs = async (preview = false) => (
+  getEntries<{ slug: string, categorie: CategorieSlug }>(
+    CONTENT_TYPES.fiche,
+    { preview, select: ['fields.slug', 'fields.categorie'] },
+  )
+)
 
 export const formatFicheForSearch = (fiche: FicheEntry): Fiche => ({
   ...fiche,
@@ -196,4 +217,72 @@ export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
   if (!entries.length) return null
 
   return entries.map(formatFicheForSearch)
+}
+
+export const listAllStructures = (preview = false): Promise<Structure[]> => (
+  getEntries<StructureEntry>(
+    CONTENT_TYPES.structure,
+    { preview, select: ['fields.slug', 'sys.createdAt', 'fields.titre', 'fields.illustration', 'fields.description'] },
+  )
+)
+
+export const listAllStructuresSlugs = async (preview = false) => (
+  getEntries<{ slug: string, categorie: CategorieSlug }>(
+    CONTENT_TYPES.structure,
+    { preview, select: ['fields.slug', 'fields.categorie'] },
+  )
+)
+
+export const findAStructure = async (id: string, preview = false): Promise<Structure | null> => {
+  const entries = await getEntries<StructureEntry>(
+    CONTENT_TYPES.structure,
+    { preview, where: { 'fields.id': id } },
+  )
+
+  if (!entries.length) return null
+
+  return entries[0]
+}
+
+export const findAStructureForIndexing = async (id: string): Promise<Structure | null> => {
+  const entries = await getEntries<StructureEntry>(
+    CONTENT_TYPES.structure,
+    { where: { 'sys.id': id } },
+  )
+
+  if (!entries.length) return null
+
+  return entries[0]
+}
+
+export const findAllStructuresLinkedToAssetForIndexing = async (assetId: string): Promise<Structure[] | null> => {
+  const entries = await getEntries<StructureEntry>(
+    CONTENT_TYPES.structure,
+    { where: { links_to_asset: assetId } },
+  )
+
+  if (!entries.length) return null
+
+  return entries
+}
+
+export const findAllStructuresLinkedToEntryForIndexing = async (entryId: string): Promise<Structure[] | null> => {
+  const entries = await getEntries<StructureEntry>(
+    CONTENT_TYPES.structure,
+    { where: { links_to_entry: entryId } },
+  )
+
+  if (!entries.length) return null
+
+  return entries
+}
+
+export const fetchAllStructuresForIndexing = async (): Promise<Structure[] | null> => {
+  const entries = await getEntries<StructureEntry>(
+    CONTENT_TYPES.structure,
+  )
+
+  if (!entries.length) return null
+
+  return entries
 }

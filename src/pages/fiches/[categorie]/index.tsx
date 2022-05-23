@@ -8,11 +8,12 @@ import { SimpleHeader } from '../../../components/Layout/SimpleHeader'
 import { SearchInput } from '../../../components/Search/SearchInput'
 import { SearchResults } from '../../../components/Search/SearchResults'
 import { SearchContext } from '../../../components/Search/SearchContext'
-import { algoliaSSRProps, AlgoliaSSRProps, indicesNames } from '../../../services/algolia.browser'
+import { algoliaSSRProps, AlgoliaSSRProps, IndicesNames } from '../../../services/algolia.browser'
 import { categories, CategorieSlug } from '../../../services/categories'
 import { BackToHomeLink } from '../../../components/CategorieLink'
 import { Container } from '../../../components/Layout/Container'
 import { Fiche } from '../../../types/models'
+import { isPreviewForced } from '../../../services/contentful'
 
 type Props = AlgoliaSSRProps & { categorieSlug: CategorieSlug }
 
@@ -25,7 +26,7 @@ export default function ListFichesByCategory({
   return (
     <Layout className="bg-gray-50">
       <NextSeo title={categorie.name} />
-      <SearchContext indexName={indicesNames.fiches} {...algoliaProps}>
+      <SearchContext indexName={IndicesNames.fiches} {...algoliaProps}>
         <Configure filters={`categorie:${categorieSlug}`} />
         <SimpleHeader className="h-[475px]" subTitle="Fiches pratiques" title={categorie.name} titleClassName={categorie.textColor}>
           <p className="text-sm text-gray-400 text-thin mt-4 w-3/4 mx-auto">{categorie.description}</p>
@@ -45,9 +46,9 @@ export default function ListFichesByCategory({
           </div>
         </SimpleHeader>
         <Container className="-mt-24 pb-12">
-          <SearchResults<Fiche>
+          <SearchResults
             className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
-            renderHit={(hit) => <FicheCard fiche={hit} />}
+            renderHit={(hit: Fiche) => <FicheCard fiche={hit} />}
           />
         </Container>
       </SearchContext>
@@ -70,7 +71,7 @@ export const getServerSideProps: GetServerSideProps<Props, { categorie: Categori
 
   return ({
     props: {
-      preview: Boolean(preview || process.env.FORCE_CONTENTFUL_PREVIEW),
+      preview: preview || isPreviewForced,
       categorieSlug,
       ...await algoliaSSRProps(req, ListFichesByCategory, { categorieSlug }),
     },

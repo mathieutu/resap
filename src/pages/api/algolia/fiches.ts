@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { NextApiRequest, NextApiResponse } from 'next'
-import { ContentType, CONTENT_TYPES, fetchAllFichesForIndexing, findAFicheForIndexing, findAllFichesLinkedToAssetForIndexing, findAllFichesLinkedToEntryForIndexing, SysType, SYS_TYPES } from '../../services/contentful'
-import { deleteFiche, refreshFiches, saveFiche, saveFiches } from '../../services/algolia.server'
+import { ContentType, CONTENT_TYPES, fetchAllFichesForIndexing, findAFicheForIndexing, findAllFichesLinkedToAssetForIndexing, findAllFichesLinkedToEntryForIndexing, SysType, SYS_TYPES } from '../../../services/contentful'
+import { deleteFiche, refreshFiches, saveFiche, saveFiches } from '../../../services/algolia.server'
 
 const deleteFicheFromAlgolia = async (ficheId: string, res: NextApiResponse) => {
   console.log(`Deleting ${ficheId}`)

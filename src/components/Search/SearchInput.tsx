@@ -1,6 +1,7 @@
 import { InputHTMLAttributes, useEffect, useState } from 'react'
 import { useSearchBox } from 'react-instantsearch-hooks'
 import { useDebounce } from '../../utils/hooks'
+import { useGeoSearch } from '../../services/algolia.browser'
 
 type Props = InputHTMLAttributes<any> & { label: string }
 export const SearchInput = ({
@@ -13,6 +14,7 @@ export const SearchInput = ({
     query,
     refine,
   } = useSearchBox()
+
   const [value, setValue] = useState(query)
   const debouncedValue = useDebounce(value, 200)
 

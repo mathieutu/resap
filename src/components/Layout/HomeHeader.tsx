@@ -61,7 +61,7 @@ export const HomeHeader = () => (
                   </div>
                 </div>
               </div>
-              <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
+              <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8 lg:whitespace-nowrap">
                 {navigationEntries.map((item) => (
                   <Link
                     key={item.name}
@@ -75,7 +75,7 @@ export const HomeHeader = () => (
             </nav>
           </div>
           <div className="flex justify-end flex-wrap gap-4 hidden lg:block">
-            <p className="flex gap-8 items-center flex-wrap">
+            <p className="flex gap-8 items-center flex-nowrap">
               <img className="h-10" src="/partenaires/logo-ars.png" alt="Logo ARS" />
               <img className="h-12" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
             </p>

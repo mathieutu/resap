@@ -1,11 +1,11 @@
 import { InstantSearch, InstantSearchSSRProvider } from 'react-instantsearch-hooks'
 import { ReactNode } from 'react'
 import { history } from 'instantsearch.js/es/lib/routers'
-import { AlgoliaSSRProps, indicesNames, searchClient } from '../../services/algolia.browser'
+import { AlgoliaSSRProps, IndicesNames, searchClient } from '../../services/algolia.browser'
 
 type SearchContextProps = {
   children: ReactNode,
-  indexName: indicesNames,
+  indexName: IndicesNames,
 } & AlgoliaSSRProps
 
 export const SearchContext = ({

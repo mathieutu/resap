@@ -24,18 +24,23 @@ type Asset = {
   file: File,
 }
 
-type Adresse = {
-  lon: number,
+type LatLon = {
   lat: number,
+  lon: number,
 }
 
 export type Structure = {
   id: string,
   createdAt: string,
   nom: string,
+  organisation: string,
+  type: string,
   specialites: string[],
-  adresse: Adresse,
-  email: string,
+  adresse: string,
+  latLon: LatLon,
+  siteWeb?: string,
+  email?: string,
+  tel?:string,
 }
 
 type Link = {
