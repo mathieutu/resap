@@ -36,6 +36,7 @@ export type Structure = {
   organisation: string,
   type: string,
   specialites: string[],
+  departement: string,
   adresse: string,
   latLon: LatLon,
   siteWeb?: string,

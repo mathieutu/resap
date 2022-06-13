@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
 export const useDebounce = <T>(value: T, delay = 300) => {
   const [debouncedValue, setDebouncedValue] = useState(value)
@@ -27,14 +27,4 @@ export const useSearchFichesForm = () => {
     onChange: (e: ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value),
     handleSubmit,
   }
-}
-
-export const usePrevious = <T>(value: T): T => {
-  const ref = useRef(value)
-
-  useEffect(() => {
-    ref.current = value
-  }, [value])
-
-  return ref.current
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars,no-console */
 const { path } = require('ramda');
 const getContentfulEnv = require('./getContentfulEnvironment');
 const data = require('./data.json').filter(item => item.id > 200);
@@ -8,6 +9,7 @@ const createEntries = async () => {
   const contentful = await getContentfulEnv();
 
   for (const structure of data) {
+    // eslint-disable-next-line no-await-in-loop
     await contentful.createEntry('structure', {
       fields: {
         id: { fr: parseInt(structure.id, 10) },

@@ -1,20 +1,20 @@
-import { useMapEvent, useMapEvents } from 'react-leaflet'
-import { useEffect, useRef, useState } from 'react'
-import { FeatureGroup, Marker } from 'leaflet'
+import { useMapEvents } from 'react-leaflet'
+import { useRef } from 'react'
 import { useGeoSearch } from '../../services/algolia.browser'
-import { usePrevious } from '../../utils/hooks'
 
 const PADDING = 0.05
 
 export const GeoSearch = () => {
-  const { refine, items } = useGeoSearch()
-  const oldItems = usePrevious(items)
+  const {
+    refine,
+  } = useGeoSearch()
   const autoMove = useRef(false)
 
   const map = useMapEvents({
     moveend() {
       autoMove.current = false
-      const bounds = map.getBounds().pad(-PADDING)
+      const bounds = map.getBounds()
+        .pad(-PADDING)
 
       refine({
         northEast: bounds.getNorthEast(),
@@ -22,17 +22,6 @@ export const GeoSearch = () => {
       })
     },
   })
-
-  // useEffect(() => {
-  //   if (autoMove.current && items.length !== oldItems.length) {
-  //     const markers = items.map(({ _geoloc }) => new Marker(_geoloc))
-  //     const bounds = new FeatureGroup(markers).getBounds().pad(PADDING)
-  //
-  //     map.fitBounds(bounds)
-  //   }
-  //
-  //   autoMove.current = true
-  // }, [items])
 
   return null
 }

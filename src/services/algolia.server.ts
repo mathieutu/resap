@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import algoliaSearch, { SearchIndex } from 'algoliasearch'
 import { Fiche, Structure } from '../types/models'
 

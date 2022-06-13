@@ -5,7 +5,6 @@ import { map } from 'ramda'
 import { BLOCKS, Document } from '@contentful/rich-text-types'
 import { Fiche, Structure } from '../types/models'
 import { CategorieSlug } from './categories'
-import { dump } from '../utils/logs'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
 
@@ -39,7 +38,7 @@ type FicheEntry = Fiche & {
   contenu: Document,
 }
 
-type StructureEntry = Structure
+type StructureEntry = Omit<Structure, 'departement'>
 
 const parseContentfulEntries = (element: any): any => {
   if (!element || typeof element !== 'object') return element
@@ -137,6 +136,7 @@ const convertContentfulContentToHtml = (content: Document): string => {
   return documentToHtmlString(content, options)
 }
 
+// region Fiche methods
 export const listAllFiches = (preview = false): Promise<Fiche[]> => (
   getEntries<FicheEntry>(
     CONTENT_TYPES.fiche,
@@ -151,7 +151,7 @@ export const listAllFichesSlugs = async (preview = false) => (
   )
 )
 
-export const formatFicheForSearch = (fiche: FicheEntry): Fiche => ({
+const formatFicheForSearch = (fiche: FicheEntry): Fiche => ({
   ...fiche,
   contenu: documentToPlainTextString(fiche.contenu),
   resume: documentToPlainTextString(fiche.resume),
@@ -219,30 +219,14 @@ export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
   return entries.map(formatFicheForSearch)
 }
 
-export const listAllStructures = (preview = false): Promise<Structure[]> => (
-  getEntries<StructureEntry>(
-    CONTENT_TYPES.structure,
-    { preview, select: ['fields.slug', 'sys.createdAt', 'fields.titre', 'fields.illustration', 'fields.description'] },
-  )
-)
+// endregion
 
-export const listAllStructuresSlugs = async (preview = false) => (
-  getEntries<{ slug: string, categorie: CategorieSlug }>(
-    CONTENT_TYPES.structure,
-    { preview, select: ['fields.slug', 'fields.categorie'] },
-  )
-)
+// region Structures methods
 
-export const findAStructure = async (id: string, preview = false): Promise<Structure | null> => {
-  const entries = await getEntries<StructureEntry>(
-    CONTENT_TYPES.structure,
-    { preview, where: { 'fields.id': id } },
-  )
-
-  if (!entries.length) return null
-
-  return entries[0]
-}
+const formatStructureForSearch = (struct: StructureEntry): Structure => ({
+  ...struct,
+  departement: struct.adresse.match(/(\d\d)\d\d\d\D/)?.[1] ?? '',
+})
 
 export const findAStructureForIndexing = async (id: string): Promise<Structure | null> => {
   const entries = await getEntries<StructureEntry>(
@@ -252,29 +236,7 @@ export const findAStructureForIndexing = async (id: string): Promise<Structure |
 
   if (!entries.length) return null
 
-  return entries[0]
-}
-
-export const findAllStructuresLinkedToAssetForIndexing = async (assetId: string): Promise<Structure[] | null> => {
-  const entries = await getEntries<StructureEntry>(
-    CONTENT_TYPES.structure,
-    { where: { links_to_asset: assetId } },
-  )
-
-  if (!entries.length) return null
-
-  return entries
-}
-
-export const findAllStructuresLinkedToEntryForIndexing = async (entryId: string): Promise<Structure[] | null> => {
-  const entries = await getEntries<StructureEntry>(
-    CONTENT_TYPES.structure,
-    { where: { links_to_entry: entryId } },
-  )
-
-  if (!entries.length) return null
-
-  return entries
+  return formatStructureForSearch(entries[0])
 }
 
 export const fetchAllStructuresForIndexing = async (): Promise<Structure[] | null> => {
@@ -284,5 +246,6 @@ export const fetchAllStructuresForIndexing = async (): Promise<Structure[] | nul
 
   if (!entries.length) return null
 
-  return entries
+  return entries.map(formatStructureForSearch)
 }
+// endregion

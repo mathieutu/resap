@@ -19,6 +19,8 @@ const GeoSearch = dynamic<Record<string, never>>(
   },
 )
 
+const ALGOLIA_MAX_HITS_PER_PAGE = 1000
+
 export default function Annuaire({ ...algoliaProps }: AlgoliaSSRProps) {
   return (
     <Layout className="bg-gray-50">
@@ -74,7 +76,7 @@ export default function Annuaire({ ...algoliaProps }: AlgoliaSSRProps) {
           </div>
           <div className="flex flex-col bg-white drop-shadow-md rounded-md p-5 m-auto my-5">
             <SearchContext indexName={IndicesNames.structures} {...algoliaProps}>
-              <Configure aroundLatLngViaIP hitsPerPage={9000} />
+              <Configure aroundLatLngViaIP hitsPerPage={ALGOLIA_MAX_HITS_PER_PAGE} />
               <div className="bg-white mb-4">
                 <div className="mt-1 relative rounded-md shadow-sm w-full">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
