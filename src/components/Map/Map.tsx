@@ -8,9 +8,10 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 import { ReactNode, useEffect, useMemo } from 'react'
 import { groupBy } from 'ramda'
 import { Structure } from '../../types/models'
-import { departmentsBoundaries } from './departements-auvergne-rhone-alpes'
+import { DepartementFeature, departementsBoundaries } from './departements'
 import { MarkerClusterGroup } from './Cluster'
 import { ResetViewControl } from './ResetViewControl'
+import { departements } from '../../data/departements'
 
 const unSelectedIcon = new L.Icon({
   iconUrl: markerIcon.src,
@@ -71,20 +72,21 @@ export const Map = ({
       maxZoom={20}
       scrollWheelZoom={false}
       style={{
-        height: '70vh',
+        height: '100%',
         width: '100%',
         margin: 'auto',
         borderRadius: '0.375rem',
+        zIndex: 0,
       }}
     >
       <ResetViewControl />
       <GeoJSON
-        data={departmentsBoundaries}
-        style={feature => ({
+        data={departementsBoundaries}
+        style={(feature: DepartementFeature | undefined) => ({
           opacity: 0.5,
           fillOpacity: 0.2,
           color: 'currentColor',
-          className: feature?.properties.className,
+          className: departements[feature!.properties.code].textColor,
         })}
       />
       <TileLayer

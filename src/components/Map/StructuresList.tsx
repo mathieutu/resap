@@ -18,7 +18,7 @@ const StructureListItem = ({
 }: StructureListItemProps) => (
   // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus
   <div
-    className={classNames('relative group block p-4 rounded-md space-y-1 border cursor-pointer', selected ? 'border-green-default' : 'border-grey-light hover:border-blue-default')}
+    className={classNames('relative group block p-4 rounded-md space-y-1 border cursor-pointer', selected ? 'border-green-default' : 'border-gray-light hover:border-blue-default')}
     onClick={() => onClick(s)}
     role="button"
   >
@@ -58,8 +58,8 @@ export const StructuresList = ({
 
   const selectStructure = (s: Structure) => setSelectedStructure(currentStructure => (currentStructure?.id === s.id ? undefined : s))
   return (
-    <div className="block md:flex md:flex-row gap-4">
-      <div className="w-full md:w-8/12">
+    <div className="block flex flex-col md:flex-row gap-4">
+      <div className="w-full md:w-8/12 sm:h-[70vh] h-[300px]">
         <Map
           structures={structures}
           onStructureSelected={selectStructure}
@@ -79,7 +79,7 @@ export const StructuresList = ({
             />
           </div>
         )}
-        <div className="overflow-y-auto space-y-4 border-grey-light border-y py-4" style={{ height: `calc(100% - ${selectedStructureRef.current?.clientHeight || 0}px)` }}>
+        <div className="overflow-y-auto space-y-4 border-gray-light border-y py-4" style={{ height: `calc(100% - ${selectedStructureRef.current?.clientHeight || 0}px)` }}>
           {structures.filter(s => s.id !== selectedStructure?.id)
             .map(structure => (
               <StructureListItem
