@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { Categorie } from '../../services/categories'
+import { Categorie } from '../../data/categories'
 
 type Props = { categorie: Categorie }
 

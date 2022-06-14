@@ -1,13 +1,13 @@
 import { Headline } from '../Headline'
 import { ClassNameProp } from '../../types/react'
-import { categories } from '../../services/categories'
+import { categories } from '../../data/categories'
 import { Link, PrimaryLink } from '../Links'
 import { CategorieCard } from '../Card/CategorieCard'
 
 type Props = ClassNameProp
 
 export const ThemeSection = ({ className }: Props) => (
-  <div className={`${className} py-12 bg-grey-light`}>
+  <div className={`${className} py-12 bg-gray-light`}>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Headline
         tag="FICHES PRATIQUES"

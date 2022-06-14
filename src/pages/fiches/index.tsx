@@ -8,7 +8,7 @@ import { SearchInput } from '../../components/Search/SearchInput'
 import { SearchResults } from '../../components/Search/SearchResults'
 import { SearchContext } from '../../components/Search/SearchContext'
 import { algoliaSSRProps, AlgoliaSSRProps, IndicesNames } from '../../services/algolia.browser'
-import { categories } from '../../services/categories'
+import { categories } from '../../data/categories'
 import { CategorieLink } from '../../components/CategorieLink'
 import { Container } from '../../components/Layout/Container'
 import { Fiche } from '../../types/models'
@@ -16,17 +16,17 @@ import { isPreviewForced } from '../../services/contentful'
 
 export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
   return (
-    <Layout className="bg-grey-light">
+    <Layout className="bg-gray-light">
       <NextSeo title="Fiches pratiques" />
       <SearchContext indexName={IndicesNames.fiches} {...algoliaProps}>
         <SimpleHeader className="h-[475px]" title="Fiches pratiques" titleClassName="text-blue-default" subTitle="">
           <div className="w-full block md:w-1/2 mx-auto mt-16 sm:flex">
             <div className="mt-1 relative rounded-md shadow-sm w-full">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <SearchIcon className="h-5 w-5  text-grey-default " aria-hidden="true" />
+                <SearchIcon className="h-5 w-5  text-gray-default " aria-hidden="true" />
               </div>
               <SearchInput
-                className="block w-full pl-10 py-3 text-base rounded-md placeholder-grey-default shadow-sm focus:ring-blue-default focus:border-blue-default sm:flex-1 border-gray-default"
+                className="block w-full pl-10 py-3 text-base rounded-md placeholder-gray-default shadow-sm focus:ring-blue-default focus:border-blue-default sm:flex-1 border-gray-default"
                 label="Recherchez parmi nos fiches..."
               />
             </div>

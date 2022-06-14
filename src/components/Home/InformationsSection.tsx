@@ -10,7 +10,7 @@ const Block = ({ titre, children }: { titre: string } & ChildrenProp) => (
     <dt>
       <p className="lg:ml-16 text-lg leading-6 font-medium text-black">{titre}</p>
     </dt>
-    <dd className="mt-2 lg:ml-16 text-base space-y-1 text-grey-default">{children}</dd>
+    <dd className="mt-2 lg:ml-16 text-base space-y-1 text-gray-default">{children}</dd>
   </div>
 )
 

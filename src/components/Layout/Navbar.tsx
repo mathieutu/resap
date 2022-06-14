@@ -34,7 +34,7 @@ export const Navbar = () => {
                       href={item.href}
                       className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                       activeClassName="border-green-default text-blue-default"
-                      inactiveClassName="border-transparent text-grey-default hover:border-green-default hover:text-blue-default"
+                      inactiveClassName="border-transparent text-gray-default hover:border-green-default hover:text-blue-default"
                     >
                       {item.name}
                     </Link>
@@ -52,7 +52,7 @@ export const Navbar = () => {
                   <input
                     id="search"
                     name="search"
-                    className="w-full block pl-10 l-10  py-2 border border-grey-default rounded-md leading-5 bg-white placeholder-grey-default focus:outline-none focus:placeholder-grey-default focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm"
+                    className="w-full block pl-10 l-10  py-2 border border-gray-default rounded-md leading-5 bg-white placeholder-gray-default focus:outline-none focus:placeholder-gray-default focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm"
                     placeholder="Recherchez parmis les fiches et structures"
                     type="search"
                     size={42}
@@ -111,9 +111,9 @@ export const Navbar = () => {
                     <Link
                       key={item.name}
                       href={item.href}
-                      activeClassName="bg-grey-light border-green-default text-blue-default"
-                      className="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-default hover:bg-grey-light"
-                      inactiveClassName="text-grey-default"
+                      activeClassName="bg-gray-light border-green-default text-blue-default"
+                      className="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-default hover:bg-gray-light"
+                      inactiveClassName="text-gray-default"
                     >
                       {item.name}
                     </Link>

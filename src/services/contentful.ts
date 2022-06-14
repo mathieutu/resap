@@ -4,7 +4,7 @@ import { documentToPlainTextString } from '@contentful/rich-text-plain-text-rend
 import { map } from 'ramda'
 import { BLOCKS, Document } from '@contentful/rich-text-types'
 import { Fiche, Structure } from '../types/models'
-import { CategorieSlug } from './categories'
+import { CategorieSlug } from '../data/categories'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
 

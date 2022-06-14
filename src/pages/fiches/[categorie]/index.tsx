@@ -9,7 +9,7 @@ import { SearchInput } from '../../../components/Search/SearchInput'
 import { SearchResults } from '../../../components/Search/SearchResults'
 import { SearchContext } from '../../../components/Search/SearchContext'
 import { algoliaSSRProps, AlgoliaSSRProps, IndicesNames } from '../../../services/algolia.browser'
-import { categories, CategorieSlug } from '../../../services/categories'
+import { categories, CategorieSlug } from '../../../data/categories'
 import { BackToHomeLink } from '../../../components/CategorieLink'
 import { Container } from '../../../components/Layout/Container'
 import { Fiche } from '../../../types/models'
@@ -36,7 +36,7 @@ export default function ListFichesByCategory({
                 <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </div>
               <SearchInput
-                className="block w-full pl-10 py-3 text-base rounded-md placeholder-grey-default shadow-sm focus:ring-blue-default focus:border-blue-default sm:flex-1 border-grey-default"
+                className="block w-full pl-10 py-3 text-base rounded-md placeholder-gray-default shadow-sm focus:ring-blue-default focus:border-blue-default sm:flex-1 border-gray-default"
                 label={`Recherchez parmi nos fiches "${categorie.name}"...`}
               />
             </div>

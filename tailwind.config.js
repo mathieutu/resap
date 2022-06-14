@@ -4,7 +4,7 @@ module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
-    './src/services/categories.ts',
+    './src/data/*.ts',
     './src/services/contentful.ts',
   ],
   theme: {
@@ -17,7 +17,7 @@ module.exports = {
         IBM: ['IBM Plex Sans', 'sans-serif'],
       },
       colors: {
-        grey: {
+        gray: {
           default: '#808080',
           light: '#F2F2F7',
         },

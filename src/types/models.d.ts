@@ -1,4 +1,4 @@
-import { categories } from '../services/categories'
+import { categories } from '../data/categories'
 
 type ImageSize = {
   width: number,
