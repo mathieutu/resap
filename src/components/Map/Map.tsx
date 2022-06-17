@@ -8,10 +8,10 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 import { ReactNode, useEffect, useMemo } from 'react'
 import { groupBy } from 'ramda'
 import { Structure } from '../../types/models'
-import { DepartementFeature, departementsBoundaries } from './departements'
+import { departementsBoundaries } from './departements'
 import { MarkerClusterGroup } from './Cluster'
 import { ResetViewControl } from './ResetViewControl'
-import { departements } from '../../data/departements'
+import { types } from '../../data/structures_types'
 
 const unSelectedIcon = new L.Icon({
   iconUrl: markerIcon.src,
@@ -82,16 +82,16 @@ export const Map = ({
       <ResetViewControl />
       <GeoJSON
         data={departementsBoundaries}
-        style={(feature: DepartementFeature | undefined) => ({
+        style={{
           opacity: 0.5,
-          fillOpacity: 0.2,
+          fill: false,
           color: 'currentColor',
-          className: departements[feature!.properties.code].textColor,
-        })}
+          className: 'text-blue-default',
+        }}
       />
       <TileLayer
         attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-        url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+        url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png"
       />
       {Object.entries(structuresByDepartements)
         .map(([departement, structs]) => (
@@ -102,7 +102,9 @@ export const Map = ({
                   key={s.id}
                   position={[s.latLon.lat, s.latLon.lon]}
                   eventHandlers={{ click: () => onStructureSelected(s) }}
-                  icon={unSelectedIcon}
+                  icon={L.divIcon({ className: types[s.type]?.markerClassname, html: `<svg viewBox="0 0 15 15" height="15" width="15">
+<rect fill="none" x="0" y="0" width="15" height="15"></rect><path fill="currentColor" transform="translate(0 0)" d="M7.5,0C5.0676,0,2.2297,1.4865,2.2297,5.2703
+\tC2.2297,7.8378,6.2838,13.5135,7.5,15c1.0811-1.4865,5.2703-7.027,5.2703-9.7297C12.7703,1.4865,9.9324,0,7.5,0z"></path></svg>` })}
                 />
               ))}
           </MarkerClusterGroup>

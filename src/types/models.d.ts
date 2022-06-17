@@ -1,4 +1,5 @@
 import { categories } from '../data/categories'
+import { StructureType } from '../data/structures_types'
 
 type ImageSize = {
   width: number,
@@ -34,7 +35,7 @@ export type Structure = {
   createdAt: string,
   nom: string,
   organisation: string,
-  type: string,
+  type: StructureType,
   specialites: string[],
   departement: string,
   adresse: string,

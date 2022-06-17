@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { XIcon } from '@heroicons/react/outline'
 import { Structure } from '../../types/models'
 import type { MapProps } from './Map'
+import { types } from '../../data/structures_types'
 
 type StructureListItemProps = {
   structure: Structure,
@@ -26,7 +27,7 @@ const StructureListItem = ({
       <span className="font-bold">{s.nom}</span>
       {s.organisation !== s.nom ? <span className="text-sm italic"> ({s.organisation})</span> : null}
     </p>
-    <p className="inline-block bg-green-default text-center w-fit p-1 rounded-md text-xs">{s.type}</p>
+    <p className={classNames('inline-block text-center w-fit p-1 rounded-md text-xs', types[s.type]?.colorClassname)}>{s.type}</p>
     <p className="">{s.adresse}</p>
     {s.tel && <p className=""><a href={`tel:${s.tel}`} className="hover:text-blue-default">{s.tel}</a></p>}
     {s.email && <p className=""><a href={`mailto:${s.email}`} className="hover:text-blue-default">{s.email}</a></p>}
