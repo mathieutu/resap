@@ -34,7 +34,7 @@ export type Structure = {
   id: string,
   createdAt: string,
   nom: string,
-  organisation: string,
+  organisation?: string,
   type: StructureType,
   specialites: string[],
   departement: string,

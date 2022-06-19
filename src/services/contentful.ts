@@ -70,8 +70,8 @@ const getEntries = async <T extends Record<string, unknown>>(
 
   const client = createClient({
     space: CONTENTFUL_SPACE_ID,
-    accessToken: (preview || isPreviewForced) ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
-    host: (preview || isPreviewForced) ? 'preview.contentful.com' : 'cdn.contentful.com',
+    accessToken: preview ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
+    host: preview ? 'preview.contentful.com' : 'cdn.contentful.com',
   })
 
   const getAllItems = async (offset = 0): Promise<any[]> => {

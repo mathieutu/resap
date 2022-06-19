@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic'
 import { ReactNode, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { XIcon } from '@heroicons/react/outline'
+import { AtSymbolIcon, LocationMarkerIcon, PhoneIcon } from '@heroicons/react/solid'
 import { Structure } from '../../types/models'
 import type { MapProps } from './Map'
 import { types } from '../../data/structures_types'
@@ -19,18 +20,36 @@ const StructureListItem = ({
 }: StructureListItemProps) => (
   // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus
   <div
-    className={classNames('relative group block p-4 rounded-md space-y-1 border cursor-pointer', selected ? 'border-green-default' : 'border-gray-light hover:border-blue-default')}
+    className={classNames('text-gray-900 relative group block p-4 rounded-md space-y-1 border cursor-pointer', selected ? 'border-green-default' : 'border-gray-light hover:border-blue-default')}
     onClick={() => onClick(s)}
     role="button"
   >
     <p>
       <span className="font-bold">{s.nom}</span>
-      {s.organisation !== s.nom ? <span className="text-sm italic"> ({s.organisation})</span> : null}
+      {!s.organisation || s.nom.includes(s.organisation) ? null : <span className="text-sm italic"> ({s.organisation})</span>}
     </p>
-    <p className={classNames('inline-block text-center w-fit p-1 rounded-md text-xs', types[s.type]?.colorClassname)}>{s.type}</p>
-    <p className="">{s.adresse}</p>
-    {s.tel && <p className=""><a href={`tel:${s.tel}`} className="hover:text-blue-default">{s.tel}</a></p>}
-    {s.email && <p className=""><a href={`mailto:${s.email}`} className="hover:text-blue-default">{s.email}</a></p>}
+    <p className={classNames('inline-block w-fit py-1 px-2 rounded-md text-xs', types[s.type]?.colorClassname)}>{s.type}</p>
+    <p>
+      <a href="" className="inline-flex items-center gap-1 hover:text-blue-default">
+        <LocationMarkerIcon className="h-4 w-4" /> {s.adresse}
+      </a>
+    </p>
+    {s.tel
+      && (
+        <p>
+          <a href={`tel:${s.tel}`} className="inline-flex items-center gap-1 hover:text-blue-default">
+            <PhoneIcon className="h-4 w-4" /> {s.tel}
+          </a>
+        </p>
+      )}
+    {s.email
+      && (
+        <p>
+          <a href={`mailto:${s.email}`} className="inline-flex items-center gap-1 hover:text-blue-default">
+            <AtSymbolIcon className="h-4 w-4" /> {s.email}
+          </a>
+        </p>
+      )}
     {selected && <XIcon className="absolute top-1 right-2 h-5 w-5 text-gray-300 group-hover:text-blue-default" />}
   </div>
 )

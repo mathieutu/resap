@@ -25,9 +25,14 @@ export const SearchContext = ({
         stateMapping: {
           // @ts-expect-error
           stateToRoute(uiState) {
-            const { query } = uiState[indexName]
+            const { query, refinementList, geoSearch, configure } = uiState[indexName]
 
-            return { query }
+            return {
+              query,
+              refinementList,
+              geoSearch,
+              configure: { filters: configure?.filters },
+            }
           },
           routeToState(routeState) {
             return {

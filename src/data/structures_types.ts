@@ -62,6 +62,81 @@ export const types = {
     markerClassname: 'text-violet-500',
   },
 
+  'Centre de vaccination': {
+    nom: 'Centre de vaccination',
+    colorClassname: 'bg-teal-200 text-teal-700',
+    markerClassname: 'text-teal-500',
+  },
+  'SIAO': {
+    nom: 'SIAO',
+    colorClassname: 'bg-indigo-200 text-indigo-700',
+    markerClassname: 'text-indigo-500',
+  },
+  'CAARUD': {
+    nom: 'CAARUD',
+    colorClassname: 'bg-stone-200 text-stone-700',
+    markerClassname: 'text-stone-400',
+  },
+  'CLAT': {
+    nom: 'CLAT',
+    colorClassname: 'bg-stone-200 text-stone-700',
+    markerClassname: 'text-stone-400',
+  },
+  'Associations d’accompagnement personnes en situation de prostitution': {
+    nom: 'Associations d’accompagnement personnes en situation de prostitution',
+    colorClassname: 'bg-fuchsia-200 text-fuchsia-700',
+    markerClassname: 'text-fuchsia-500',
+  },
+  'PRAHDA': {
+    nom: 'PRAHDA',
+    colorClassname: 'bg-stone-200 text-stone-700',
+    markerClassname: 'text-stone-400',
+  },
+  'Réseaux polyvalents (tous âges et toutes pathologies)': {
+    nom: 'Réseaux polyvalents (tous âges et toutes pathologies)',
+    colorClassname: 'bg-stone-200 text-stone-700',
+    markerClassname: 'text-stone-400',
+  },
+  'SPADA': {
+    nom: 'SPADA',
+    colorClassname: 'bg-stone-200 text-stone-700',
+    markerClassname: 'text-stone-400',
+  },
+  'Association LGBTQIA+': {
+    nom: 'Association LGBTQIA+',
+    colorClassname: 'bg-fuchsia-200 text-fuchsia-700',
+    markerClassname: 'text-fuchsia-500',
+  },
+  'MDPH': {
+    nom: 'MDPH',
+    colorClassname: 'bg-stone-200 text-stone-700',
+    markerClassname: 'text-stone-400',
+  },
+  'Préfecture': {
+    nom: 'Préfecture',
+    colorClassname: 'bg-stone-200 text-stone-700',
+    markerClassname: 'text-stone-400',
+  },
+  'CAES': {
+    nom: 'CAES',
+    colorClassname: 'bg-stone-200 text-stone-700',
+    markerClassname: 'text-stone-400',
+  },
+  'COREVIH': {
+    nom: 'COREVIH',
+    colorClassname: 'bg-stone-200 text-stone-700',
+    markerClassname: 'text-stone-400',
+  },
+  'OFII': {
+    nom: 'OFII',
+    colorClassname: 'bg-stone-200 text-stone-700',
+    markerClassname: 'text-stone-400',
+  },
+  'CPTS': {
+    nom: 'CPTS',
+    colorClassname: 'bg-stone-200 text-stone-700',
+    markerClassname: 'text-stone-400',
+  },
 } as const
 
 export type StructureType = keyof typeof types

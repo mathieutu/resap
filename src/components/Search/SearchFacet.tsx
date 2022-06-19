@@ -15,7 +15,7 @@ type SearchFacetProps = {
 
 const getSelectionClassname = (attribute: string, value: string) => {
   if (attribute === 'type') {
-    return types[value as StructureType]?.colorClassname
+    return types[value as StructureType].colorClassname
   }
 
   return 'bg-gray-light text-blue-default'

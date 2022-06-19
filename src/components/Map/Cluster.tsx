@@ -12,7 +12,7 @@ export const MarkerClusterGroup = createPathComponent(
       showCoverageOnHover: false,
       chunkedLoading: true,
       spiderfyOnMaxZoom: false,
-      disableClusteringAtZoom: 15,
+      disableClusteringAtZoom: 12,
       maxClusterRadius: (zoom: number) => {
         if (zoom < 8) return 10000
 
