@@ -13,6 +13,7 @@ export const SearchInput = ({
     query,
     refine,
   } = useSearchBox()
+
   const [value, setValue] = useState(query)
   const debouncedValue = useDebounce(value, 200)
 

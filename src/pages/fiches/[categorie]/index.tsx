@@ -8,11 +8,12 @@ import { SimpleHeader } from '../../../components/Layout/SimpleHeader'
 import { SearchInput } from '../../../components/Search/SearchInput'
 import { SearchResults } from '../../../components/Search/SearchResults'
 import { SearchContext } from '../../../components/Search/SearchContext'
-import { algoliaSSRProps, AlgoliaSSRProps, indicesNames } from '../../../services/algolia.browser'
-import { categories, CategorieSlug } from '../../../services/categories'
+import { algoliaSSRProps, AlgoliaSSRProps, IndicesNames } from '../../../services/algolia.browser'
+import { categories, CategorieSlug } from '../../../data/categories'
 import { BackToHomeLink } from '../../../components/CategorieLink'
 import { Container } from '../../../components/Layout/Container'
 import { Fiche } from '../../../types/models'
+import { isPreviewForced } from '../../../services/contentful'
 
 type Props = AlgoliaSSRProps & { categorieSlug: CategorieSlug }
 
@@ -25,8 +26,8 @@ export default function ListFichesByCategory({
   return (
     <Layout className="bg-gray-50">
       <NextSeo title={categorie.name} />
-      <SearchContext indexName={indicesNames.fiches} {...algoliaProps}>
-        <Configure filters={`categorie:${categorieSlug}`} />
+      <SearchContext indexName={IndicesNames.fiches} {...algoliaProps}>
+        <Configure facetsRefinements={{ categorie: [categorieSlug] }} />
         <SimpleHeader className="h-[475px]" subTitle="Fiches pratiques" title={categorie.name} titleClassName={categorie.textColor}>
           <p className="text-sm text-gray-400 text-thin mt-4 w-3/4 mx-auto">{categorie.description}</p>
           <div className="w-full block md:w-1/2 mx-auto mt-8 sm:flex">
@@ -35,7 +36,7 @@ export default function ListFichesByCategory({
                 <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </div>
               <SearchInput
-                className="block w-full pl-10 py-3 text-base rounded-md placeholder-grey-default shadow-sm focus:ring-blue-default focus:border-blue-default sm:flex-1 border-grey-default"
+                className="block w-full pl-10 py-3 text-base rounded-md placeholder-gray-default shadow-sm focus:ring-blue-default focus:border-blue-default sm:flex-1 border-gray-default"
                 label={`Recherchez parmi nos fiches "${categorie.name}"...`}
               />
             </div>
@@ -45,9 +46,9 @@ export default function ListFichesByCategory({
           </div>
         </SimpleHeader>
         <Container className="-mt-24 pb-12">
-          <SearchResults<Fiche>
+          <SearchResults
             className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
-            renderHit={(hit) => <FicheCard fiche={hit} />}
+            renderHit={(hit: Fiche) => <FicheCard fiche={hit} />}
           />
         </Container>
       </SearchContext>
@@ -70,7 +71,7 @@ export const getServerSideProps: GetServerSideProps<Props, { categorie: Categori
 
   return ({
     props: {
-      preview: Boolean(preview || process.env.FORCE_CONTENTFUL_PREVIEW),
+      preview: preview || isPreviewForced,
       categorieSlug,
       ...await algoliaSSRProps(req, ListFichesByCategory, { categorieSlug }),
     },

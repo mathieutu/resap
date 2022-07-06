@@ -1,4 +1,5 @@
-import { categories } from '../services/categories'
+import { CategorieSlug } from '../data/categories'
+import { StructureType } from '../data/structures_types'
 
 type ImageSize = {
   width: number,
@@ -24,29 +25,35 @@ type Asset = {
   file: File,
 }
 
-type Adresse = {
-  lon: number,
+type LatLon = {
   lat: number,
+  lon: number,
 }
 
 export type Structure = {
   id: string,
   createdAt: string,
   nom: string,
+  organisation?: string,
+  type: StructureType,
   specialites: string[],
-  adresse: Adresse,
-  email: string,
+  departement: string,
+  adresse: string,
+  latLon: LatLon,
+  siteWeb?: string,
+  email?: string,
+  tel?: string,
 }
 
 type Link = {
   id: string,
   titre: string,
   createdAt: string,
-} & ({ url: string} | { fichier: Asset })
+} & ({ url: string } | { fichier: Asset })
 
 export type Fiche = {
   id: string,
-  categorie: keyof typeof categories,
+  categorie: CategorieSlug,
   createdAt: string,
   updatedAt: string,
   titre: string,
@@ -57,8 +64,9 @@ export type Fiche = {
   contenu: string,
   date: string,
   tags: string[],
-  structures?: Structure[],
   pourEnSavoirPlus?: Link[],
   outils?: Link[],
   patients?: Link[],
+  typeDispositif: StructureType[],
+  structures: Structure[],
 }

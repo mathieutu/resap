@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { ArrowLeftIcon } from '@heroicons/react/solid'
 import { Link } from './Links'
-import { Categorie } from '../services/categories'
+import { Categorie } from '../data/categories'
 
 type TypeProps = { categorie: Categorie, scroll?: boolean, inverted?: boolean }
 

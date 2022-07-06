@@ -2,7 +2,7 @@
 import classNames from 'classnames'
 import { Fiche } from '../../types/models'
 import { Link } from '../Links'
-import { categories } from '../../services/categories'
+import { categories } from '../../data/categories'
 import { CategorieLink } from '../CategorieLink'
 
 type Props = { fiche: Fiche }
@@ -28,7 +28,7 @@ export const FicheCard = ({ fiche }: Props) => {
           <CategorieLink categorie={category} />
           <Link href={ficheUrl} className="block mt-4">
             <div className="text-xl font-semibold text-gray-900">{fiche.titre}</div>
-            <div className="mt-3 text-base text-grey-default">{fiche.description}</div>
+            <div className="mt-3 text-base text-gray-default">{fiche.description}</div>
           </Link>
         </div>
       </div>

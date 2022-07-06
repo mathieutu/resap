@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { Categorie } from '../../services/categories'
+import { Categorie } from '../../data/categories'
 
 type Props = { categorie: Categorie }
 
@@ -10,7 +10,7 @@ export const CategorieCard = ({ categorie }: Props) => (
     <categorie.icon
       className={classNames(categorie.textColor, 'group-hover:text-white w-[75px] h-[75px]')}
     />
-    <span className={classNames(categorie.textColor, 'group-hover:text-white uppercase text-sm')}>
+    <span className={classNames(categorie.textColor, 'group-hover:text-white uppercase text-sm text-center')}>
       {categorie.name}
     </span>
   </div>

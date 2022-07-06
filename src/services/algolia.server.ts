@@ -1,5 +1,6 @@
-import algoliaSearch from 'algoliasearch'
-import { Fiche } from '../types/models'
+/* eslint-disable no-console */
+import algoliaSearch, { SearchIndex } from 'algoliasearch'
+import { Fiche, Structure } from '../types/models'
 
 const { NEXT_PUBLIC_ALGOLIA_APP_ID: appId, ALGOLIA_ADMIN_API_KEY: apiKey } = process.env
 
@@ -9,37 +10,74 @@ if (!appId || !apiKey) {
 
 const algoliaClient = algoliaSearch(appId, apiKey)
 
-const fichesIndex = algoliaClient.initIndex('fiches')
+// eslint-disable-next-line no-underscore-dangle,one-var-declaration-per-line,one-var
+let _fichesIndex: SearchIndex, _structuresIndex: SearchIndex
 
-export const deleteFiche = (objectId: string) => fichesIndex.deleteObject(objectId)
+const getFichesIndex = () => {
+  if (!_fichesIndex) _fichesIndex = algoliaClient.initIndex('fiches')
+
+  return _fichesIndex
+}
+
+const getStructuresIndex = () => {
+  if (!_structuresIndex) _structuresIndex = algoliaClient.initIndex('structures')
+
+  return _structuresIndex
+}
+
+export const deleteFiche = (objectId: string) => getFichesIndex().deleteObject(objectId)
+
+const prepareFicheForIndexing = (fiche: Fiche) => ({
+  ...fiche,
+  url: `/fiches/${fiche.slug}`,
+  objectID: fiche.id,
+})
 
 export const saveFiche = (fiche: Fiche) => {
-  const objectToIndex = {
-    ...fiche,
-    url: `/fiches/${fiche.slug}`,
-    objectID: fiche.id,
-  }
+  const objectToIndex = prepareFicheForIndexing(fiche)
 
-  return fichesIndex.saveObject(objectToIndex)
+  return getFichesIndex().saveObject(objectToIndex)
 }
 
 export const saveFiches = (fiches: Fiche[]) => {
-  const objectsToIndex = fiches.map(fiche => ({
-    ...fiche,
-    url: `/fiches/${fiche.slug}`,
-    objectID: fiche.id,
-  }))
+  const objectsToIndex = fiches.map(prepareFicheForIndexing)
 
-  return fichesIndex.saveObjects(objectsToIndex)
+  return getFichesIndex().saveObjects(objectsToIndex)
 }
 
 export const refreshFiches = async (fiches: Fiche[]) => {
-  const objectsToIndex = fiches.map(fiche => ({
-    ...fiche,
-    url: `/fiches/${fiche.slug}`,
-    objectID: fiche.id,
-  }))
+  const objectsToIndex = fiches.map(prepareFicheForIndexing)
 
-  await fichesIndex.clearObjects()
-  return fichesIndex.saveObjects(objectsToIndex)
+  await getFichesIndex().clearObjects()
+  return getFichesIndex().saveObjects(objectsToIndex)
+}
+
+const prepareStructureForIndexing = (structure: Structure) => ({
+  ...structure,
+  url: `/structures/${structure.id}`,
+  objectID: structure.id,
+  _geoloc: {
+    lat: structure.latLon.lat,
+    lng: structure.latLon.lon,
+  },
+})
+
+export const deleteStructure = (objectId: string) => getStructuresIndex().deleteObject(objectId)
+
+export const saveStructure = (structure: Structure) => {
+  const objectToIndex = prepareStructureForIndexing(structure)
+
+  return getStructuresIndex().saveObject(objectToIndex)
+}
+
+export const saveStructures = (structures: Structure[]) => {
+  const objectsToIndex = structures.map(prepareStructureForIndexing)
+  return getStructuresIndex().saveObjects(objectsToIndex)
+}
+
+export const refreshStructures = async (structures: Structure[]) => {
+  await getStructuresIndex().clearObjects()
+  console.log('Structures index cleared.')
+
+  return saveStructures(structures)
 }

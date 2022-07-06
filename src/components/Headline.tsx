@@ -7,7 +7,7 @@ type HeadlineProps = { title: string, tag: string } & ClassNameProp & ChildrenPr
 
 export const Headline = ({ title, children, tag, className }: HeadlineProps) => (
   <div className={classNames(className, 'lg:text-center')}>
-    <span className="text-sm text-grey-default font-semibold mb-12 block tracking-wide uppercase">{tag.toUpperCase()}</span>
+    <span className="text-sm text-gray-default font-semibold mb-12 block tracking-wide uppercase">{tag.toUpperCase()}</span>
     <h2
       className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-blue-default sm:text-4xl"
     >

@@ -3,17 +3,18 @@ import { NextSeo, ArticleJsonLd } from 'next-seo'
 import { useState } from 'react'
 import { Transition } from '@headlessui/react'
 import { not } from 'ramda'
-import { findAFiche, listAllFichesSlugs } from '../../../services/contentful'
+import { findAFiche, isPreviewForced, listAllFichesSlugs } from '../../../services/contentful'
 import { Fiche } from '../../../types/models'
 import { Prose } from '../../../components/Prose'
 import { Layout } from '../../../components/Layout/Layout'
 import { HeaderFiche } from '../../../components/Layout/HeaderFiche'
-import { Categorie, categories } from '../../../services/categories'
+import { Categorie, categories } from '../../../data/categories'
 import { Container } from '../../../components/Layout/Container'
 import { Box } from '../../../components/Layout/Box'
 import { Link } from '../../../components/Links'
 import { FloatingPrintButton } from '../../../components/FloatingPrintButton'
 import { SecondaryButton } from '../../../components/Buttons'
+import { StructuresList } from '../../../components/Map/StructuresList'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await listAllFichesSlugs()
@@ -36,7 +37,7 @@ export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({ 
   return ({
     props: {
       fiche,
-      preview: Boolean(preview || process.env.FORCE_CONTENTFUL_PREVIEW),
+      preview: preview || isPreviewForced,
     },
   })
 }
@@ -140,6 +141,9 @@ export default function FichePage({ fiche }: Props) {
                   Masquer les détails
                 </SecondaryButton>
               </Transition>
+              <div className="mt-10">
+                {fiche.structures?.length ? <StructuresList structures={fiche.structures} /> : null}
+              </div>
             </div>
             <div className="w-full lg:w-4/12 lg:px-4 print:hidden space-y-10">
               <LinksCard title="Quelques outils" links={fiche.outils} />
