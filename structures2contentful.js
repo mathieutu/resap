@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars,no-console,no-await-in-loop */
+/* eslint-disable @typescript-eslint/no-unused-vars,no-console,no-await-in-loop,import/no-unresolved */
 const { path } = require('ramda');
 const { writeFileSync } = require('fs');
 const getContentfulEnv = require('./getContentfulEnvironment');
