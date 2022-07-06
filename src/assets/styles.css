@@ -9,3 +9,11 @@ html, body, #__next {
   @apply h-full;
 }
 
+
+#nprogress .bar {
+  @apply bg-blue-default;
+}
+
+#nprogress .spinner-icon {
+  @apply border-t-green-default border-l-green-default;
+}
