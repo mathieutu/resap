@@ -13,6 +13,7 @@ import { Structure } from '../types/models'
 import { isPreviewForced } from '../services/contentful'
 import { SearchFacet } from '../components/Search/SearchFacet'
 import { DepartementCode, departements } from '../data/departements'
+import { StructureType, types } from '../data/structures_types'
 
 const GeoSearch = dynamic<Record<string, never>>(
   () => import('../components/Search/GeoSearch').then(module => module.GeoSearch),
@@ -92,8 +93,19 @@ export default function Annuaire({ ...algoliaProps }: AlgoliaSSRProps) {
             <SearchContext indexName={IndicesNames.structures} {...algoliaProps}>
               <Configure aroundLatLngViaIP hitsPerPage={ALGOLIA_MAX_HITS_PER_PAGE} />
               <div className="mb-4 grid sm:grid-cols-3 sm:gap-4 gap-2">
-                <SearchFacet attribute="departement" label="Départements" getItemLabel={item => `${departements[item.value as DepartementCode].nom} - ${item.value}`} className="relative w-full bg-white border border-gray-default rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm" />
-                <SearchFacet attribute="type" label="Types de structures" className="relative w-full bg-white border border-gray-default rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm" />
+                <SearchFacet
+                  attribute="departement"
+                  label="Départements"
+                  getItemLabel={item => `${departements[item.value as DepartementCode].nom} - ${item.value}`}
+                  className="relative w-full bg-white border border-gray-default rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm"
+                />
+                <SearchFacet
+                  attribute="type"
+                  label="Types de dispositif"
+                  getItemLabel={item => types[item.value as StructureType].nom}
+                  getItemClassName={item => types[item.value as StructureType].colorClassname}
+                  className="relative w-full bg-white border border-gray-default rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm"
+                />
                 <SearchField />
               </div>
               <SearchResults

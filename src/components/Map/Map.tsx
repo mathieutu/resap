@@ -58,7 +58,8 @@ export const Map = ({
       <GeoJSON
         data={departementsBoundaries}
         style={{
-          opacity: 0.5,
+          opacity: 0.3,
+          weight: 2,
           fill: false,
           color: 'currentColor',
           className: 'text-blue-default',
@@ -95,7 +96,7 @@ export const Map = ({
           zIndexOffset={9999}
           icon={L.divIcon({
             className: types[selectedStructure.type].markerClassname,
-            html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" height="30" width="30"><title>${selectedStructure.nom}</title><rect fill="none" x="0" y="0" width="22" height="22"></rect><path fill="#ff1919" transform="translate(3 3)" d="M7.5,0C5.0676,0,2.2297,1.4865,2.2297,5.2703
+            html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" height="35" width="35"><title>${selectedStructure.nom}</title><path fill="#ff1919" transform="translate(3 3)" d="M7.5,0C5.0676,0,2.2297,1.4865,2.2297,5.2703
 \tC2.2297,7.8378,6.2838,13.5135,7.5,15c1.0811-1.4865,5.2703-7.027,5.2703-9.7297C12.7703,1.4865,9.9324,0,7.5,0z" style="stroke-linejoin:round;stroke-miterlimit:4;" stroke="currentColor" stroke-width="3"></path><path fill="white" transform="translate(3 3)" d="M7.5,0C5.0676,0,2.2297,1.4865,2.2297,5.2703
 \tC2.2297,7.8378,6.2838,13.5135,7.5,15c1.0811-1.4865,5.2703-7.027,5.2703-9.7297C12.7703,1.4865,9.9324,0,7.5,0z"></path></svg>`,
           })}

@@ -136,6 +136,37 @@ const convertContentfulContentToHtml = (content: Document): string => {
   return documentToHtmlString(content, options)
 }
 
+// region Structures methods
+
+function formatStructure(structure: StructureEntry): Structure {
+  return {
+    ...structure,
+    departement: structure.adresse.match(/(\d\d)\d\d\d\D/)?.[1] ?? '',
+  }
+}
+
+export const findAStructureForIndexing = async (id: string): Promise<Structure | null> => {
+  const entries = await getEntries<StructureEntry>(
+    CONTENT_TYPES.structure,
+    { where: { 'sys.id': id } },
+  )
+
+  if (!entries.length) return null
+
+  return formatStructure(entries[0])
+}
+
+export const fetchAllStructuresForIndexing = async (): Promise<Structure[] | null> => {
+  const entries = await getEntries<StructureEntry>(
+    CONTENT_TYPES.structure,
+  )
+
+  if (!entries.length) return null
+
+  return entries.map(formatStructure)
+}
+// endregion
+
 // region Fiche methods
 export const listAllFiches = (preview = false): Promise<Fiche[]> => (
   getEntries<FicheEntry>(
@@ -171,6 +202,10 @@ export const findAFiche = async (slug: string, preview = false): Promise<Fiche |
     ...fiche,
     resume: convertContentfulContentToHtml(fiche.resume),
     contenu: convertContentfulContentToHtml(fiche.contenu),
+    structures: (await getEntries<StructureEntry>(
+      CONTENT_TYPES.structure,
+      { preview, where: { 'fields.type[in]': (fiche.typeDispositif || []).join(',') } },
+    )).map(formatStructure),
   }
 }
 
@@ -219,33 +254,4 @@ export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
   return entries.map(formatFicheForSearch)
 }
 
-// endregion
-
-// region Structures methods
-
-const formatStructureForSearch = (struct: StructureEntry): Structure => ({
-  ...struct,
-  departement: struct.adresse.match(/(\d\d)\d\d\d\D/)?.[1] ?? '',
-})
-
-export const findAStructureForIndexing = async (id: string): Promise<Structure | null> => {
-  const entries = await getEntries<StructureEntry>(
-    CONTENT_TYPES.structure,
-    { where: { 'sys.id': id } },
-  )
-
-  if (!entries.length) return null
-
-  return formatStructureForSearch(entries[0])
-}
-
-export const fetchAllStructuresForIndexing = async (): Promise<Structure[] | null> => {
-  const entries = await getEntries<StructureEntry>(
-    CONTENT_TYPES.structure,
-  )
-
-  if (!entries.length) return null
-
-  return entries.map(formatStructureForSearch)
-}
 // endregion

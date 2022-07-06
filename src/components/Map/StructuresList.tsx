@@ -1,17 +1,28 @@
 import dynamic from 'next/dynamic'
-import { ReactNode, useRef, useState } from 'react'
+import { ReactNode, useRef, useState, useEffect } from 'react'
 import classNames from 'classnames'
 import { XIcon } from '@heroicons/react/outline'
 import { AtSymbolIcon, LocationMarkerIcon, PhoneIcon } from '@heroicons/react/solid'
 import { Structure } from '../../types/models'
 import type { MapProps } from './Map'
 import { types } from '../../data/structures_types'
+import { ChildrenProp } from '../../types/react'
 
 type StructureListItemProps = {
   structure: Structure,
   selected?: boolean,
   onClick: (structure: Structure) => void,
 };
+
+const LinkToCoordinate = ({ href, selected, children }: {href: string, selected?: boolean} & ChildrenProp) => {
+  if (!selected) return <span className="inline-flex items-center gap-1">{children}</span>
+
+  return (
+    <a target="_blank noreferer nopener" href={href} className="inline-flex items-center gap-1 hover:text-blue-default">
+      {children}
+    </a>
+  )
+}
 
 const StructureListItem = ({
   structure: s,
@@ -26,30 +37,31 @@ const StructureListItem = ({
   >
     <p>
       <span className="font-bold">{s.nom}</span>
-      {!s.organisation || s.nom.includes(s.organisation) ? null : <span className="text-sm italic"> ({s.organisation})</span>}
+      {!s.organisation || s.nom.includes(s.organisation) ? null
+        : <span className="text-sm italic"> ({s.organisation})</span>}
     </p>
-    <p className={classNames('inline-block w-fit py-1 px-2 rounded-md text-xs', types[s.type]?.colorClassname)}>{s.type}</p>
+    <p className={classNames('inline-block w-fit py-1 px-2 rounded-md text-xs', types[s.type].colorClassname)}>{types[s.type].nom}</p>
     <p>
-      <a href="" className="inline-flex items-center gap-1 hover:text-blue-default">
+      <LinkToCoordinate selected={selected!} href={`https://maps.google.fr/maps?hl=fr&q=${s.nom} ${s.adresse}`}>
         <LocationMarkerIcon className="h-4 w-4" /> {s.adresse}
-      </a>
+      </LinkToCoordinate>
     </p>
     {s.tel
-      && (
-        <p>
-          <a href={`tel:${s.tel}`} className="inline-flex items-center gap-1 hover:text-blue-default">
-            <PhoneIcon className="h-4 w-4" /> {s.tel}
-          </a>
-        </p>
-      )}
+        && (
+          <p>
+            <LinkToCoordinate selected={selected!} href={`tel:${s.tel}`}>
+              <PhoneIcon className="h-4 w-4" /> {s.tel}
+            </LinkToCoordinate>
+          </p>
+        )}
     {s.email
-      && (
-        <p>
-          <a href={`mailto:${s.email}`} className="inline-flex items-center gap-1 hover:text-blue-default">
-            <AtSymbolIcon className="h-4 w-4" /> {s.email}
-          </a>
-        </p>
-      )}
+        && (
+          <p>
+            <LinkToCoordinate selected={selected!} href={`mailto:${s.email}`}>
+              <AtSymbolIcon className="h-4 w-4" /> {s.email}
+            </LinkToCoordinate>
+          </p>
+        )}
     {selected && <XIcon className="absolute top-1 right-2 h-5 w-5 text-gray-300 group-hover:text-blue-default" />}
   </div>
 )
@@ -75,8 +87,12 @@ export const StructuresList = ({
 }: StructuresListProps) => {
   const [selectedStructure, setSelectedStructure] = useState<Structure | undefined>()
   const selectedStructureRef = useRef<HTMLDivElement>(null)
+  const [selectedStructureRefClientHeight, setSelectedStructureRefClientHeight] = useState<number | undefined>()
 
   const selectStructure = (s: Structure) => setSelectedStructure(currentStructure => (currentStructure?.id === s.id ? undefined : s))
+
+  useEffect(() => { setSelectedStructureRefClientHeight(selectedStructureRef.current?.clientHeight) })
+
   return (
     <div className="block flex flex-col md:flex-row gap-4">
       <div className="w-full md:w-8/12 sm:h-[70vh] h-[300px]">
@@ -99,7 +115,7 @@ export const StructuresList = ({
             />
           </div>
         )}
-        <div className="overflow-y-auto space-y-4 border-gray-light border-y py-4" style={{ height: `calc(100% - ${selectedStructureRef.current?.clientHeight || 0}px)` }}>
+        <div className="overflow-y-auto space-y-4 border-gray-light border-y py-4" style={{ height: `calc(100% - ${selectedStructureRefClientHeight || 0}px)` }}>
           {structures.filter(s => s.id !== selectedStructure?.id)
             .map(structure => (
               <StructureListItem

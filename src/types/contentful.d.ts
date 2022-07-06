@@ -3,55 +3,6 @@
 import { Asset, Entry } from "contentful";
 import { Document } from "@contentful/rich-text-types";
 
-export interface IAuteurFields {
-  /** Nom */
-  nom: string;
-
-  /** Prénom */
-  prenom: string;
-
-  /** Photo */
-  photo: Asset;
-
-  /** Titre */
-  titre: string;
-
-  /** Structure */
-  structure: string;
-
-  /** Bio */
-  bio?: string | undefined;
-
-  /** Email */
-  email: string;
-
-  /** Téléphone */
-  telephone?: string | undefined;
-
-  /** Site Web */
-  siteWeb?: string | undefined;
-
-  /** Masculin ou féminin ? */
-  femme: boolean;
-}
-
-export interface IAuteur extends Entry<IAuteurFields> {
-  sys: {
-    id: string;
-    type: string;
-    createdAt: string;
-    updatedAt: string;
-    locale: string;
-    contentType: {
-      sys: {
-        id: "auteur";
-        linkType: "ContentType";
-        type: "Link";
-      };
-    };
-  };
-}
-
 export interface IFicheFields {
   /** Titre */
   titre: string;
@@ -74,14 +25,8 @@ export interface IFicheFields {
   /** Contenu */
   contenu: Document;
 
-  /** Auteur */
-  auteur: IAuteur;
-
   /** Tags */
   tags: string[];
-
-  /** Structures */
-  structures?: IStructure[] | undefined;
 
   /** Pour aller plus loin */
   pourEnSavoirPlus?: ILien[] | undefined;
@@ -91,6 +36,36 @@ export interface IFicheFields {
 
   /** Pour les patients */
   patients?: ILien[] | undefined;
+
+  /** Type de dispositif */
+  typeDispositif: (
+    | "HUDA"
+    | "SPADA"
+    | "MSP"
+    | "Associations caritatives - Distribution Alimentaire"
+    | "CEGIDD"
+    | "Centre de vaccination"
+    | "CPTS"
+    | "Filières gérontologiques"
+    | "MDPH"
+    | "PASS"
+    | "CSAPA"
+    | "CADA"
+    | "SIAO"
+    | "Accompagnement MNA"
+    | "Association LGBTQIA+"
+    | "Associations d'accompagnement personnes en situation de prostitution"
+    | "CAARUD"
+    | "COREVIH"
+    | "Préfecture"
+    | "OFII"
+    | "Association d'aide aux migrants"
+    | "Réseaux polyvalents (tous âges et toutes pathologies)"
+    | "CPH"
+    | "PRAHDA"
+    | "CAES"
+    | "CD"
+  )[];
 }
 
 export interface IFiche extends Entry<IFicheFields> {
@@ -142,23 +117,59 @@ export interface IStructureFields {
   /** Nom */
   nom: string;
 
+  /** Nom organisation */
+  organisation?: string | undefined;
+
+  /** Type dispositif */
+  type:
+    | "HUDA"
+    | "SPADA"
+    | "MSP"
+    | "Associations caritatives - Distribution Alimentaire"
+    | "CEGIDD"
+    | "Centre de vaccination"
+    | "CLAT"
+    | "CPTS"
+    | "Filières gérontologiques"
+    | "MDPH"
+    | "PASS"
+    | "CSAPA"
+    | "CADA"
+    | "SIAO"
+    | "Accompagnement MNA"
+    | "Association LGBTQIA+"
+    | "Associations d’accompagnement personnes en situation de prostitution"
+    | "CAARUD"
+    | "COREVIH"
+    | "Préfecture"
+    | "OFII"
+    | "Association d'aide aux migrants"
+    | "Réseaux polyvalents (tous âges et toutes pathologies)"
+    | "CPH"
+    | "PRAHDA"
+    | "CAES"
+    | "CDS";
+
   /** Description */
   description?: string | undefined;
 
-  /** Spécialités */
+  /** Spécialités (tags) */
   specialites?: string[] | undefined;
 
-  /** Adresse */
-  adresse: { lat: number; lon: number };
+  /** Emplacement (coordonnées) */
+  latLon: { lat: number; lon: number };
+
+  /** Adresse à afficher (texte) */
+  adresse: string;
 
   /** Site web */
   siteWeb?: string | undefined;
 
   /** Téléphone */
-  telephone?: string | undefined;
+  tel?: string | undefined;
 
   /** Email */
-  email: string;
+  email?: string | undefined;
 }
 
 export interface IStructure extends Entry<IStructureFields> {
@@ -178,7 +189,7 @@ export interface IStructure extends Entry<IStructureFields> {
   };
 }
 
-export type CONTENT_TYPE = "auteur" | "fiche" | "lien" | "structure";
+export type CONTENT_TYPE = "fiche" | "lien" | "structure";
 
 export type LOCALE_CODE = "fr";
 

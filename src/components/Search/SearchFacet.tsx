@@ -5,27 +5,20 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import classNames from 'classnames'
 import type { RefinementListItem } from 'instantsearch.js/es/connectors/refinement-list/connectRefinementList'
 import { ClassNameProp } from '../../types/react'
-import { StructureType, types } from '../../data/structures_types'
 
 type SearchFacetProps = {
   attribute: string,
   label: string,
   getItemLabel?: (item: RefinementListItem) => string,
+  getItemClassName?: (item: RefinementListItem) => string,
 } & ClassNameProp;
-
-const getSelectionClassname = (attribute: string, value: string) => {
-  if (attribute === 'type') {
-    return types[value as StructureType].colorClassname
-  }
-
-  return 'bg-gray-light text-blue-default'
-}
 
 export const SearchFacet = ({
   attribute,
   className,
   label,
   getItemLabel = item => item.label,
+  getItemClassName = () => 'bg-gray-light text-blue-default',
 }: SearchFacetProps) => {
   const {
     items,
@@ -47,7 +40,7 @@ export const SearchFacet = ({
                       key={item.value}
                       className={classNames(
                         'inline-flex items-center px-2 py-0.5 rounded text-xs truncate',
-                        getSelectionClassname(attribute, item.value),
+                        getItemClassName(item),
                       )}
                     >
                       {getItemLabel(item)}
@@ -72,7 +65,7 @@ export const SearchFacet = ({
                     key={item.value}
                     className={({ active }) => classNames(
                       active
-                        ? getSelectionClassname(attribute, item.value)
+                        ? getItemClassName(item)
                         : 'text-gray-900',
                       'cursor-default select-none relative py-2 pl-3 pr-9',
                     )}
@@ -83,10 +76,10 @@ export const SearchFacet = ({
                     }) => (
                       <>
                         <div className="flex items-baseline">
-                          <span className={classNames(item.isRefined ? 'font-semibold' : 'font-normal', 'truncate')}>
+                          <span title={getItemLabel(item)} className={classNames(item.isRefined ? 'font-semibold' : 'font-normal', 'truncate')}>
                             {getItemLabel(item)}
                           </span>
-                          <span className={classNames(active ? getSelectionClassname(attribute, item.value) : 'text-gray-400', 'text-xs italic ml-2')}>
+                          <span className={classNames(active ? getItemClassName(item) : 'text-gray-400', 'text-xs italic ml-2')}>
                             ({item.count})
                           </span>
                         </div>
