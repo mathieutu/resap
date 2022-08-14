@@ -14,6 +14,7 @@ import { isPreviewForced } from '../services/contentful'
 import { SearchFacet } from '../components/Search/SearchFacet'
 import { DepartementCode, departements } from '../data/departements'
 import { StructureType, types } from '../data/structures_types'
+import { FloatingPrintButton } from '../components/FloatingPrintButton'
 
 const GeoSearch = dynamic<Record<string, never>>(
   () => import('../components/Search/GeoSearch').then(module => module.GeoSearch),
@@ -42,57 +43,15 @@ export default function Annuaire({ ...algoliaProps }: AlgoliaSSRProps) {
       <NextSeo title="Annuaire" />
       <div className="py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
         <div className="relative max-w-7xl mx-auto">
-          <svg
-            className="absolute left-full transform translate-x-1/4"
-            width={404}
-            height={404}
-            fill="none"
-            viewBox="0 0 404 404"
-            aria-hidden="true"
-          >
-            <defs>
-              <pattern
-                id="85737c0e-0916-41d7-917f-596dc7edfa27"
-                x={0}
-                y={0}
-                width={20}
-                height={20}
-                patternUnits="userSpaceOnUse"
-              >
-                <rect x={0} y={0} width={4} height={4} className="text-gray-200" fill="currentColor" />
-              </pattern>
-            </defs>
-            <rect width={404} height={404} fill="url(#85737c0e-0916-41d7-917f-596dc7edfa27)" />
-          </svg>
-          <svg
-            className="absolute right-full bottom-0 transform -translate-x-1/4"
-            width={404}
-            height={404}
-            fill="none"
-            viewBox="0 0 404 404"
-            aria-hidden="true"
-          >
-            <defs>
-              <pattern
-                id="85737c0e-0916-41d7-917f-596dc7edfa27"
-                x={0}
-                y={0}
-                width={20}
-                height={20}
-                patternUnits="userSpaceOnUse"
-              >
-                <rect x={0} y={0} width={4} height={4} className="text-gray-200" fill="currentColor" />
-              </pattern>
-            </defs>
-            <rect width={404} height={404} fill="url(#85737c0e-0916-41d7-917f-596dc7edfa27)" />
-          </svg>
+          <FloatingPrintButton className="absolute -top-5 2xl:top-20" />
           <div className="text-center">
             <h1 className="text-3xl font-extrabold tracking-tight text-blue-default sm:text-4xl">Annuaire</h1>
           </div>
-          <div className="flex flex-col bg-white drop-shadow-md rounded-md p-5 m-auto my-5">
+          <div className="flex flex-col bg-white drop-shadow-md print:drop-shadow-none rounded-md p-5 m-auto my-5">
+
             <SearchContext indexName={IndicesNames.structures} {...algoliaProps}>
               <Configure aroundLatLngViaIP hitsPerPage={ALGOLIA_MAX_HITS_PER_PAGE} />
-              <div className="mb-4 grid sm:grid-cols-3 sm:gap-4 gap-2">
+              <div className="mb-4 grid sm:grid-cols-3 sm:gap-4 gap-2 print:hidden">
                 <SearchFacet
                   attribute="departement"
                   label="Départements"

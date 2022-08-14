@@ -95,7 +95,7 @@ export const StructuresList = ({
 
   return (
     <div className="block flex flex-col md:flex-row gap-4">
-      <div className="w-full md:w-8/12 sm:h-[70vh] h-[300px]">
+      <div className="w-full md:w-8/12 sm:h-[70vh] h-[300px] print:break-inside-avoid-page">
         <Map
           structures={structures}
           onStructureSelected={selectStructure}
@@ -115,7 +115,7 @@ export const StructuresList = ({
             />
           </div>
         )}
-        <div className="overflow-y-auto space-y-4 border-gray-light border-y py-4" style={{ height: `calc(100% - ${selectedStructureRefClientHeight || 0}px)` }}>
+        <div className="print:break-inside-avoid-page overflow-y-auto space-y-4 border-gray-light border-y py-4 print:border-0" style={{ height: `calc(100% - ${selectedStructureRefClientHeight || 0}px)` }}>
           {structures.filter(s => s.id !== selectedStructure?.id)
             .map(structure => (
               <StructureListItem
