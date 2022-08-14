@@ -9,6 +9,7 @@ import { departementsBoundaries } from './departements'
 import { MarkerClusterGroup } from './Cluster'
 import { ResetViewControl } from './ResetViewControl'
 import { types } from '../../data/structures_types'
+import { CurrentLocationControl } from './CurrentLocationControl'
 
 const initialCenter: LatLngTuple = [45.40, 4.66]
 const initialZoom = 7
@@ -54,6 +55,7 @@ export const Map = ({
       }}
     >
       <ResetViewControl />
+      <CurrentLocationControl />
       <GeoJSON
         data={departementsBoundaries}
         style={{

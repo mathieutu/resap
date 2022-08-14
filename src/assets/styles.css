@@ -17,3 +17,7 @@ html, body, #__next {
 #nprogress .spinner-icon {
   @apply border-t-green-default border-l-green-default;
 }
+
+.leaflet-bar {
+  @apply print:hidden;
+}
