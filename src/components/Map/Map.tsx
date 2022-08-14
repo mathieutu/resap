@@ -45,7 +45,6 @@ export const Map = ({
       zoom={initialZoom}
       minZoom={5}
       maxZoom={17}
-      scrollWheelZoom={false}
       style={{
         height: '100%',
         width: '100%',
