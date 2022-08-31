@@ -1,12 +1,13 @@
-import dynamic from 'next/dynamic'
-import { ReactNode, useRef, useState, useEffect } from 'react'
-import classNames from 'classnames'
-import { XIcon } from '@heroicons/react/outline'
-import { AtSymbolIcon, LocationMarkerIcon, PhoneIcon } from '@heroicons/react/solid'
-import { Structure } from '../../types/models'
-import type { MapProps } from './Map'
-import { types } from '../../data/structures_types'
-import { ChildrenProp } from '../../types/react'
+import dynamic from 'next/dynamic';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
+import { XIcon } from '@heroicons/react/outline';
+import { AtSymbolIcon, LocationMarkerIcon, PhoneIcon } from '@heroicons/react/solid';
+import { useRouter } from 'next/router';
+import { Structure } from '../../types/models';
+import type { MapProps } from './Map';
+import { types } from '../../data/structures_types';
+import { ChildrenProp } from '../../types/react';
 
 type StructureListItemProps = {
   structure: Structure,
@@ -85,12 +86,28 @@ export const StructuresList = ({
   structures,
   mapChildren,
 }: StructuresListProps) => {
+  const router = useRouter()
+  const { id: selectedStructureId } = router.query
+  const selectStructure = ({ id }: Structure) => router.push(`/annuaire/${id === selectedStructureId ? '' : id}`, undefined, { shallow: true, scroll: false })
+
   const [selectedStructure, setSelectedStructure] = useState<Structure | undefined>()
+
+  useEffect(() => {
+    setSelectedStructure(currentStructure => {
+      if (!selectedStructureId) return undefined
+
+      const structure = structures.find(({ id }) => id === selectedStructureId)
+
+      if (!structure || structure.id === currentStructure?.id) return currentStructure
+
+      return structure
+    })
+  }, [selectedStructureId, structures])
+
   const selectedStructureRef = useRef<HTMLDivElement>(null)
   const [selectedStructureRefClientHeight, setSelectedStructureRefClientHeight] = useState<number | undefined>()
 
-  const selectStructure = (s: Structure) => setSelectedStructure(currentStructure => (currentStructure?.id === s.id ? undefined : s))
-
+  // 🤷‍ It's working fine like that. I don't understand how it does not infinitely rerender.
   useEffect(() => { setSelectedStructureRefClientHeight(selectedStructureRef.current?.clientHeight) })
 
   return (
@@ -115,7 +132,10 @@ export const StructuresList = ({
             />
           </div>
         )}
-        <div className="print:break-inside-avoid-page overflow-y-auto space-y-4 border-gray-light border-y py-4 print:border-0" style={{ height: `calc(100% - ${selectedStructureRefClientHeight || 0}px)` }}>
+        <div
+          className="print:break-inside-avoid-page overflow-y-auto space-y-4 border-gray-light border-y py-4 print:border-0"
+          style={{ height: `calc(100% - ${selectedStructureRefClientHeight || 0}px)` }}
+        >
           {structures.filter(s => s.id !== selectedStructure?.id)
             .map(structure => (
               <StructureListItem
