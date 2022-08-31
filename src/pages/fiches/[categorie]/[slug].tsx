@@ -12,7 +12,7 @@ import { Categorie, categories } from '../../../data/categories'
 import { Container } from '../../../components/Layout/Container'
 import { Box } from '../../../components/Layout/Box'
 import { Link } from '../../../components/Links'
-import { FloatingPrintButton } from '../../../components/FloatingPrintButton'
+import { FloatingButtons } from '../../../components/FloatingButtons'
 import { SecondaryButton } from '../../../components/Buttons'
 import { StructuresList } from '../../../components/Map/StructuresList'
 
@@ -120,7 +120,7 @@ export default function FichePage({ fiche }: Props) {
       <HeaderFiche fiche={fiche} categorie={categorie} />
       <div className="relative pb-12">
         <Container>
-          <FloatingPrintButton className=" absolute top-5 2xl:top-20 xl:left-8" />
+          <FloatingButtons className=" absolute top-5 2xl:top-20 xl:left-8" />
           <div className="w-full py-10 lg:py-20">
             <h1 className="mt-10 lg:mt-0 text-3xl md:text-5xl lg:text-6xl text-blue-default">{fiche.titre}</h1>
           </div>

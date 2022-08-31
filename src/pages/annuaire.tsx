@@ -12,9 +12,8 @@ import { SearchResults } from '../components/Search/SearchResults'
 import { Structure } from '../types/models'
 import { isPreviewForced } from '../services/contentful'
 import { SearchFacet } from '../components/Search/SearchFacet'
-import { DepartementCode, departements } from '../data/departements'
 import { StructureType, types } from '../data/structures_types'
-import { FloatingPrintButton } from '../components/FloatingPrintButton'
+import { FloatingButtons } from '../components/FloatingButtons'
 
 const GeoSearch = dynamic<Record<string, never>>(
   () => import('../components/Search/GeoSearch').then(module => module.GeoSearch),
@@ -43,7 +42,7 @@ export default function Annuaire({ ...algoliaProps }: AlgoliaSSRProps) {
       <NextSeo title="Annuaire" />
       <div className="py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
         <div className="relative max-w-7xl mx-auto">
-          <FloatingPrintButton className="absolute -top-5 2xl:top-20" />
+          <FloatingButtons className="absolute -top-5 2xl:top-20" />
           <div className="text-center">
             <h1 className="text-3xl font-extrabold tracking-tight text-blue-default sm:text-4xl">Annuaire</h1>
           </div>
