@@ -73,7 +73,7 @@ export const getServerSideProps: GetServerSideProps<Props, { categorie: Categori
     props: {
       preview: preview || isPreviewForced,
       categorieSlug,
-      ...await algoliaSSRProps(req, ListFichesByCategory, { categorieSlug }),
+      // ...await algoliaSSRProps(req, ListFichesByCategory, { categorieSlug }),
     },
   })
 }

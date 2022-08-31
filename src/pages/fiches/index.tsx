@@ -49,6 +49,6 @@ export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
 export const getServerSideProps: GetServerSideProps<AlgoliaSSRProps> = async ({ preview, req }) => ({
   props: {
     preview: preview || isPreviewForced,
-    ...await algoliaSSRProps(req, ListFiches),
+    // ...await algoliaSSRProps(req, ListFiches),
   },
 })

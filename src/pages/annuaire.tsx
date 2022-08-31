@@ -81,6 +81,6 @@ export const getServerSideProps: GetServerSideProps<AlgoliaSSRProps> = async ({
 }) => ({
   props: {
     preview: preview || isPreviewForced,
-    ...await algoliaSSRProps(req, Annuaire),
+    // ...await algoliaSSRProps(req, Annuaire),
   },
 })

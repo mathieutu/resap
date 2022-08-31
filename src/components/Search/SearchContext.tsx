@@ -20,7 +20,7 @@ export const SearchContext = ({
       searchClient={searchClient}
       routing={{
         router: history({
-          getLocation: () => (typeof window === 'undefined' ? new URL(url) as unknown as Location : window.location),
+          // getLocation: () => (typeof window === 'undefined' ? new URL(url) as unknown as Location : window.location),
         }),
         stateMapping: {
           // @ts-expect-error
