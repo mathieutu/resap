@@ -21,10 +21,6 @@ export const SearchInput = ({
     refine(debouncedValue)
   }, [debouncedValue])
 
-  useEffect(() => {
-    setValue(query)
-  }, [query])
-
   return (
     <>
       <label htmlFor={id} className="sr-only">
