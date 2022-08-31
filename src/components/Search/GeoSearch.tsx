@@ -49,7 +49,7 @@ export const GeoSearch = () => {
         map.fitBounds(computedBounds)
       }
     }
-  }, [])
+  }, [map, router.query])
 
   if (!bounds) return null
 

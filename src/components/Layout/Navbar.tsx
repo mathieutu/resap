@@ -95,7 +95,7 @@ export const Navbar = () => {
               >
                 <div className="px-5 pt-4 flex items-center justify-between">
                   <div>
-                    <LogoFull className="text-blue-default" />
+                    <LogoFull className="max-h-6 text-blue-default" />
                   </div>
                   <div className="-mr-2">
                     <Popover.Button

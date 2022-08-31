@@ -19,11 +19,7 @@ export const SearchInput = ({
 
   useEffect(() => {
     refine(debouncedValue)
-  }, [debouncedValue])
-
-  useEffect(() => {
-    setValue(query)
-  }, [query])
+  }, [refine, debouncedValue])
 
   return (
     <>

@@ -10,14 +10,6 @@ html, body, #__next {
 }
 
 
-#nprogress .bar {
-  @apply bg-blue-default;
-}
-
-#nprogress .spinner-icon {
-  @apply border-t-green-default border-l-green-default;
-}
-
 .leaflet-bar {
   @apply print:hidden;
 }

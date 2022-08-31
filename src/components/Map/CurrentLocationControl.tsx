@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { createControlComponent } from '@react-leaflet/core'
-import type { LatLng, Map } from 'leaflet'
-import { Control, DomEvent, DomUtil, Util } from 'leaflet'
+import type { Map } from 'leaflet'
+import { Control, DomEvent, DomUtil } from 'leaflet'
 
 const CurrentLocationControlFactory = Control.extend({
   onAdd(map: Map) {
@@ -9,7 +9,7 @@ const CurrentLocationControlFactory = Control.extend({
       // eslint-disable-next-line no-console
       console.error(e)
       // eslint-disable-next-line no-alert
-      alert('La localisation n\'a pas pu être déterminée. Avez vous accepté la permission du navigateur ?')
+      alert('Votre position n\'a pas pu être déterminée. Avez vous activé/autorisé les services de Géolocalisation ?')
     })
 
     const container = DomUtil.create('div', 'leaflet-bar')

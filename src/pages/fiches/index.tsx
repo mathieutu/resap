@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import { SearchIcon } from '@heroicons/react/solid'
 import { NextSeo } from 'next-seo'
 import { Layout } from '../../components/Layout/Layout'
@@ -7,7 +7,7 @@ import { SimpleHeader } from '../../components/Layout/SimpleHeader'
 import { SearchInput } from '../../components/Search/SearchInput'
 import { SearchResults } from '../../components/Search/SearchResults'
 import { SearchContext } from '../../components/Search/SearchContext'
-import { algoliaSSRProps, AlgoliaSSRProps, IndicesNames } from '../../services/algolia.browser'
+import { AlgoliaSSRProps, IndicesNames } from '../../services/algolia.browser'
 import { categories } from '../../data/categories'
 import { CategorieLink } from '../../components/CategorieLink'
 import { Container } from '../../components/Layout/Container'
@@ -46,9 +46,8 @@ export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<AlgoliaSSRProps> = async ({ preview, req }) => ({
+export const getStaticProps: GetStaticProps = async ({ preview }) => ({
   props: {
     preview: preview || isPreviewForced,
-    ...await algoliaSSRProps(req, ListFiches),
   },
 })
