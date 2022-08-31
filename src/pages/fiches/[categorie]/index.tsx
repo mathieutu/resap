@@ -1,32 +1,31 @@
-import { GetServerSideProps } from 'next'
-import { SearchIcon } from '@heroicons/react/solid'
-import { NextSeo } from 'next-seo'
-import { Configure } from 'react-instantsearch-hooks'
-import { Layout } from '../../../components/Layout/Layout'
-import { FicheCard } from '../../../components/Card/FicheCard'
-import { SimpleHeader } from '../../../components/Layout/SimpleHeader'
-import { SearchInput } from '../../../components/Search/SearchInput'
-import { SearchResults } from '../../../components/Search/SearchResults'
-import { SearchContext } from '../../../components/Search/SearchContext'
-import { algoliaSSRProps, AlgoliaSSRProps, IndicesNames } from '../../../services/algolia.browser'
-import { categories, CategorieSlug } from '../../../data/categories'
-import { BackToHomeLink } from '../../../components/CategorieLink'
-import { Container } from '../../../components/Layout/Container'
-import { Fiche } from '../../../types/models'
-import { isPreviewForced } from '../../../services/contentful'
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { SearchIcon } from '@heroicons/react/solid';
+import { NextSeo } from 'next-seo';
+import { Configure } from 'react-instantsearch-hooks';
+import { Layout } from '../../../components/Layout/Layout';
+import { FicheCard } from '../../../components/Card/FicheCard';
+import { SimpleHeader } from '../../../components/Layout/SimpleHeader';
+import { SearchInput } from '../../../components/Search/SearchInput';
+import { SearchResults } from '../../../components/Search/SearchResults';
+import { SearchContext } from '../../../components/Search/SearchContext';
+import { IndicesNames } from '../../../services/algolia.browser';
+import { categories, CategorieSlug } from '../../../data/categories';
+import { BackToHomeLink } from '../../../components/CategorieLink';
+import { Container } from '../../../components/Layout/Container';
+import { Fiche } from '../../../types/models';
+import { isPreviewForced } from '../../../services/contentful';
 
-type Props = AlgoliaSSRProps & { categorieSlug: CategorieSlug }
+type Props = { categorieSlug: CategorieSlug }
 
 export default function ListFichesByCategory({
   categorieSlug,
-  ...algoliaProps
 }: Props) {
   const categorie = categories[categorieSlug]
 
   return (
     <Layout className="bg-gray-50">
       <NextSeo title={categorie.name} />
-      <SearchContext indexName={IndicesNames.fiches} {...algoliaProps}>
+      <SearchContext indexName={IndicesNames.fiches}>
         <Configure facetsRefinements={{ categorie: [categorieSlug] }} />
         <SimpleHeader className="h-[475px]" subTitle="Fiches pratiques" title={categorie.name} titleClassName={categorie.textColor}>
           <p className="text-sm text-gray-400 text-thin mt-4 w-3/4 mx-auto">{categorie.description}</p>
@@ -56,24 +55,17 @@ export default function ListFichesByCategory({
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props, { categorie: CategorieSlug }> = async ({
+export const getStaticPaths: GetStaticPaths = async () => ({
+  paths: Object.values(categories).map(({ href }) => `/${href}`),
+  fallback: false,
+})
+
+export const getStaticProps: GetStaticProps<Props, { categorie: CategorieSlug }> = async ({
   params,
   preview,
-  req,
-}) => {
-  const categorieSlug = params!.categorie
-
-  if (!categories[categorieSlug]) {
-    return {
-      notFound: true,
-    }
-  }
-
-  return ({
-    props: {
-      preview: preview || isPreviewForced,
-      categorieSlug,
-      // ...await algoliaSSRProps(req, ListFichesByCategory, { categorieSlug }),
-    },
-  })
-}
+}) => ({
+  props: {
+    preview: preview || isPreviewForced,
+    categorieSlug: params!.categorie,
+  },
+})

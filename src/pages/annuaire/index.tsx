@@ -1,22 +1,22 @@
-import { NextSeo } from 'next-seo'
-import { SearchIcon } from '@heroicons/react/solid'
-import { GetServerSideProps } from 'next'
-import { Configure } from 'react-instantsearch-hooks'
-import dynamic from 'next/dynamic'
-import { Layout } from '../components/Layout/Layout'
-import { SearchContext } from '../components/Search/SearchContext'
-import { algoliaSSRProps, AlgoliaSSRProps, IndicesNames } from '../services/algolia.browser'
-import { SearchInput } from '../components/Search/SearchInput'
-import { StructuresList } from '../components/Map/StructuresList'
-import { SearchResults } from '../components/Search/SearchResults'
-import { Structure } from '../types/models'
-import { isPreviewForced } from '../services/contentful'
-import { SearchFacet } from '../components/Search/SearchFacet'
-import { StructureType, types } from '../data/structures_types'
-import { FloatingButtons } from '../components/FloatingButtons'
+import { NextSeo } from 'next-seo';
+import { SearchIcon } from '@heroicons/react/solid';
+import { GetStaticProps } from 'next';
+import { Configure } from 'react-instantsearch-hooks';
+import dynamic from 'next/dynamic';
+import { Layout } from '../../components/Layout/Layout';
+import { SearchContext } from '../../components/Search/SearchContext';
+import { IndicesNames } from '../../services/algolia.browser';
+import { SearchInput } from '../../components/Search/SearchInput';
+import { StructuresList } from '../../components/Map/StructuresList';
+import { SearchResults } from '../../components/Search/SearchResults';
+import { Structure } from '../../types/models';
+import { isPreviewForced } from '../../services/contentful';
+import { SearchFacet } from '../../components/Search/SearchFacet';
+import { StructureType, types } from '../../data/structures_types';
+import { FloatingButtons } from '../../components/FloatingButtons';
 
 const GeoSearch = dynamic<Record<string, never>>(
-  () => import('../components/Search/GeoSearch').then(module => module.GeoSearch),
+  () => import('../../components/Search/GeoSearch').then(module => module.GeoSearch),
   {
     ssr: false,
   },
@@ -36,7 +36,7 @@ const SearchField = () => (
   </div>
 )
 
-export default function Annuaire({ ...algoliaProps }: AlgoliaSSRProps) {
+export default function Annuaire() {
   return (
     <Layout className="bg-gray-50">
       <NextSeo title="Annuaire" />
@@ -48,7 +48,7 @@ export default function Annuaire({ ...algoliaProps }: AlgoliaSSRProps) {
           </div>
           <div className="flex flex-col bg-white drop-shadow-md print:drop-shadow-none rounded-md p-5 m-auto my-5">
 
-            <SearchContext indexName={IndicesNames.structures} {...algoliaProps}>
+            <SearchContext indexName={IndicesNames.structures}>
               <Configure aroundLatLngViaIP hitsPerPage={ALGOLIA_MAX_HITS_PER_PAGE} />
               <div className="mb-4 grid sm:grid-cols-3 sm:gap-4 gap-2 print:hidden">
                 <div className="col-span-2">
@@ -75,12 +75,10 @@ export default function Annuaire({ ...algoliaProps }: AlgoliaSSRProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<AlgoliaSSRProps> = async ({
+export const getStaticProps: GetStaticProps = async ({
   preview,
-  req,
 }) => ({
   props: {
     preview: preview || isPreviewForced,
-    // ...await algoliaSSRProps(req, Annuaire),
   },
 })
