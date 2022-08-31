@@ -1,19 +1,19 @@
-import { NextSeo } from 'next-seo';
-import { SearchIcon } from '@heroicons/react/solid';
-import { GetStaticProps } from 'next';
-import { Configure } from 'react-instantsearch-hooks';
-import dynamic from 'next/dynamic';
-import { Layout } from '../../components/Layout/Layout';
-import { SearchContext } from '../../components/Search/SearchContext';
-import { IndicesNames } from '../../services/algolia.browser';
-import { SearchInput } from '../../components/Search/SearchInput';
-import { StructuresList } from '../../components/Map/StructuresList';
-import { SearchResults } from '../../components/Search/SearchResults';
-import { Structure } from '../../types/models';
-import { isPreviewForced } from '../../services/contentful';
-import { SearchFacet } from '../../components/Search/SearchFacet';
-import { StructureType, types } from '../../data/structures_types';
-import { FloatingButtons } from '../../components/FloatingButtons';
+import { NextSeo } from 'next-seo'
+import { SearchIcon } from '@heroicons/react/solid'
+import { GetStaticProps } from 'next'
+import { Configure } from 'react-instantsearch-hooks'
+import dynamic from 'next/dynamic'
+import { Layout } from '../../components/Layout/Layout'
+import { SearchContext } from '../../components/Search/SearchContext'
+import { IndicesNames } from '../../services/algolia.browser'
+import { SearchInput } from '../../components/Search/SearchInput'
+import { StructuresList } from '../../components/Map/StructuresList'
+import { SearchResults } from '../../components/Search/SearchResults'
+import { Structure } from '../../types/models'
+import { isPreviewForced } from '../../services/contentful'
+import { SearchFacet } from '../../components/Search/SearchFacet'
+import { StructureType, types } from '../../data/structures_types'
+import { FloatingButtons } from '../../components/FloatingButtons'
 
 const GeoSearch = dynamic<Record<string, never>>(
   () => import('../../components/Search/GeoSearch').then(module => module.GeoSearch),
@@ -42,7 +42,7 @@ export default function Annuaire() {
       <NextSeo title="Annuaire" />
       <div className="py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
         <div className="relative max-w-7xl mx-auto">
-          <FloatingButtons className="absolute -top-5 2xl:top-20" />
+          <FloatingButtons className="absolute -top-5" />
           <div className="text-center">
             <h1 className="text-3xl font-extrabold tracking-tight text-blue-default sm:text-4xl">Annuaire</h1>
           </div>
