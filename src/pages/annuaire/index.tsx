@@ -51,7 +51,7 @@ export default function Annuaire() {
             <SearchContext indexName={IndicesNames.structures}>
               <Configure aroundLatLngViaIP hitsPerPage={ALGOLIA_MAX_HITS_PER_PAGE} />
               <div className="mb-4 grid sm:grid-cols-3 sm:gap-4 gap-2 print:hidden">
-                <div className="col-span-2">
+                <div className="sm:col-span-2">
                   <SearchFacet
                     attribute="type"
                     label="Filtrer par dispositifs dans la zone"

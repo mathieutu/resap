@@ -15,10 +15,12 @@ import {
 } from 'react-share'
 import { ClassNameProp } from '../types/react'
 
+const buttonClassName = 'print:hidden w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-green-default hover:bg-blue-default flex items-center justify-center cursor-pointer'
+
 const PrintButton = () => (
   <button
     type="button"
-    className="print:hidden w-12 h-12 rounded-full bg-green-default hover:bg-blue-default flex items-center justify-center cursor-pointer"
+    className={buttonClassName}
     onClick={() => window.print()}
   >
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="text-white w-3/5">
@@ -30,7 +32,7 @@ const PrintButton = () => (
 const ShareButton = () => (
   <Menu as="div" className="relative inline-block text-left">
     <div>
-      <Menu.Button className="print:hidden w-12 h-12 rounded-full bg-green-default hover:bg-blue-default flex items-center justify-center cursor-pointer">
+      <Menu.Button className={buttonClassName}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="text-white w-3/5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
         </svg>

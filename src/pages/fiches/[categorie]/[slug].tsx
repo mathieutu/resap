@@ -147,7 +147,7 @@ export default function FichePage({ fiche }: Props) {
               <LinksCard title="Pour les patients" links={fiche.patients} />
               <LinksCard title="Pour aller plus loin" links={fiche.pourEnSavoirPlus} />
             </div>
-            <div className="w-full">
+            <div className="w-full mt-10 lg:mt-0">
               {fiche.structures?.length ? <StructuresList structures={fiche.structures} /> : null}
             </div>
           </div>
