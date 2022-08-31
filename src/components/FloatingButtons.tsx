@@ -2,13 +2,16 @@ import classNames from 'classnames'
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import {
-  FacebookShareButton,
+  EmailIcon,
+  EmailShareButton,
   FacebookIcon,
-  TwitterShareButton,
-  TwitterIcon,
-  LinkedinShareButton,
+  FacebookShareButton,
   LinkedinIcon,
-  EmailShareButton, EmailIcon, WhatsappShareButton, WhatsappIcon, FacebookMessengerShareButton, FacebookMessengerIcon,
+  LinkedinShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
 } from 'react-share'
 import { ClassNameProp } from '../types/react'
 

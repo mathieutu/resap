@@ -19,7 +19,7 @@ export const SearchInput = ({
 
   useEffect(() => {
     refine(debouncedValue)
-  }, [debouncedValue])
+  }, [refine, debouncedValue])
 
   return (
     <>

@@ -1,19 +1,19 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
-import { SearchIcon } from '@heroicons/react/solid';
-import { NextSeo } from 'next-seo';
-import { Configure } from 'react-instantsearch-hooks';
-import { Layout } from '../../../components/Layout/Layout';
-import { FicheCard } from '../../../components/Card/FicheCard';
-import { SimpleHeader } from '../../../components/Layout/SimpleHeader';
-import { SearchInput } from '../../../components/Search/SearchInput';
-import { SearchResults } from '../../../components/Search/SearchResults';
-import { SearchContext } from '../../../components/Search/SearchContext';
-import { IndicesNames } from '../../../services/algolia.browser';
-import { categories, CategorieSlug } from '../../../data/categories';
-import { BackToHomeLink } from '../../../components/CategorieLink';
-import { Container } from '../../../components/Layout/Container';
-import { Fiche } from '../../../types/models';
-import { isPreviewForced } from '../../../services/contentful';
+import { GetStaticPaths, GetStaticProps } from 'next'
+import { SearchIcon } from '@heroicons/react/solid'
+import { NextSeo } from 'next-seo'
+import { Configure } from 'react-instantsearch-hooks'
+import { Layout } from '../../../components/Layout/Layout'
+import { FicheCard } from '../../../components/Card/FicheCard'
+import { SimpleHeader } from '../../../components/Layout/SimpleHeader'
+import { SearchInput } from '../../../components/Search/SearchInput'
+import { SearchResults } from '../../../components/Search/SearchResults'
+import { SearchContext } from '../../../components/Search/SearchContext'
+import { IndicesNames } from '../../../services/algolia.browser'
+import { categories, CategorieSlug } from '../../../data/categories'
+import { BackToHomeLink } from '../../../components/CategorieLink'
+import { Container } from '../../../components/Layout/Container'
+import { Fiche } from '../../../types/models'
+import { isPreviewForced } from '../../../services/contentful'
 
 type Props = { categorieSlug: CategorieSlug }
 

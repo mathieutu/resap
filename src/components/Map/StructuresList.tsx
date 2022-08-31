@@ -1,13 +1,13 @@
-import dynamic from 'next/dynamic';
-import { ReactNode, useEffect, useRef, useState } from 'react';
-import classNames from 'classnames';
-import { XIcon } from '@heroicons/react/outline';
-import { AtSymbolIcon, LocationMarkerIcon, PhoneIcon } from '@heroicons/react/solid';
-import { useRouter } from 'next/router';
-import { Structure } from '../../types/models';
-import type { MapProps } from './Map';
-import { types } from '../../data/structures_types';
-import { ChildrenProp } from '../../types/react';
+import dynamic from 'next/dynamic'
+import { ReactNode, useEffect, useRef, useState } from 'react'
+import classNames from 'classnames'
+import { XIcon } from '@heroicons/react/outline'
+import { AtSymbolIcon, LocationMarkerIcon, PhoneIcon } from '@heroicons/react/solid'
+import { useRouter } from 'next/router'
+import { Structure } from '../../types/models'
+import type { MapProps } from './Map'
+import { types } from '../../data/structures_types'
+import { ChildrenProp } from '../../types/react'
 
 type StructureListItemProps = {
   structure: Structure,
@@ -108,6 +108,7 @@ export const StructuresList = ({
   const [selectedStructureRefClientHeight, setSelectedStructureRefClientHeight] = useState<number | undefined>()
 
   // 🤷‍ It's working fine like that. I don't understand how it does not infinitely rerender.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { setSelectedStructureRefClientHeight(selectedStructureRef.current?.clientHeight) })
 
   return (

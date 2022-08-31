@@ -1,6 +1,6 @@
-import { InstantSearch, InstantSearchSSRProvider } from 'react-instantsearch-hooks';
-import { ReactNode } from 'react';
-import { IndicesNames, searchClient } from '../../services/algolia.browser';
+import { InstantSearch, InstantSearchSSRProvider } from 'react-instantsearch-hooks'
+import { ReactNode } from 'react'
+import { IndicesNames, searchClient } from '../../services/algolia.browser'
 
 type SearchContextProps = {
   children: ReactNode,

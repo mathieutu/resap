@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { createControlComponent } from '@react-leaflet/core'
-import type { LatLng, Map } from 'leaflet'
-import { Control, DomEvent, DomUtil, Util } from 'leaflet'
+import type { Map } from 'leaflet'
+import { Control, DomEvent, DomUtil } from 'leaflet'
 
 const CurrentLocationControlFactory = Control.extend({
   onAdd(map: Map) {
