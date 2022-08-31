@@ -1,6 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:@next/next/recommended'],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:@next/next/recommended', 'plugin:react-hooks/recommended'],
   plugins: ['@typescript-eslint/eslint-plugin'],
   root: true,
   env: {

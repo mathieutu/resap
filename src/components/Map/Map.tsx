@@ -20,7 +20,7 @@ const UpdateViewWhenSelectingStructure = ({ selectedStructure: s }: { selectedSt
     if (s) {
       map.flyTo([s.latLon.lat, s.latLon.lon])
     }
-  }, [s])
+  }, [map, s])
 
   return null
 }
