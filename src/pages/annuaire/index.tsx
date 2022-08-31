@@ -31,7 +31,7 @@ const SearchField = () => (
     </div>
     <SearchInput
       className="w-full border border-gray-default placeholder-gray-default rounded-md shadow-sm pl-3 pl-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-default focus:border-blue-default text-sm"
-      label="Recherche"
+      label="Chercher dans la zone"
     />
   </div>
 )
@@ -54,7 +54,7 @@ export default function Annuaire() {
                 <div className="col-span-2">
                   <SearchFacet
                     attribute="type"
-                    label="Types de dispositif"
+                    label="Filtrer par dispositifs dans la zone"
                     getItemLabel={item => types[item.value as StructureType].nom}
                     getItemClassName={item => types[item.value as StructureType].colorClassname}
                     className="relative w-full bg-white border border-gray-default rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm"

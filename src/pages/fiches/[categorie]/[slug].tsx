@@ -141,14 +141,14 @@ export default function FichePage({ fiche }: Props) {
                   Masquer les détails
                 </SecondaryButton>
               </Transition>
-              <div className="mt-10">
-                {fiche.structures?.length ? <StructuresList structures={fiche.structures} /> : null}
-              </div>
             </div>
             <div className="w-full lg:w-4/12 lg:px-4 print:hidden space-y-10">
               <LinksCard title="Quelques outils" links={fiche.outils} />
               <LinksCard title="Pour les patients" links={fiche.patients} />
               <LinksCard title="Pour aller plus loin" links={fiche.pourEnSavoirPlus} />
+            </div>
+            <div className="w-full">
+              {fiche.structures?.length ? <StructuresList structures={fiche.structures} /> : null}
             </div>
           </div>
         </Container>
