@@ -74,7 +74,7 @@ export const HomeHeader = () => (
               </div>
             </nav>
           </div>
-          <div className="flex justify-end flex-wrap gap-4 hidden lg:block">
+          <div className="flex justify-end flex-wrap gap-4 lg:block">
             <p className="flex gap-8 items-center flex-nowrap">
               <img className="h-10" src="/partenaires/logo-ars.png" alt="Logo ARS" />
               <img className="h-12" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
