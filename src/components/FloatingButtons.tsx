@@ -3,7 +3,6 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import {
   EmailIcon,
-  EmailShareButton,
   FacebookIcon,
   FacebookShareButton,
   LinkedinIcon,
@@ -96,19 +95,24 @@ const ShareButton = () => (
             )}
           </Menu.Item>
           <Menu.Item>
-            {({ active }) => (
-              <EmailShareButton
-                resetButtonStyle={false}
-                url={window.location.href}
-                className={classNames(
-                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                  'group flex items-center px-4 py-2 text-sm w-full',
-                )}
-              >
-                <EmailIcon className="mr-3 h-5 w-5 rounded-full" />
-                Email
-              </EmailShareButton>
-            )}
+            {({ active }) => {
+              const params = new URLSearchParams()
+              params.append('subject', document.title)
+              params.append('body', `Bonjour, \nj'ai trouvé une page qui peut vous intéresser sur le site resap.fr : \n${window.location.href} \nCordialement,`)
+
+              return (
+                <a
+                  href={`mailto:?${params.toString()}`}
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'group flex items-center px-4 py-2 text-sm w-full',
+                  )}
+                >
+                  <EmailIcon className="mr-3 h-5 w-5 rounded-full" />
+                  Email
+                </a>
+              )
+            }}
           </Menu.Item>
           <Menu.Item>
             {({ active }) => (
