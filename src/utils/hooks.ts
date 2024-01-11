@@ -19,7 +19,11 @@ export const useSearchFichesForm = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    return router.push(`/fiches?query=${value}`)
+    router.replace(`/fiches?query=${value}`).then(() => {
+      if (router.pathname === '/fiches') {
+        router.reload()
+      }
+    })
   }
 
   return {

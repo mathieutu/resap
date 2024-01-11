@@ -52,7 +52,7 @@ export const Navbar = () => {
                   <input
                     id="search"
                     name="search"
-                    className="w-full block pl-10 l-10  py-2 border border-gray-default rounded-md leading-5 bg-white placeholder-gray-default focus:outline-none focus:placeholder-gray-default focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm"
+                    className="w-full block pl-10 py-2 border border-gray-default rounded-md leading-5 bg-white placeholder-gray-default focus:outline-none focus:placeholder-gray-default focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm"
                     placeholder="Recherchez parmi nos fiches"
                     type="search"
                     size={42}

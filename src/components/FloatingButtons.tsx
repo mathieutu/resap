@@ -99,6 +99,7 @@ const ShareButton = () => (
             {({ active }) => (
               <EmailShareButton
                 resetButtonStyle={false}
+                openShareDialogOnClick={true}
                 url={window.location.href}
                 className={classNames(
                   active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',

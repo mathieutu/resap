@@ -79,9 +79,9 @@ export const Footer = () => (
       </div>
       <div className="mt-6 border-t border-gray-200 pt-6 flex justify-between items-center flex-wrap gap-4">
         <p className="flex gap-8 items-center flex-wrap">
-          <img className="h-10 brightness-0 invert" src="/partenaires/logo-ca.png" alt="Logo Crédit agricole" />
-          <img className="h-10 brightness-0 invert" src="/partenaires/logo-ars.png" alt="Logo ARS" />
-          <img className="h-12 brightness-0 invert" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
+          <a href="https://www.fondation-ca-solidaritedeveloppement.org/"><img className="h-10 brightness-0 invert" src="/partenaires/logo-ca.png" alt="Logo Crédit agricole" /></a>
+          <a href="https://www.ars.sante.fr/"><img className="h-10 brightness-0 invert" src="/partenaires/logo-ars.png" alt="Logo ARS" /></a>
+          <a href="https://www.gouvernement.fr/"><img className="h-12 brightness-0 invert" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" /></a>
         </p>
         <p className="text-base text-white">&copy; {new Date().getFullYear()} RESAP</p>
       </div>
