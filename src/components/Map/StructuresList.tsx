@@ -15,7 +15,7 @@ type StructureListItemProps = {
   onClick: (structure: Structure) => void,
 };
 
-const LinkToCoordinate = ({ href, selected, children }: {href: string, selected?: boolean} & ChildrenProp) => {
+const LinkToCoordinate = ({ href, selected, children }: { href: string, selected?: boolean } & ChildrenProp) => {
   if (!selected) return <span className="inline-flex items-center gap-1">{children}</span>
 
   return (
@@ -48,21 +48,29 @@ const StructureListItem = ({
       </LinkToCoordinate>
     </p>
     {s.tel
-        && (
-          <p>
-            <LinkToCoordinate selected={selected!} href={`tel:${s.tel}`}>
-              <PhoneIcon className="h-4 w-4" /> {s.tel}
-            </LinkToCoordinate>
-          </p>
-        )}
+      && (
+        <p>
+          <LinkToCoordinate selected={selected!} href={`tel:${s.tel}`}>
+            <PhoneIcon className="h-4 w-4" /> {s.tel}
+          </LinkToCoordinate>
+        </p>
+      )}
     {s.email
-        && (
-          <p>
-            <LinkToCoordinate selected={selected!} href={`mailto:${s.email}`}>
-              <AtSymbolIcon className="h-4 w-4" /> {s.email}
-            </LinkToCoordinate>
-          </p>
-        )}
+      && (
+        <p>
+          <LinkToCoordinate selected={selected!} href={`mailto:${s.email}`}>
+            <AtSymbolIcon className="h-4 w-4" /> {s.email}
+          </LinkToCoordinate>
+        </p>
+      )}
+    {s.siteWeb
+      && (
+        <p>
+          <LinkToCoordinate selected={selected!} href={`${s.siteWeb}`}>
+            <AtSymbolIcon className="h-4 w-4" /> {s.siteWeb}
+          </LinkToCoordinate>
+        </p>
+      )}
     {selected && <XIcon className="absolute top-1 right-2 h-5 w-5 text-gray-300 group-hover:text-blue-default" />}
   </div>
 )
