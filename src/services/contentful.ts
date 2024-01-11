@@ -6,7 +6,7 @@ import { BLOCKS, Document } from '@contentful/rich-text-types'
 import { Fiche, Structure } from '../types/models'
 import { CategorieSlug } from '../data/categories'
 
-const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
+const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW, CONTENTFUL_ENVIRONMENT } = process.env
 
 if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_PREVIEW_ACCESS_TOKEN || !CONTENTFUL_ACCESS_TOKEN) {
   throw new Error('CONTENTFUL env vars needed (SPACE_ID, PREVIEW_ACCESS_TOKEN, ACCESS_TOKEN).')
@@ -72,6 +72,7 @@ const getEntries = async <T extends Record<string, unknown>>(
     space: CONTENTFUL_SPACE_ID,
     accessToken: preview ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
     host: preview ? 'preview.contentful.com' : 'cdn.contentful.com',
+    environment: CONTENTFUL_ENVIRONMENT,
   })
 
   const getAllItems = async (offset = 0): Promise<any[]> => {
