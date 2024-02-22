@@ -68,7 +68,7 @@ export default function Annuaire() {
                     getItemClassName={(item) =>
                       types[item.value as StructureType].colorClassname
                     }
-                    className="relative w-full bg-white border border-gray-default rounded-md shadow-sm pl-3 md:pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm"
+                    className="relative w-full bg-white border border-gray-default rounded-md shadow-sm pl-3 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm md:pr-10"
                   />
                 </div>
                 <SearchField />

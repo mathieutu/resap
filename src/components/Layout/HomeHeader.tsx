@@ -41,7 +41,7 @@ export const HomeHeader = () => (
     <div className="max-w-7xl mx-auto">
       <Popover>
         <div className="bg-white flex justify-between lg:px-8 pt-6 px-4 relative sm:px-6 z-30">
-          <div className="w-full">
+          <div className="w-full h-auto">
             <nav
               className="relative flex items-center justify-between sm:h-10 lg:justify-start"
               aria-label="Global"

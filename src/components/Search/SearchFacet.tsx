@@ -30,7 +30,7 @@ export const SearchFacet = ({
           <Listbox.Label className="sr-only">{label}</Listbox.Label>
           <div className="mt-1 relative">
             <Listbox.Button className={className}>
-              <span className="w-full inline-flex truncate gap-2 flex-wrap">
+              <span className="w-full inline-flex flex-wrap truncate gap-2">
                 {refinedItems.length ? (
                   refinedItems.map((item) => (
                     <span
