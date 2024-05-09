@@ -65,7 +65,7 @@ export default function APropos() {
             <h2>Plusieurs organisations ont rapidement contribué au projet</h2>
 
             <h3>La délégation régionale Auvergne-Rhône-Alpes Médecins du Monde</h3>
-            <p>Elle déploie des programmes sur le territoire de Lyon, de Grenoble, mais également des Combrailles (Auvergne). </p>
+            <p>Elle déploie des programmes sur le territoire de Lyon, de Grenoble. </p>
             <p>Pour faire vivre ces programmes, la délégation s&#39;appuie sur une équipe salariée mais également sur des bénévoles, et notamment de médecins bénévoles (qui pratiquent en cabinet par ailleurs). Afin de favoriser l&#39;accès aux soins des plus précaires, l&#39;association a mis en place (Grenoble/ Lyon) des partenariats avec certains médecins libéraux pour l&#39;orientation des patients en situation de précarité.</p>
 
             <h3>La Fédération des Acteurs de la Solidarité Auvergne Rhône Alpes</h3>
