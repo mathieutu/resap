@@ -4,19 +4,14 @@ import { SimpleHeader } from '../../components/Layout/SimpleHeader'
 import { AlgoliaSSRProps, IndicesNames } from '../../services/algolia.browser'
 import { Container } from '../../components/Layout/Container'
 import { isPreviewForced } from '../../services/contentful'
-import { Card } from '../../components/Dashboard/Card'
 
-export default function Dashboard(algoliaProps: AlgoliaSSRProps) {
+export default function Annuaire(algoliaProps: AlgoliaSSRProps) {
     return (
         <Layout className="bg-gray-light">
-            <SimpleHeader className="h-[350px]" title="Dashboard" titleClassName="text-blue-default" subTitle="" children="">
+            <SimpleHeader className="h-[350px]" title="Fiches pratiques" titleClassName="text-blue-default" subTitle="" children="">
             </SimpleHeader>
             <Container className="flex justify-around -mt-24 pb-12">
-                <Card title="Fiches pratiques" link="/dashboard/fiches" />
-                <Card title="Annuaire" link="/dashboard/annuaire" />
-                <Card title="Type de structure" link="/dashboard/structure" />
-                <Card title="Catégories" link="/dashboard/categories" />
-                <Card title="A propos" link="/dashboard/a-propos" />
+                <p>Page contenant le back-office des fiches pratiques</p>
             </Container>
         </Layout>
     )
