@@ -1,17 +1,14 @@
 type Props = {
     title: string,
-    link: string
+    link: string,
 }
 
 export const Card = ({ title, link }: Props) => {
     return (
-
-
-        <div className="max-w-sm p-6 bg-white rounded-lg shadow-lg overflow-hidden bg-white">
+        <div className="w-1/4 p-6 bg-white rounded-lg shadow-lg overflow-hidden bg-white">
             <a href={link}>
-                <h5 className="text-xl font-semibold text-gray-900">{ title }</h5>
+                <h5 className="text-xl font-semibold text-gray-900">{title}</h5>
             </a>
-            <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">Il y a ... fiches pratiques</p>
             <a href={link} className="inline-flex font-medium items-center text-blue-600 hover:underline">
                 Accéder
                 <svg className="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
@@ -19,6 +16,5 @@ export const Card = ({ title, link }: Props) => {
                 </svg>
             </a>
         </div>
-
     )
 }
