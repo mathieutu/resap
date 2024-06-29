@@ -12,10 +12,32 @@ type OptionType = {
 };
 
 const options: OptionType[] = [
-    { id: 1, label: 'Option 1' },
-    { id: 2, label: 'Option 2' },
-    { id: 3, label: 'Option 3' },
-    // Add more options here
+    { id: 1, label: 'Accompagnement MNA' },
+    { id: 2, label: 'Association d\'aide aux migrants' },
+    { id: 3, label: 'Association LGBTQIA+' },
+    { id: 4, label: 'Associations caritatives - Distribution Alimentaire' },
+    { id: 5, label: 'Associations d\'accompagnement personnes en situation de prostitution' },
+    { id: 6, label: 'CAARUD' },
+    { id: 7, label: 'CADA' },
+    { id: 8, label: 'CAES' },
+    { id: 9, label: 'CD' },
+    { id: 10, label: 'CEGIDD' },
+    { id: 11, label: 'Centre de vaccination' },
+    { id: 12, label: 'COREVIH' },
+    { id: 13, label: 'CPH' },
+    { id: 14, label: 'CPTS' },
+    { id: 15, label: 'CSAPA' },
+    { id: 16, label: 'Filières gérontologiques' },
+    { id: 17, label: 'HUDA' },
+    { id: 18, label: 'MDPH' },
+    { id: 19, label: 'MSP' },
+    { id: 20, label: 'OFII' },
+    { id: 21, label: 'PASS' },
+    { id: 22, label: 'PRAHDA' },
+    { id: 23, label: 'Préfecture' },
+    { id: 24, label: 'Réseaux polyvalents (tous âges et toutes pathologies)' },
+    { id: 25, label: 'SIAO' },
+    { id: 26, label: 'SPADA' },
 ];
 
 export default function Annuaire(algoliaProps: AlgoliaSSRProps) {
@@ -45,22 +67,23 @@ export default function Annuaire(algoliaProps: AlgoliaSSRProps) {
                     <div className="space-y-12">
                         <div className="border-b border-gray-900/10 pb-12">
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                                <div className="sm:col-span-4">
+                                <div className="sm:col-span-full">
                                     <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">Titre</label>
-                                    <div className="mt-2">
-                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <div className="mt-2 w-full">
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                                             <input type="text" name="title" id="title" autoComplete="title" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="sm:col-span-3">
+                                <div className="sm:col-span-full">
                                     <label htmlFor="category" className="block text-sm font-medium leading-6 text-gray-900">Catégorie</label>
-                                    <div className="mt-2">
-                                        <select id="category" name="category" autoComplete="category" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                            <option>United States</option>
-                                            <option>Canada</option>
-                                            <option>Mexico</option>
+                                    <div className="mt-2 w-full">
+                                        <select id="category" name="category" autoComplete="category" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            <option value={'sante'}>Santé</option>
+                                            <option value={'besoins-primaires'}>Besoins primaires</option>
+                                            <option value={'social'}>Social</option>
+                                            <option value={'interpretariat'}>Iterpretariat</option>
                                         </select>
                                     </div>
                                 </div>
@@ -74,7 +97,7 @@ export default function Annuaire(algoliaProps: AlgoliaSSRProps) {
                                             </svg>
                                             <div className="mt-4 flex text-sm leading-6 text-gray-600">
                                                 <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                                                    <span>Ajouter une image</span>
+                                                    <span>Ajouter une illustration</span>
                                                     <input id="file-upload" name="file-upload" type="file" className="sr-only" />
                                                 </label>
                                                 <p className="pl-1">ou glissez et déposez</p>
@@ -92,12 +115,64 @@ export default function Annuaire(algoliaProps: AlgoliaSSRProps) {
                                     <p className="mt-3 text-sm leading-6 text-gray-600">Courte description apparaissant dans la recherche et les listes. Maximum 280 characters</p>
                                 </div>
 
-                                <div className="relative w-64">
+                                <div className="col-span-full">
+                                    <label htmlFor="resume" className="block text-sm font-medium leading-6 text-gray-900">Resumé</label>
+                                    <div className="mt-2">
+                                        <textarea id="resume" name="resume" rows={3} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                    </div>
+                                    <p className="mt-3 text-sm leading-6 text-gray-600">Un résumé qui s'affichera en premier sur la fiche.</p>
+                                </div>
+
+                                <div className="col-span-full">
+                                    <label htmlFor="content" className="block text-sm font-medium leading-6 text-gray-900">Contenu</label>
+                                    <div className="mt-2">
+                                        <textarea id="content" name="content" rows={3} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                    </div>
+                                </div>
+
+                                <div className="col-span-full">
+                                    <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">Tags</label>
+                                    <div className="mt-2">
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                                            <input type="text" name="title" id="title" autoComplete="title" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                        </div>
+                                    </div>
+                                    <p className="mt-3 text-sm leading-6 text-gray-600">Une suite de mots, pour identifier et rechercher la fiche.</p>
+                                </div>
+                                
+                                <div className="col-span-full">
+                                    <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">Pour aller plus loin</label>
+                                    <div className="mt-2">
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                                            <input type="text" name="title" id="title" autoComplete="title" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col-span-full">
+                                    <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">Quelques Outils</label>
+                                    <div className="mt-2">
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                                            <input type="text" name="title" id="title" autoComplete="title" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="sm:col-span-full">
+                                    <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">Pour les patients</label>
+                                    <div className="mt-2">
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                                            <input type="text" name="title" id="title" autoComplete="title" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="relative w-96">
                                     <div
                                         onClick={toggleDropdown}
                                         className="bg-white border border-gray-300 rounded-md p-2 flex justify-between items-center cursor-pointer"
                                     >
-                                        <span>{selectedOptions.length > 0 ? selectedOptions.map(opt => opt.label).join(', ') : 'Choisir des tags'}</span>
+                                        <span>{selectedOptions.length > 0 ? selectedOptions.map(opt => opt.label).join(', ') : 'Types de dispositif'}</span>
 
                                         <svg
                                             className="w-5 h-5"
@@ -140,6 +215,7 @@ export default function Annuaire(algoliaProps: AlgoliaSSRProps) {
                                         </div>
                                     )}
                                 </div>
+
                             </div>
                         </div>
                         <div className="mt-6 flex items-center justify-end gap-x-6">
