@@ -3,9 +3,8 @@ import { Container } from "../../../components/Layout/Container";
 import { Layout } from "../../../components/Layout/Layout";
 import { SimpleHeader } from "../../../components/Layout/SimpleHeader";
 import { getEntries } from "../../../services/manageContent";
-import { GetStaticPaths } from "next";
 import Link from "next/link";
-import { FicheCard } from "../../../components/Dashboard/FicheCard";
+import { Card } from "../../../components/Dashboard/Card";
 
 export default function ListeFiches() {
 
@@ -33,7 +32,7 @@ export default function ListeFiches() {
                         {fiches.map(fiche =>
                             <Link href={{ pathname: `/dashboard/fiches/${fiche.sys.id}` }}>
                                 <a>
-                                    <FicheCard title={fiche.fields.titre.fr} id={fiche.sys.id} />
+                                    <Card title={fiche.fields.titre.fr} id={fiche.sys.id} />
                                 </a>
                             </Link>
                         )}

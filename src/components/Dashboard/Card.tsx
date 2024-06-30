@@ -1,11 +1,9 @@
-
-import Link from "next/link";
 type Props = {
     title: string,
     id: string
 }
 
-export const FicheCard = ({ title, id }: Props) => {
+export const Card = ({ title, id }: Props) => {
 
     console.log(`/dashboard/fiches/${id}`)
     return (
