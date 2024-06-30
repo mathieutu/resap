@@ -1,12 +1,12 @@
 import axios from "axios";
 import { createClient } from "contentful";
 
-export async function getEntries(contentType: string): Promise<any[]> {
-    const CONTENTFUL_SPACE_ID = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
-    const CONTENTFUL_MANAGEMENT_TOKEN = process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN
-    const CONTENTFUL_ENVIRONMENT = process.env.NEXT_PUBLIC_CONTENTFUL_ENVIRONMENT
+function createContentManagementClient() {
+    const CONTENTFUL_SPACE_ID = "9u74ojeq10qz";
+    const CONTENTFUL_MANAGEMENT_TOKEN = "CFPAT-VKSKtnR5wGLpNCDwEQLwVpav-pJb7XpBR34CMujwT8k";
+    const CONTENTFUL_ENVIRONMENT = "dev";
     if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_MANAGEMENT_TOKEN || !CONTENTFUL_ENVIRONMENT) {
-        return [];
+        return null;
     }
     const client = createClient({
         space: CONTENTFUL_SPACE_ID,
@@ -14,7 +14,30 @@ export async function getEntries(contentType: string): Promise<any[]> {
         host: 'api.contentful.com',
         environment: CONTENTFUL_ENVIRONMENT,
     })
-    const response  = await client.getEntries(contentType)
+    return client;
+}
 
-    return response.items;
+export async function getEntries(contentType: string): Promise<Array<Record<string, any>>> {
+    const client = createContentManagementClient();
+    if (!client) {
+        // TODO throw error
+        return []
+    }
+
+    const response  = await client.getEntries({
+        content_type: contentType,
+    })
+
+    return response.items as Array<Record<string, any>>;
+}
+
+export async function getSingleEntry(id: string): Promise<Record<string, any>|null> {
+    const client = createContentManagementClient();
+    if (!client) {
+        // TODO throw error
+        return null
+    }
+    const response = await client.getEntry(id)
+    console.log(response);
+    return response
 }
