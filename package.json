@@ -22,6 +22,7 @@
     "@heroicons/react": "^1.0.6",
     "@react-leaflet/core": "^2.0.1",
     "@tailwindcss/line-clamp": "^0.4.0",
+    "@tinymce/tinymce-react": "^5.1.1",
     "@types/leaflet.markercluster": "^1.5.1",
     "algoliasearch": "^4.14.2",
     "axios": "^0.27.2",
