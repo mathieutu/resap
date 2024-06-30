@@ -4,7 +4,6 @@ import { Layout } from '../../../components/Layout/Layout'
 import { SimpleHeader } from '../../../components/Layout/SimpleHeader'
 import { AlgoliaSSRProps, IndicesNames } from '../../../services/algolia.browser'
 import { Container } from '../../../components/Layout/Container'
-import { Editor } from '@tinymce/tinymce-react'
 import { isPreviewForced } from '../../../services/contentful'
 
 type OptionType = {
@@ -136,24 +135,8 @@ export default function Annuaire(algoliaProps: AlgoliaSSRProps) {
                                 <div className="col-span-full">
                                     <label htmlFor="resume" className="block text-sm font-medium leading-6 text-gray-900">Resumé</label>
                                     <div className="mt-2">
-                                        <Editor
-                                            apiKey='xbi1qu2whkqzxvp4t2sukbs69yqcdjby6ufpgikv3qqg9kgi'
-                                            init={{
-                                                height: 500,
-                                                width: 1200,
-                                                menubar: false,
-                                                plugins: [
-                                                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                                                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                                                    'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                                                ],
-                                                toolbar: 'undo redo | blocks | ' +
-                                                    'bold italic forecolor | alignleft aligncenter ' +
-                                                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                                                    'removeformat | help',
-                                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                                            }}
-                                            onEditorChange={(value) => setResume(value)}
+                                    <textarea
+                                            onChange={(e) => setResume(e.target.value)}
                                         />
                                     </div>
                                     <p className="mt-3 text-sm leading-6 text-gray-600">Un résumé qui s'affichera en premier sur la fiche.</p>
@@ -162,24 +145,8 @@ export default function Annuaire(algoliaProps: AlgoliaSSRProps) {
                                 <div className="col-span-full">
                                     <label htmlFor="content" className="block text-sm font-medium leading-6 text-gray-900">Contenu</label>
                                     <div className="mt-2">
-                                        <Editor
-                                            apiKey='xbi1qu2whkqzxvp4t2sukbs69yqcdjby6ufpgikv3qqg9kgi'
-                                            init={{
-                                                height: 500,
-                                                width: 1200,
-                                                menubar: false,
-                                                plugins: [
-                                                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                                                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                                                    'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                                                ],
-                                                toolbar: 'undo redo | blocks | ' +
-                                                    'bold italic forecolor | alignleft aligncenter ' +
-                                                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                                                    'removeformat | help',
-                                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                                            }}
-                                            onEditorChange={(value) => setResume(value)}
+                                    <textarea
+                                            onChange={(e) => setContent(e.target.value)}
                                         />
                                     </div>
                                 </div>

@@ -4,7 +4,6 @@ import { Layout } from "../../../components/Layout/Layout"
 import { SimpleHeader } from "../../../components/Layout/SimpleHeader"
 import { useEffect, useState } from "react"
 import { createEntry, getSingleEntry, patchEntry } from "../../../services/manageContent"
-import { Editor } from "@tinymce/tinymce-react"
 
 type OptionType = {
     id: number
@@ -54,7 +53,7 @@ export default function FicheForm() {
     const [illustration, setIllustration] = useState('');
     const [description, setDescription] = useState('');
     const [resume, setResume] = useState('');
-    const [contenu, setContenu] = useState('');
+    const [content, setContent] = useState('');
     const [tags, setTags] = useState([] as string[]);
     /*
     const [plusLoin, setPlusLoin] = useState('')
@@ -97,7 +96,7 @@ export default function FicheForm() {
             //setIllustration(result.fields.illustration.fr);
             setDescription((result.fields.description) ? result.fields.description.fr : '');
             setResume((result.fields.resume) ? result.fields.resume.fr : '');
-            setContenu((result.fields.contenu) ? result.fields.contenu.fr : '');
+            setContent((result.fields.contenu) ? result.fields.contenu.fr : '');
             setTags((result.fields.tags) ? result.fields.tags.fr : '');
             /*
             setPlusLoin(result.fields.plusLoin.fr);
@@ -135,7 +134,7 @@ export default function FicheForm() {
                 //illustration,
                 //description,
                 //resume,
-                contenu,
+                content,
                 tags
             }
             const result = await patchEntry(id, payload, sys.version)
@@ -153,8 +152,8 @@ export default function FicheForm() {
 
     useEffect(onTitleChange, [titre])
     useEffect(() => {
-        console.log(contenu)
-    }, [contenu])
+        console.log(content)
+    }, [content])
 
 
     return (
@@ -228,24 +227,8 @@ export default function FicheForm() {
                                 <div className="col-span-full">
                                     <label htmlFor="resume" className="block text-sm font-medium leading-6 text-gray-900">Resumé</label>
                                     <div className="mt-2">
-                                        <Editor
-                                            apiKey='xbi1qu2whkqzxvp4t2sukbs69yqcdjby6ufpgikv3qqg9kgi'
-                                            init={{
-                                                height: 500,
-                                                width: 1200,
-                                                menubar: false,
-                                                plugins: [
-                                                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                                                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                                                    'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                                                ],
-                                                toolbar: 'undo redo | blocks | ' +
-                                                    'bold italic forecolor | alignleft aligncenter ' +
-                                                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                                                    'removeformat | help',
-                                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                                            }}
-                                            onEditorChange={(value) => setResume(value)}
+                                        <textarea
+                                            onChange={(e) => setResume(e.target.value)}
                                         />
                                     </div>
                                     <p className="mt-3 text-sm leading-6 text-gray-600">Un résumé qui s'affichera en premier sur la fiche.</p>
@@ -254,24 +237,8 @@ export default function FicheForm() {
                                 <div className="col-span-full">
                                     <label htmlFor="content" className="block text-sm font-medium leading-6 text-gray-900">Contenu</label>
                                     <div className="mt-2">
-                                        <Editor
-                                            apiKey='xbi1qu2whkqzxvp4t2sukbs69yqcdjby6ufpgikv3qqg9kgi'
-                                            init={{
-                                                height: 500,
-                                                width: 1200,
-                                                menubar: false,
-                                                plugins: [
-                                                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                                                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                                                    'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                                                ],
-                                                toolbar: 'undo redo | formatselect | ' +
-                                                'bold italic backcolor | alignleft aligncenter ' +
-                                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                                'removeformat | h1 h2 h3 | help',
-                                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                                            }}
-                                            onEditorChange={(value) => setContenu(value)}
+                                        <textarea
+                                            onChange={(e) => setContent(e.target.value)}
                                         />
                                     </div>
                                 </div>

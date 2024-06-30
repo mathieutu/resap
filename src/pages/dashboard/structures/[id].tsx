@@ -4,7 +4,6 @@ import { Layout } from "../../../components/Layout/Layout"
 import { SimpleHeader } from "../../../components/Layout/SimpleHeader"
 import { useEffect, useState } from "react"
 import { createEntry, getSingleEntry, patchEntry } from "../../../services/manageContent"
-import { Editor } from "@tinymce/tinymce-react"
 
 
 import { types } from "../../../data/structures_types"
