@@ -91,16 +91,14 @@ export default function FicheForm() {
     async function fetchFiche(id: string) {
         const result = await getSingleEntry(id);
         if (result) {
-            console.log(result.fields)
-            setTitre(result.fields.titre.fr);
-            setCategorie(result.fields.categorie.fr);
+            // console.log(result.fields)
+            setTitre( (result.fields.titre) ? result.fields.titre.fr : '');
+            setCategorie((result.fields.categorie) ? result.fields.categorie.fr : '');
             //setIllustration(result.fields.illustration.fr);
-            setDescription(result.fields.description.fr);
-            setResume(result.fields.resume.fr);
-            setContenu(result.fields.contenu.fr);
-            setTags(result.fields.tags.fr);
-            /*
-            */
+            setDescription((result.fields.description) ? result.fields.description.fr : '');
+            setResume((result.fields.resume) ? result.fields.resume.fr : '');
+            setContenu((result.fields.contenu) ? result.fields.contenu.fr : '');
+            setTags((result.fields.tags) ? result.fields.tags.fr : '');
             /*
             setPlusLoin(result.fields.plusLoin.fr);
             setTools(result.fields.tools.fr)
@@ -126,6 +124,7 @@ export default function FicheForm() {
                 //contenu,
                 tags
             };
+            
             const result = await createEntry('fiche', payload)
         } else {
             // update

@@ -5,6 +5,7 @@ import { SimpleHeader } from "../../../components/Layout/SimpleHeader";
 import { getEntries } from "../../../services/manageContent";
 import { GetStaticPaths } from "next";
 import Link from "next/link";
+import { FicheCard } from "../../../components/Dashboard/FicheCard";
 
 export default function ListeFiches() {
 
@@ -21,20 +22,22 @@ export default function ListeFiches() {
 
     return (
         <Layout className="bg-gray-50">
-            <SimpleHeader className="h-[250px]" title="Fiches pratiques" titleClassName="text-blue-default" subTitle="">
-                <Container className="flex justify-around pb-12">
-                    <button>
+            <SimpleHeader className="h-fit" title="Fiches pratiques" titleClassName="text-blue-default" subTitle="">
+                <Container className="m-5">
+                    <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         <Link href={{ pathname: `/dashboard/fiches/new` }}>Nouvelle fiche</Link>
                     </button>
-                    <ul>
+                </Container>
+                <Container className="flex justify-around pb-12">
+                    <div className="w-full grid grid-cols-4 gap-2">
                         {fiches.map(fiche =>
-                            <li key={fiche.sys.id}>
-                                <Link href={{ pathname: `/dashboard/fiches/${fiche.sys.id}` }}>
-                                    {fiche.fields.titre.fr}
-                                </Link>
-                            </li>
+                            <Link href={{ pathname: `/dashboard/fiches/${fiche.sys.id}` }}>
+                                <a>
+                                    <FicheCard title={fiche.fields.titre.fr} id={fiche.sys.id} />
+                                </a>
+                            </Link>
                         )}
-                    </ul>
+                    </div>
                 </Container>
             </SimpleHeader>
         </Layout>
