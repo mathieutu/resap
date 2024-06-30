@@ -12,12 +12,10 @@ export default function ListeFiches() {
 
     async function fetchFiches() {
         const result = await getEntries('fiche');
-        console.log(result)
         setFiches(result)
     }
 
     useEffect(() => {
-        console.log("dud")
         fetchFiches();
     }, [])
 

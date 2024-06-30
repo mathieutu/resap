@@ -1,5 +1,7 @@
 import axios from "axios";
 import { createClient } from "contentful";
+import path from "path";
+import { config } from "process";
 
 function createContentManagementClient() {
     const CONTENTFUL_SPACE_ID = "9u74ojeq10qz";
@@ -38,6 +40,34 @@ export async function getSingleEntry(id: string): Promise<Record<string, any>|nu
         return null
     }
     const response = await client.getEntry(id)
-    console.log(response);
     return response
+}
+
+export async function patchEntry(id: string, payload: Record<string, any>, version: number): Promise<any> {
+    
+    const CONTENTFUL_SPACE_ID = "9u74ojeq10qz";
+    const CONTENTFUL_MANAGEMENT_TOKEN = "CFPAT-VKSKtnR5wGLpNCDwEQLwVpav-pJb7XpBR34CMujwT8k";
+    const CONTENTFUL_ENVIRONMENT = "dev";
+
+    const operations = []
+    for (let key in payload) {
+        operations.push({
+            op: 'add',
+            path: `/fields/${key}/fr`,
+            value: payload[key]
+        })
+    }
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json-patch+json',
+            'X-Contentful-Version': version,
+            'Authorization': `Bearer ${CONTENTFUL_MANAGEMENT_TOKEN}`
+        }
+    }
+
+    const response = await axios.patch(`https://api.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${CONTENTFUL_ENVIRONMENT}/entries/${id}`,
+        operations,
+        config,
+    )
 }

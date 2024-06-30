@@ -3,7 +3,7 @@ import { Container } from "../../../components/Layout/Container"
 import { Layout } from "../../../components/Layout/Layout"
 import { SimpleHeader } from "../../../components/Layout/SimpleHeader"
 import { useEffect, useState } from "react"
-import { getSingleEntry } from "../../../services/manageContent"
+import { getSingleEntry, patchEntry } from "../../../services/manageContent"
 import { Editor } from "@tinymce/tinymce-react"
 
 type OptionType = {
@@ -43,34 +43,19 @@ const options: OptionType[] = [
 export default function FicheForm() {
 
     const router = useRouter();
-
     const [selectedOptions, setSelectedOptions] = useState<OptionType[]>([])
     const [isOpen, setIsOpen] = useState(false)
     const [search, setSearch] = useState('')
-
     const [metadata, setMetadata] = useState({});
-    const [sys, setSys] = useState({});
-    const [fields, setFields] = useState({
-        titre: '',
-        categorie: 'sante',
-        illustration: '',
-        description: '',
-        resume: '',
-        contenu: '',
-        tags: [] as string[],
-        plusLoin: '',
-        tools: '',
-        patient: '',
-    });
-
-    /*
-    const [title, setTitle] = useState('')
-    const [category, setCategory] = useState('sante')
+    const [sys, setSys] = useState({ version: 1});
+    const [titre, setTitre] = useState('')
+    const [categorie, setCategorie] = useState('sante')
     const [illustration, setIllustration] = useState('')
     const [description, setDescription] = useState('')
     const [resume, setResume] = useState('')
-    const [content, setContent] = useState('')
-    const [tags, setTags] = useState([''])
+    const [contenu, setContenu] = useState('')
+    const [tags, setTags] = useState([] as string[])
+    /*
     const [plusLoin, setPlusLoin] = useState('')
     const [tools, setTools] = useState('')
     const [patient, setPatient] = useState('')
@@ -89,15 +74,47 @@ export default function FicheForm() {
     }
 
     const handleTags = (value: string) => {
-        const data = value.split(' ')
-        setFields({...fields, tags: data})
+        const data = value.split(';')
+        setTags(data)
     }
-
-
+    
     async function fetchFiche(id: string) {
         const result = await getSingleEntry(id);
         if (result) {
-            setFields({...result.fields});
+            setTitre(result.fields.titre.fr);
+            setCategorie(result.fields.categorie.fr);
+            setIllustration(result.fields.illustration.fr);
+            setDescription(result.fields.description.fr);
+            setResume(result.fields.resume.fr);
+            setContenu(result.fields.contenu.fr);
+            setTags([...result.fields.tags.fr]);
+            /*
+            setPlusLoin(result.fields.plusLoin.fr);
+            setTools(result.fields.tools.fr)
+            setPatient(result.fields.patient.fr)
+            */
+           setSys({...result.sys})
+           setMetadata({...result.metadata})
+        }
+    }
+
+    async function handleSubmit(event: any) {
+        event.preventDefault();
+        const id = router.query.id as string;
+        if (!id) {
+            // create
+        } else {
+            // update
+            const payload = {
+                titre, 
+                categorie,
+                //illustration,
+                //description,
+                //resume,
+                contenu,
+                tags
+            }
+            const result = await patchEntry(id, payload, sys.version)
             setSys({...result.sys});
             setMetadata({...result.metadata});
         }
@@ -117,7 +134,7 @@ export default function FicheForm() {
                 <div></div>
             </SimpleHeader>
             <Container className="flex justify-around pb-12">
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="space-y-12">
                         <div className="border-b border-gray-900/10 pb-12">
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -125,7 +142,7 @@ export default function FicheForm() {
                                     <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">Titre</label>
                                     <div className="mt-2 w-full">
                                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                                            <input type="text" name="title" id="title" autoComplete="title" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setFields({...fields, titre: e.target.value})} />
+                                            <input type="text" name="title" id="title" autoComplete="title" value={titre} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setTitre(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
@@ -133,7 +150,7 @@ export default function FicheForm() {
                                 <div className="sm:col-span-full">
                                     <label htmlFor="category" className="block text-sm font-medium leading-6 text-gray-900">Catégorie</label>
                                     <div className="mt-2 w-full">
-                                        <select id="category" name="category" autoComplete="category" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" onChange={(e) => setFields({...fields, categorie: e.target.value})}>
+                                        <select id="category" name="category" autoComplete="category" value={titre} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" onChange={(e) => setCategorie(e.target.value)}>
                                             <option value={'sante'}>Santé</option>
                                             <option value={'besoins-primaires'}>Besoins primaires</option>
                                             <option value={'social'}>Social</option>
@@ -152,7 +169,7 @@ export default function FicheForm() {
                                             <div className="mt-4 flex text-sm leading-6 text-gray-600">
                                                 <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                                                     <span>Ajouter une illustration</span>
-                                                    <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={(e) => setFields({...fields, illustration: e.target.value})} />
+                                                    <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={(e) => setIllustration(e.target.value)} />
                                                 </label>
                                                 <p className="pl-1">ou glissez et déposez</p>
                                             </div>
@@ -164,7 +181,7 @@ export default function FicheForm() {
                                 <div className="col-span-full">
                                     <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">Description</label>
                                     <div className="mt-2">
-                                        <textarea id="description" name="description" rows={3} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" onChange={(e) => setFields({...fields, description: e.target.value})}></textarea>
+                                        <textarea id="description" name="description" rows={3} value={description} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" onChange={(e) => setDescription(e.target.value)}></textarea>
                                     </div>
                                     <p className="mt-3 text-sm leading-6 text-gray-600">Courte description apparaissant dans la recherche et les listes. Maximum 280 characters</p>
                                 </div>
@@ -190,7 +207,7 @@ export default function FicheForm() {
                                                     'removeformat | help',
                                                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                                             }}
-                                            onEditorChange={(value) => setFields({...fields, resume: value})}
+                                            onEditorChange={(value) => setResume(value)}
                                         />
                                     </div>
                                     <p className="mt-3 text-sm leading-6 text-gray-600">Un résumé qui s'affichera en premier sur la fiche.</p>
@@ -216,7 +233,7 @@ export default function FicheForm() {
                                                     'removeformat | help',
                                                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                                             }}
-                                            onEditorChange={(value) => setFields({...fields, contenu: value})}
+                                            onEditorChange={(value) => setContenu(value)}
                                         />
                                     </div>
                                 </div>
@@ -225,17 +242,18 @@ export default function FicheForm() {
                                     <label htmlFor="tags" className="block text-sm font-medium leading-6 text-gray-900">Tags</label>
                                     <div className="mt-2">
                                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                                            <input type="text" name="tags" id="tags" autoComplete="tags" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => handleTags(e.target.value)} />
+                                            <input type="text" name="tags" id="tags" autoComplete="tags" placeholder="tag 1;tag 2" value={tags.join(';')} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => handleTags(e.target.value)} />
                                         </div>
                                     </div>
-                                    <p className="mt-3 text-sm leading-6 text-gray-600">Une suite de mots, pour identifier et rechercher la fiche.</p>
+                                    <p className="mt-3 text-sm leading-6 text-gray-600">Une suite de mots séparés par des point-virgules, pour identifier et rechercher la fiche.</p>
                                 </div>
 
+                                {/*
                                 <div className="col-span-full">
                                     <label htmlFor="plus-loin" className="block text-sm font-medium leading-6 text-gray-900">Pour aller plus loin</label>
                                     <div className="mt-2">
                                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                                            <input type="text" name="plus-loin" id="plus-loin" autoComplete="plus-loin" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setFields({...fields, plusLoin: e.target.value})} />
+                                            <input type="text" name="plus-loin" id="plus-loin" autoComplete="plus-loin" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setPlusLoin(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
@@ -244,7 +262,7 @@ export default function FicheForm() {
                                     <label htmlFor="tools" className="block text-sm font-medium leading-6 text-gray-900">Quelques Outils</label>
                                     <div className="mt-2">
                                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                                            <input type="text" name="tools" id="tools" autoComplete="tools" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setFields({...fields, tools: e.target.value})} />
+                                            <input type="text" name="tools" id="tools" autoComplete="tools" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setTools(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
@@ -253,10 +271,11 @@ export default function FicheForm() {
                                     <label htmlFor="patients" className="block text-sm font-medium leading-6 text-gray-900">Pour les patients</label>
                                     <div className="mt-2">
                                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                                            <input type="text" name="patients" id="patients" autoComplete="patients" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setFields({...fields, patient: e.target.value})} />
+                                            <input type="text" name="patients" id="patients" autoComplete="patients" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setPatient(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
+                                */}
 
                                 <div className="relative w-96">
                                     <div
@@ -310,7 +329,7 @@ export default function FicheForm() {
                             </div>
                         </div>
                         <div className="mt-6 flex items-center justify-end gap-x-6">
-                            <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Ajouter</button>
+                            <button type="submit" onClick={handleSubmit} className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Ajouter</button>
                         </div>
                     </div>
                 </form>
