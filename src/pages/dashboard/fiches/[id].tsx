@@ -91,13 +91,16 @@ export default function FicheForm() {
     async function fetchFiche(id: string) {
         const result = await getSingleEntry(id);
         if (result) {
+            console.log(result.fields)
             setTitre(result.fields.titre.fr);
             setCategorie(result.fields.categorie.fr);
-            setIllustration(result.fields.illustration.fr);
+            //setIllustration(result.fields.illustration.fr);
             setDescription(result.fields.description.fr);
             setResume(result.fields.resume.fr);
             setContenu(result.fields.contenu.fr);
-            setTags([...result.fields.tags.fr]);
+            setTags(result.fields.tags.fr);
+            /*
+            */
             /*
             setPlusLoin(result.fields.plusLoin.fr);
             setTools(result.fields.tools.fr)
@@ -150,6 +153,9 @@ export default function FicheForm() {
     }, [])
 
     useEffect(onTitleChange, [titre])
+    useEffect(() => {
+        console.log(contenu)
+    }, [contenu])
 
 
     return (

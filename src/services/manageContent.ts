@@ -88,19 +88,41 @@ export async function patchEntry(id: string, payload: Record<string, any>, versi
         }
     }
 
-    const response = await axios.patch(`https://api.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${CONTENTFUL_ENVIRONMENT}/entries/${id}`,
+    const response = await axios.patch(
+        `https://api.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${CONTENTFUL_ENVIRONMENT}/entries/${id}`,
         operations,
         config,
     )
 }
 
-export async function publishEntry(id: string) {
+export async function publishEntry(id: string, version: number) {
+    const config = {
+        headers: {
+            'X-Contentful-Version': version,
+        }
+    }
 
+    const response = await axios.put(
+        `https://api.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${CONTENTFUL_ENVIRONMENT}/entries/${id}/published`,
+        config,
+    );
+
+    return response;
 }
 
-export async function unpublishEntry(id: string) {
+export async function unpublishEntry(id: string, version: number) {
+    const config = {
+        headers: {
+            'X-Contentful-Version': version,
+        }
+    }
 
+    const response = await axios.delete(
+        `https://api.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${CONTENTFUL_ENVIRONMENT}/entries/${id}/published`,
+        config,
+    );
 }
+
 export async function deleteEntry(id: string) {
 
 }
