@@ -3,7 +3,7 @@ import { Container } from "../../../components/Layout/Container"
 import { Layout } from "../../../components/Layout/Layout"
 import { SimpleHeader } from "../../../components/Layout/SimpleHeader"
 import { useEffect, useState } from "react"
-import { getSingleEntry, patchEntry } from "../../../services/manageContent"
+import { createEntry, getSingleEntry, patchEntry } from "../../../services/manageContent"
 import { Editor } from "@tinymce/tinymce-react"
 
 type OptionType = {
@@ -48,13 +48,14 @@ export default function FicheForm() {
     const [search, setSearch] = useState('')
     const [metadata, setMetadata] = useState({});
     const [sys, setSys] = useState({ version: 1});
-    const [titre, setTitre] = useState('')
-    const [categorie, setCategorie] = useState('sante')
-    const [illustration, setIllustration] = useState('')
-    const [description, setDescription] = useState('')
-    const [resume, setResume] = useState('')
-    const [contenu, setContenu] = useState('')
-    const [tags, setTags] = useState([] as string[])
+    const [titre, setTitre] = useState('');
+    const [slug, setSlug] = useState('');
+    const [categorie, setCategorie] = useState('sante');
+    const [illustration, setIllustration] = useState('');
+    const [description, setDescription] = useState('');
+    const [resume, setResume] = useState('');
+    const [contenu, setContenu] = useState('');
+    const [tags, setTags] = useState([] as string[]);
     /*
     const [plusLoin, setPlusLoin] = useState('')
     const [tools, setTools] = useState('')
@@ -63,6 +64,15 @@ export default function FicheForm() {
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen)
+    }
+
+    function onTitleChange() {
+        const newSlug = titre
+            .toLowerCase()
+            .trim()
+            .replaceAll(' ', '-')
+            .replace(/[^\w\-]+/g, '');     // Remove all non-word chars
+        setSlug(newSlug);
     }
 
     const handleSelect = (option: OptionType) => {
@@ -103,6 +113,16 @@ export default function FicheForm() {
         const id = router.query.id as string;
         if (!id) {
             // create
+            let payload = {
+                titre, 
+                categorie,
+                //illustration,
+                //description,
+                //resume,
+                contenu,
+                tags
+            };
+            const result = await createEntry('fiche', payload)
         } else {
             // update
             const payload = {
@@ -127,6 +147,8 @@ export default function FicheForm() {
         }
     }, [])
 
+    useEffect(onTitleChange, [titre])
+
 
     return (
         <Layout className="bg-gray-light">
@@ -143,6 +165,15 @@ export default function FicheForm() {
                                     <div className="mt-2 w-full">
                                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                                             <input type="text" name="title" id="title" autoComplete="title" value={titre} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setTitre(e.target.value)} />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="sm:col-span-full">
+                                    <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">Slug</label>
+                                    <div className="mt-2 w-full">
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                                            <input type="text" name="slug" id="slug" autoComplete="slug" value={slug} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setSlug(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>

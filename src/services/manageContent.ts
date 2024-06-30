@@ -3,10 +3,11 @@ import { createClient } from "contentful";
 import path from "path";
 import { config } from "process";
 
+const CONTENTFUL_SPACE_ID = "9u74ojeq10qz";
+const CONTENTFUL_MANAGEMENT_TOKEN = "CFPAT-VKSKtnR5wGLpNCDwEQLwVpav-pJb7XpBR34CMujwT8k";
+const CONTENTFUL_ENVIRONMENT = "dev";
+
 function createContentManagementClient() {
-    const CONTENTFUL_SPACE_ID = "9u74ojeq10qz";
-    const CONTENTFUL_MANAGEMENT_TOKEN = "CFPAT-VKSKtnR5wGLpNCDwEQLwVpav-pJb7XpBR34CMujwT8k";
-    const CONTENTFUL_ENVIRONMENT = "dev";
     if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_MANAGEMENT_TOKEN || !CONTENTFUL_ENVIRONMENT) {
         return null;
     }
@@ -43,12 +44,31 @@ export async function getSingleEntry(id: string): Promise<Record<string, any>|nu
     return response
 }
 
-export async function patchEntry(id: string, payload: Record<string, any>, version: number): Promise<any> {
-    
-    const CONTENTFUL_SPACE_ID = "9u74ojeq10qz";
-    const CONTENTFUL_MANAGEMENT_TOKEN = "CFPAT-VKSKtnR5wGLpNCDwEQLwVpav-pJb7XpBR34CMujwT8k";
-    const CONTENTFUL_ENVIRONMENT = "dev";
+// update method seems to be absent from the entry object returned from the contentful client,
+// so we're using an axios call. 
+export async function createEntry(contentType: string, payload: Record<string, any>) {
+    const fields = {} as Record<string, any>
+    for (let key in payload) {
+        fields[key] = { fr: payload[key]}
+    }
 
+    const config = {
+        headers: {
+            'Content-Type': 'application/vnd.contentful.management.v1+json',
+            'X-Contentful-Content-Type': contentType,
+            'Authorization': `Bearer ${CONTENTFUL_MANAGEMENT_TOKEN}`
+        }
+    }
+
+    const response = await axios.patch(`https://api.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${CONTENTFUL_ENVIRONMENT}/entries`,
+        fields,
+        config,
+    )
+}
+
+// update method seems to be absent from the entry object returned from the contentful client,
+// so we're using an axios call. 
+export async function patchEntry(id: string, payload: Record<string, any>, version: number): Promise<any> {
     const operations = []
     for (let key in payload) {
         operations.push({
