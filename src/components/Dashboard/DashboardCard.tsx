@@ -3,7 +3,7 @@ type Props = {
     link: string,
 }
 
-export const Card = ({ title, link }: Props) => {
+export const DashboardCard = ({ title, link }: Props) => {
     return (
         <div className="w-1/4 p-6 bg-white rounded-lg shadow-lg overflow-hidden bg-white">
             <a href={link}>
