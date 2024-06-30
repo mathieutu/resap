@@ -111,15 +111,16 @@ export default function FicheForm() {
     async function handleSubmit(event: any) {
         event.preventDefault();
         const id = router.query.id as string;
-        if (!id) {
+        if (id === 'new') {
             // create
             let payload = {
                 titre, 
+                slug,
                 categorie,
                 //illustration,
                 //description,
                 //resume,
-                contenu,
+                //contenu,
                 tags
             };
             const result = await createEntry('fiche', payload)
@@ -127,6 +128,7 @@ export default function FicheForm() {
             // update
             const payload = {
                 titre, 
+                slug,
                 categorie,
                 //illustration,
                 //description,
@@ -142,7 +144,7 @@ export default function FicheForm() {
 
     useEffect(() => {
         const id = router.query.id;
-        if (!!id) {
+        if (id !== 'new') {
             fetchFiche(id as string);
         }
     }, [])

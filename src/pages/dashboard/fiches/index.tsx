@@ -23,6 +23,9 @@ export default function ListeFiches() {
         <Layout className="bg-gray-50">
             <SimpleHeader className="h-[250px]" title="Fiches pratiques" titleClassName="text-blue-default" subTitle="">
                 <Container className="flex justify-around pb-12">
+                    <button>
+                        <Link href={{ pathname: `/dashboard/fiches/new` }}>Nouvelle fiche</Link>
+                    </button>
                     <ul>
                         {fiches.map(fiche =>
                             <li key={fiche.sys.id}>

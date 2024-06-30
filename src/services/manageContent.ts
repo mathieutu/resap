@@ -47,9 +47,9 @@ export async function getSingleEntry(id: string): Promise<Record<string, any>|nu
 // update method seems to be absent from the entry object returned from the contentful client,
 // so we're using an axios call. 
 export async function createEntry(contentType: string, payload: Record<string, any>) {
-    const fields = {} as Record<string, any>
+    const body = {fields: {}} as Record<string, any>
     for (let key in payload) {
-        fields[key] = { fr: payload[key]}
+        body.fields[key] = { fr: payload[key]}
     }
 
     const config = {
@@ -60,10 +60,12 @@ export async function createEntry(contentType: string, payload: Record<string, a
         }
     }
 
-    const response = await axios.patch(`https://api.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${CONTENTFUL_ENVIRONMENT}/entries`,
-        fields,
+    const response = await axios.post(
+        `https://api.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${CONTENTFUL_ENVIRONMENT}/entries`,
+        body,
         config,
     )
+    return(response)
 }
 
 // update method seems to be absent from the entry object returned from the contentful client,
@@ -90,4 +92,15 @@ export async function patchEntry(id: string, payload: Record<string, any>, versi
         operations,
         config,
     )
+}
+
+export async function publishEntry(id: string) {
+
+}
+
+export async function unpublishEntry(id: string) {
+
+}
+export async function deleteEntry(id: string) {
+
 }
