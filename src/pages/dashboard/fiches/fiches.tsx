@@ -1,11 +1,11 @@
 import { useState, useRef } from 'react'
 import { GetStaticProps } from 'next'
-import { Layout } from '../../components/Layout/Layout'
-import { SimpleHeader } from '../../components/Layout/SimpleHeader'
-import { AlgoliaSSRProps, IndicesNames } from '../../services/algolia.browser'
-import { Container } from '../../components/Layout/Container'
+import { Layout } from '../../../components/Layout/Layout'
+import { SimpleHeader } from '../../../components/Layout/SimpleHeader'
+import { AlgoliaSSRProps, IndicesNames } from '../../../services/algolia.browser'
+import { Container } from '../../../components/Layout/Container'
 import { Editor } from '@tinymce/tinymce-react'
-import { isPreviewForced } from '../../services/contentful'
+import { isPreviewForced } from '../../../services/contentful'
 
 type OptionType = {
     id: number
@@ -76,7 +76,8 @@ export default function Annuaire(algoliaProps: AlgoliaSSRProps) {
 
     return (
         <Layout className="bg-gray-light">
-            <SimpleHeader className="h-[250px]" title="Fiches pratiques" titleClassName="text-blue-default" subTitle="" children="">
+            <SimpleHeader className="h-[250px]" title="Fiches pratiques" titleClassName="text-blue-default" subTitle="" >
+                <div></div>
             </SimpleHeader>
             <Container className="flex justify-around pb-12">
                 <form>
