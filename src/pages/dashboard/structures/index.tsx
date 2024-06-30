@@ -29,9 +29,17 @@ export default function ListeStructures() {
                     <ul>
                         {structures.map(structure =>
                             <li key={structure.sys.id}>
-                                <Link href={{ pathname: `/dashboard/structures/${structure.sys.id}` }}>
-                                    {structure.fields.titre.fr}
-                                </Link>
+
+                                {structure.fields.nom &&
+                                    <Link href={{ pathname: `/dashboard/structures/${structure.sys.id}` }}>
+                                        {structure.fields.nom.fr}
+                                    </Link>
+                                }
+                                {!structure.fields.nom &&
+                                    <Link href={{ pathname: `/dashboard/structures/${structure.sys.id}` }}>
+                                        Untitled
+                                    </Link>
+                                }
                             </li>
                         )}
                     </ul>
