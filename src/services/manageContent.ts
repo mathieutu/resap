@@ -1,11 +1,9 @@
 import axios from "axios";
 import { createClient } from "contentful";
-import path from "path";
-import { config } from "process";
 
-const CONTENTFUL_SPACE_ID = "9u74ojeq10qz";
-const CONTENTFUL_MANAGEMENT_TOKEN = "CFPAT-VKSKtnR5wGLpNCDwEQLwVpav-pJb7XpBR34CMujwT8k";
-const CONTENTFUL_ENVIRONMENT = "dev";
+const CONTENTFUL_SPACE_ID = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
+const CONTENTFUL_MANAGEMENT_TOKEN = process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN
+const CONTENTFUL_ENVIRONMENT = process.env.NEXT_PUBLIC_CONTENTFUL_ENVIRONMENT;
 
 function createContentManagementClient() {
     if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_MANAGEMENT_TOKEN || !CONTENTFUL_ENVIRONMENT) {
