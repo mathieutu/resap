@@ -22,6 +22,7 @@ export const CONTENT_TYPES = {
   categorie: 'categorie',
   fiche: 'fiche',
   structure: 'structure',
+  apropos: 'about',
 } as const
 
 export type ContentType = typeof CONTENT_TYPES[keyof typeof CONTENT_TYPES]
@@ -35,6 +36,10 @@ type GetEntriesOptions = {
 
 type FicheEntry = Fiche & {
   resume: Document,
+  contenu: Document,
+}
+
+type AProposEntry = {
   contenu: Document,
 }
 
@@ -254,5 +259,16 @@ export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
 
   return entries.map(formatFicheForSearch)
 }
+
+export const fetchAPropos = async (): Promise<String | null> => {
+  const entries = await getEntries<AProposEntry>(
+    CONTENT_TYPES.apropos,
+  )
+
+  if (!entries.length) return null
+
+  return convertContentfulContentToHtml(entries[0].contenu)
+}
+
 
 // endregion
