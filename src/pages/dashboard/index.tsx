@@ -14,7 +14,7 @@ export default function Dashboard(algoliaProps: AlgoliaSSRProps) {
             </SimpleHeader>
             <Container className="flex justify-around -mt-24 pb-12">
                 <Card title="Fiches pratiques" link="/dashboard/fiches"/>
-                <Card title="Annuaire" link="/dashboard/annuaire"/>
+                <Card title="Annuaire" link="/dashboard/structures"/>
                 <Card title="A propos" link="/dashboard/a-propos"/>
             </Container>
         </Layout>

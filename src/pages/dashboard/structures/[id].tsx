@@ -6,108 +6,43 @@ import { useEffect, useState } from "react"
 import { createEntry, getSingleEntry, patchEntry } from "../../../services/manageContent"
 import { Editor } from "@tinymce/tinymce-react"
 
-type OptionType = {
-    id: number
-    label: string
-}
 
-const options: OptionType[] = [
-    { id: 1, label: 'Accompagnement MNA' },
-    { id: 2, label: 'Association d\'aide aux migrants' },
-    { id: 3, label: 'Association LGBTQIA+' },
-    { id: 4, label: 'Associations caritatives - Distribution Alimentaire' },
-    { id: 5, label: 'Associations d\'accompagnement personnes en situation de prostitution' },
-    { id: 6, label: 'CAARUD' },
-    { id: 7, label: 'CADA' },
-    { id: 8, label: 'CAES' },
-    { id: 9, label: 'CD' },
-    { id: 10, label: 'CEGIDD' },
-    { id: 11, label: 'Centre de vaccination' },
-    { id: 12, label: 'COREVIH' },
-    { id: 13, label: 'CPH' },
-    { id: 14, label: 'CPTS' },
-    { id: 15, label: 'CSAPA' },
-    { id: 16, label: 'Filières gérontologiques' },
-    { id: 17, label: 'HUDA' },
-    { id: 18, label: 'MDPH' },
-    { id: 19, label: 'MSP' },
-    { id: 20, label: 'OFII' },
-    { id: 21, label: 'PASS' },
-    { id: 22, label: 'PRAHDA' },
-    { id: 23, label: 'Préfecture' },
-    { id: 24, label: 'Réseaux polyvalents (tous âges et toutes pathologies)' },
-    { id: 25, label: 'SIAO' },
-    { id: 26, label: 'SPADA' },
-]
 
 export default function FicheForm() {
 
     const router = useRouter();
-    const [selectedOptions, setSelectedOptions] = useState<OptionType[]>([])
-    const [isOpen, setIsOpen] = useState(false)
-    const [search, setSearch] = useState('')
     const [metadata, setMetadata] = useState({});
     const [sys, setSys] = useState({ version: 1});
-    const [titre, setTitre] = useState('');
-    const [slug, setSlug] = useState('');
-    const [categorie, setCategorie] = useState('sante');
-    const [illustration, setIllustration] = useState('');
-    const [description, setDescription] = useState('');
-    const [resume, setResume] = useState('');
-    const [contenu, setContenu] = useState('');
-    const [tags, setTags] = useState([] as string[]);
-    /*
-    const [plusLoin, setPlusLoin] = useState('')
-    const [tools, setTools] = useState('')
-    const [patient, setPatient] = useState('')
-    */
+    const [nom, setNom] = useState('');
+    const [organisation, setOrganisation] = useState('');
+    const [type, setType] = useState('');
+    const [specialites, setSpecialites] = useState([] as string[]);
+    const [latLon, setlatLon] = useState([0,0] as number[]);
+    const [adresse, setAdresse] = useState('');
+    const [siteWeb, setSiteWeb] = useState('');
+    const [tel, setTel] = useState('');
+    const [email, setEmail] = useState('');
 
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen)
-    }
-
-    function onTitleChange() {
-        const newSlug = titre
-            .toLowerCase()
-            .trim()
-            .replaceAll(' ', '-')
-            .replace(/[^\w\-]+/g, '');     // Remove all non-word chars
-        setSlug(newSlug);
-    }
-
-    const handleSelect = (option: OptionType) => {
-        if (selectedOptions.includes(option)) {
-            setSelectedOptions(selectedOptions.filter((item) => item.id !== option.id))
-        } else {
-            setSelectedOptions([...selectedOptions, option])
-        }
-    }
 
     const handleTags = (value: string) => {
         const data = value.split(';')
-        setTags(data)
+        setSpecialites(data)
     }
     
-    async function fetchFiche(id: string) {
+    async function fetchStructure(id: string) {
         const result = await getSingleEntry(id);
         if (result) {
-            console.log(result.fields)
-            setTitre(result.fields.titre.fr);
-            setCategorie(result.fields.categorie.fr);
-            //setIllustration(result.fields.illustration.fr);
-            setDescription(result.fields.description.fr);
-            setResume(result.fields.resume.fr);
-            setContenu(result.fields.contenu.fr);
-            setTags(result.fields.tags.fr);
-            /*
-            */
-            /*
-            setPlusLoin(result.fields.plusLoin.fr);
-            setTools(result.fields.tools.fr)
-            setPatient(result.fields.patient.fr)
-            */
-           setSys({...result.sys})
-           setMetadata({...result.metadata})
+            setNom(result.fields.nom.fr);
+            setOrganisation(result.fields.organisation.fr);
+            setType(result.fields.type.fr);
+            setSpecialites(result.fields.specialites.fr);
+            setlatLon(result.fields.latLon.fr);
+            setAdresse(result.fields.adresse.fr);
+            setSiteWeb(result.fields.siteWeb.fr);
+            setTel(result.fields.tel.fr);
+            setEmail(result.fields.email.fr);
+            setSys({...result.sys})
+            setMetadata({...result.metadata})
         }
     }
 
@@ -117,27 +52,29 @@ export default function FicheForm() {
         if (id === 'new') {
             // create
             let payload = {
-                titre, 
-                slug,
-                categorie,
-                //illustration,
-                //description,
-                //resume,
-                //contenu,
-                tags
+                nom,
+                organisation,
+                type,
+                specialites,
+                latLon,
+                adresse,
+                siteWeb,
+                tel,
+                email,
             };
-            const result = await createEntry('fiche', payload)
+            const result = await createEntry('structure', payload)
         } else {
             // update
             const payload = {
-                titre, 
-                slug,
-                categorie,
-                //illustration,
-                //description,
-                //resume,
-                contenu,
-                tags
+                nom,
+                organisation,
+                type,
+                specialites,
+                latLon,
+                adresse,
+                siteWeb,
+                tel,
+                email,
             }
             const result = await patchEntry(id, payload, sys.version)
             setSys({...result.sys});
@@ -148,15 +85,9 @@ export default function FicheForm() {
     useEffect(() => {
         const id = router.query.id;
         if (id !== 'new') {
-            fetchFiche(id as string);
+            fetchStructure(id as string);
         }
     }, [])
-
-    useEffect(onTitleChange, [titre])
-    useEffect(() => {
-        console.log(contenu)
-    }, [contenu])
-
 
     return (
         <Layout className="bg-gray-light">
@@ -168,8 +99,9 @@ export default function FicheForm() {
                     <div className="space-y-12">
                         <div className="border-b border-gray-900/10 pb-12">
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                            {/*
                                 <div className="sm:col-span-full">
-                                    <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">Titre</label>
+                                    <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">Nom</label>
                                     <div className="mt-2 w-full">
                                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                                             <input type="text" name="title" id="title" autoComplete="title" value={titre} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setTitre(e.target.value)} />
@@ -266,10 +198,10 @@ export default function FicheForm() {
                                                     'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
                                                     'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
                                                 ],
-                                                toolbar: 'undo redo | formatselect | ' +
-                                                'bold italic backcolor | alignleft aligncenter ' +
-                                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                                'removeformat | h1 h2 h3 | help',
+                                                toolbar: 'undo redo | blocks | ' +
+                                                    'bold italic forecolor | alignleft aligncenter ' +
+                                                    'alignright alignjustify | bullist numlist outdent indent | ' +
+                                                    'removeformat | help',
                                                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                                             }}
                                             onEditorChange={(value) => setContenu(value)}
@@ -287,34 +219,6 @@ export default function FicheForm() {
                                     <p className="mt-3 text-sm leading-6 text-gray-600">Une suite de mots séparés par des point-virgules, pour identifier et rechercher la fiche.</p>
                                 </div>
 
-                                {/*
-                                <div className="col-span-full">
-                                    <label htmlFor="plus-loin" className="block text-sm font-medium leading-6 text-gray-900">Pour aller plus loin</label>
-                                    <div className="mt-2">
-                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                                            <input type="text" name="plus-loin" id="plus-loin" autoComplete="plus-loin" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setPlusLoin(e.target.value)} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="col-span-full">
-                                    <label htmlFor="tools" className="block text-sm font-medium leading-6 text-gray-900">Quelques Outils</label>
-                                    <div className="mt-2">
-                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                                            <input type="text" name="tools" id="tools" autoComplete="tools" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setTools(e.target.value)} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="sm:col-span-full">
-                                    <label htmlFor="patients" className="block text-sm font-medium leading-6 text-gray-900">Pour les patients</label>
-                                    <div className="mt-2">
-                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                                            <input type="text" name="patients" id="patients" autoComplete="patients" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e) => setPatient(e.target.value)} />
-                                        </div>
-                                    </div>
-                                </div>
-                                */}
 
                                 <div className="relative w-96">
                                     <div
@@ -365,6 +269,7 @@ export default function FicheForm() {
                                     )}
                                 </div>
 
+                            */}
                             </div>
                         </div>
                         <div className="mt-6 flex items-center justify-end gap-x-6">
