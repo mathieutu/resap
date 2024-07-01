@@ -76,59 +76,6 @@ export default function FicheForm() {
         setSlug(newSlug);
     }
 
-
-    function parseHtmlToFormattedText(html: string): string {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-
-        function extractText(node: Node, listIndex: number[] = []): string {
-            if (node.nodeType === Node.TEXT_NODE) {
-                return node.textContent || '';
-            }
-
-            if (node.nodeType === Node.ELEMENT_NODE) {
-                const element = node as Element;
-                let text = '';
-
-                if (element.tagName.toLowerCase() === 'ol') {
-                    listIndex.push(0);
-                }
-
-                for (const child of Array.from(element.childNodes)) {
-                    text += extractText(child, listIndex);
-                }
-
-                if (element.tagName.toLowerCase() === 'ol') {
-                    listIndex.pop();
-                }
-
-                switch (element.tagName.toLowerCase()) {
-                    case 'h1':
-                    case 'h2':
-                    case 'h3':
-                        return '\n\n' + text.toUpperCase() + '\n\n';
-                    case 'p':
-                        return text + '\n\n';
-                    case 'br':
-                        return '\n';
-                    case 'li':
-                        if (element.parentElement?.tagName.toLowerCase() === 'ol') {
-                            listIndex[listIndex.length - 1]++;
-                            return `${listIndex[listIndex.length - 1]}. ${text}\n`;
-                        }
-                        return '• ' + text + '\n';
-                    default:
-                        return text;
-                }
-            }
-
-            return '';
-        }
-
-        return extractText(doc.body).replace(/\n{3,}/g, '\n\n').trim();
-    }
-
-
     function parseHtmlToFormattedText(html: string): string {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
