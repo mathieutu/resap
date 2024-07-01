@@ -4,6 +4,7 @@ import { Layout } from "../../../components/Layout/Layout"
 import { SimpleHeader } from "../../../components/Layout/SimpleHeader"
 import { useEffect, useState } from "react"
 import { createEntry, getSingleEntry, patchEntry, deleteEntry, publishEntry, unpublishEntry } from "../../../services/manageContent"
+const { parseHtml } = require('contentful-html-rich-text-converter')
 
 type OptionType = {
     id: number
