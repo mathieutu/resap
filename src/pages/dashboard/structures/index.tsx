@@ -3,7 +3,6 @@ import { Container } from "../../../components/Layout/Container";
 import { Layout } from "../../../components/Layout/Layout";
 import { SimpleHeader } from "../../../components/Layout/SimpleHeader";
 import { getEntries } from "../../../services/manageContent";
-import { GetStaticPaths } from "next";
 import Link from "next/link";
 import { Card } from "../../../components/Dashboard/Card";
 

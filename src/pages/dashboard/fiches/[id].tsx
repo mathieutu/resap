@@ -46,7 +46,7 @@ export default function FicheForm() {
     const [isOpen, setIsOpen] = useState(false)
     const [search, setSearch] = useState('')
     const [metadata, setMetadata] = useState({});
-    const [sys, setSys] = useState({ version: 1});
+    const [sys, setSys] = useState({ version: 1 });
     const [titre, setTitre] = useState('');
     const [slug, setSlug] = useState('');
     const [categorie, setCategorie] = useState('sante');
@@ -86,12 +86,12 @@ export default function FicheForm() {
         const data = value.split(';')
         setTags(data)
     }
-    
+
     async function fetchFiche(id: string) {
         const result = await getSingleEntry(id);
         if (result) {
             // console.log(result.fields)
-            setTitre( (result.fields.titre) ? result.fields.titre.fr : '');
+            setTitre((result.fields.titre) ? result.fields.titre.fr : '');
             setCategorie((result.fields.categorie) ? result.fields.categorie.fr : '');
             //setIllustration(result.fields.illustration.fr);
             setDescription((result.fields.description) ? result.fields.description.fr : '');
@@ -103,8 +103,8 @@ export default function FicheForm() {
             setTools(result.fields.tools.fr)
             setPatient(result.fields.patient.fr)
             */
-           setSys({...result.sys})
-           setMetadata({...result.metadata})
+            setSys({ ...result.sys })
+            setMetadata({ ...result.metadata })
         }
     }
 
@@ -114,7 +114,7 @@ export default function FicheForm() {
         if (id === 'new') {
             // create
             let payload = {
-                titre, 
+                titre,
                 slug,
                 categorie,
                 //illustration,
@@ -123,12 +123,12 @@ export default function FicheForm() {
                 //contenu,
                 tags
             };
-            
+
             const result = await createEntry('fiche', payload)
         } else {
             // update
             const payload = {
-                titre, 
+                titre,
                 slug,
                 categorie,
                 //illustration,
@@ -138,8 +138,8 @@ export default function FicheForm() {
                 tags
             }
             const result = await patchEntry(id, payload, sys.version)
-            setSys({...result.sys});
-            setMetadata({...result.metadata});
+            setSys({ ...result.sys });
+            setMetadata({ ...result.metadata });
         }
     }
 
@@ -151,10 +151,6 @@ export default function FicheForm() {
     }, [])
 
     useEffect(onTitleChange, [titre])
-    useEffect(() => {
-        console.log(content)
-    }, [content])
-
 
     return (
         <Layout className="bg-gray-light">
@@ -218,7 +214,7 @@ export default function FicheForm() {
                                 <div className="col-span-full">
                                     <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">Description</label>
                                     <div className="mt-2">
-                                        <textarea id="description" name="description" rows={3} value={description} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" onChange={(e) => setDescription(e.target.value)}></textarea>
+                                        <textarea id="description" name="description" rows={4} value={description} className="block p-2.5 w-full text-sm rounded-lg border focus:ring-blue-500 focus:border-blue-500" onChange={(e) => setDescription(e.target.value)}></textarea>
                                     </div>
                                     <p className="mt-3 text-sm leading-6 text-gray-600">Courte description apparaissant dans la recherche et les listes. Maximum 280 characters</p>
                                 </div>
@@ -227,9 +223,7 @@ export default function FicheForm() {
                                 <div className="col-span-full">
                                     <label htmlFor="resume" className="block text-sm font-medium leading-6 text-gray-900">Resumé</label>
                                     <div className="mt-2">
-                                        <textarea
-                                            onChange={(e) => setResume(e.target.value)}
-                                        />
+                                        <textarea id="resume" name="resume" rows={4} value={resume} className="block p-2.5 w-full text-sm rounded-lg border focus:ring-blue-500 focus:border-blue-500" onChange={(e) => setResume(e.target.value)}></textarea>
                                     </div>
                                     <p className="mt-3 text-sm leading-6 text-gray-600">Un résumé qui s'affichera en premier sur la fiche.</p>
                                 </div>
@@ -237,9 +231,7 @@ export default function FicheForm() {
                                 <div className="col-span-full">
                                     <label htmlFor="content" className="block text-sm font-medium leading-6 text-gray-900">Contenu</label>
                                     <div className="mt-2">
-                                        <textarea
-                                            onChange={(e) => setContent(e.target.value)}
-                                        />
+                                    <textarea id="content" name="content" rows={4} value={content} className="block p-2.5 w-full text-sm rounded-lg border focus:ring-blue-500 focus:border-blue-500" onChange={(e) => setContent(e.target.value)}></textarea>
                                     </div>
                                 </div>
 

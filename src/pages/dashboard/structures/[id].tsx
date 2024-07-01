@@ -5,10 +5,6 @@ import { SimpleHeader } from "../../../components/Layout/SimpleHeader"
 import { useEffect, useState } from "react"
 import { createEntry, getSingleEntry, patchEntry } from "../../../services/manageContent"
 
-
-import { types } from "../../../data/structures_types"
-
-
 export default function FicheForm() {
 
     const router = useRouter();
