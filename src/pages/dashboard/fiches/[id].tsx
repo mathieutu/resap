@@ -192,7 +192,7 @@ export default function FicheForm() {
                                     </div>
                                 </div>
 
-                                <div className="col-span-full">
+                                {/* <div className="col-span-full">
                                     <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">Illustration</label>
                                     <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                                         <div className="text-center">
@@ -209,7 +209,7 @@ export default function FicheForm() {
                                             <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF jusqu'à 10MB</p>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className="col-span-full">
                                     <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">Description</label>
