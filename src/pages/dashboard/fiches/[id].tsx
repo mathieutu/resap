@@ -5,6 +5,7 @@ import { SimpleHeader } from "../../../components/Layout/SimpleHeader"
 import { useEffect, useState } from "react"
 import { createEntry, getSingleEntry, patchEntry, deleteEntry, publishEntry, unpublishEntry } from "../../../services/manageContent"
 const { parseHtml } = require('contentful-html-rich-text-converter')
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
 type OptionType = {
     id: number
@@ -75,6 +76,58 @@ export default function FicheForm() {
         setSlug(newSlug);
     }
 
+
+    function parseHtmlToFormattedText(html: string): string {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        function extractText(node: Node, listIndex: number[] = []): string {
+            if (node.nodeType === Node.TEXT_NODE) {
+                return node.textContent || '';
+            }
+
+            if (node.nodeType === Node.ELEMENT_NODE) {
+                const element = node as Element;
+                let text = '';
+
+                if (element.tagName.toLowerCase() === 'ol') {
+                    listIndex.push(0);
+                }
+
+                for (const child of Array.from(element.childNodes)) {
+                    text += extractText(child, listIndex);
+                }
+
+                if (element.tagName.toLowerCase() === 'ol') {
+                    listIndex.pop();
+                }
+
+                switch (element.tagName.toLowerCase()) {
+                    case 'h1':
+                    case 'h2':
+                    case 'h3':
+                        return '\n\n' + text.toUpperCase() + '\n\n';
+                    case 'p':
+                        return text + '\n\n';
+                    case 'br':
+                        return '\n';
+                    case 'li':
+                        if (element.parentElement?.tagName.toLowerCase() === 'ol') {
+                            listIndex[listIndex.length - 1]++;
+                            return `${listIndex[listIndex.length - 1]}. ${text}\n`;
+                        }
+                        return '• ' + text + '\n';
+                    default:
+                        return text;
+                }
+            }
+
+            return '';
+        }
+
+        return extractText(doc.body).replace(/\n{3,}/g, '\n\n').trim();
+    }
+
     const handleSelect = (option: OptionType) => {
         if (selectedOptions.includes(option)) {
             setSelectedOptions(selectedOptions.filter((item) => item.id !== option.id))
@@ -96,8 +149,8 @@ export default function FicheForm() {
             setCategorie((result.fields.categorie) ? result.fields.categorie.fr : '');
             //setIllustration(result.fields.illustration.fr);
             setDescription((result.fields.description) ? result.fields.description.fr : '');
-            setResume((result.fields.resume) ? result.fields.resume.fr : '');
-            setContent((result.fields.contenu) ? result.fields.contenu.fr : '');
+            setResume((result.fields.resume) ? parseHtmlToFormattedText(documentToHtmlString(result.fields.resume.fr)) : '');
+            setContent((result.fields.contenu) ? parseHtmlToFormattedText(documentToHtmlString(result.fields.contenu.fr)) : '');
             setTags((result.fields.tags) ? result.fields.tags.fr : '');
             /*
             setPlusLoin(result.fields.plusLoin.fr);
