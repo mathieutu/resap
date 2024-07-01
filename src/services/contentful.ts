@@ -6,7 +6,7 @@ import { BLOCKS, Document } from '@contentful/rich-text-types'
 import { Fiche, Structure } from '../types/models'
 import { CategorieSlug } from '../data/categories'
 
-const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
+const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW, CONTENTFUL_ENVIRONMENT } = process.env
 
 if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_PREVIEW_ACCESS_TOKEN || !CONTENTFUL_ACCESS_TOKEN) {
   throw new Error('CONTENTFUL env vars needed (SPACE_ID, PREVIEW_ACCESS_TOKEN, ACCESS_TOKEN).')
@@ -22,6 +22,7 @@ export const CONTENT_TYPES = {
   categorie: 'categorie',
   fiche: 'fiche',
   structure: 'structure',
+  apropos: 'about',
 } as const
 
 export type ContentType = typeof CONTENT_TYPES[keyof typeof CONTENT_TYPES]
@@ -35,6 +36,10 @@ type GetEntriesOptions = {
 
 type FicheEntry = Fiche & {
   resume: Document,
+  contenu: Document,
+}
+
+type AProposEntry = {
   contenu: Document,
 }
 
@@ -72,6 +77,7 @@ const getEntries = async <T extends Record<string, unknown>>(
     space: CONTENTFUL_SPACE_ID,
     accessToken: preview ? CONTENTFUL_PREVIEW_ACCESS_TOKEN : CONTENTFUL_ACCESS_TOKEN,
     host: preview ? 'preview.contentful.com' : 'cdn.contentful.com',
+    environment: CONTENTFUL_ENVIRONMENT,
   })
 
   const getAllItems = async (offset = 0): Promise<any[]> => {
@@ -253,5 +259,16 @@ export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
 
   return entries.map(formatFicheForSearch)
 }
+
+export const fetchAPropos = async (): Promise<String | null> => {
+  const entries = await getEntries<AProposEntry>(
+    CONTENT_TYPES.apropos,
+  )
+
+  if (!entries.length) return null
+
+  return convertContentfulContentToHtml(entries[0].contenu)
+}
+
 
 // endregion
