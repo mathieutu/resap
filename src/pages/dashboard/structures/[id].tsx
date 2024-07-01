@@ -3,13 +3,13 @@ import { Container } from "../../../components/Layout/Container"
 import { Layout } from "../../../components/Layout/Layout"
 import { SimpleHeader } from "../../../components/Layout/SimpleHeader"
 import { useEffect, useState } from "react"
-import { createEntry, getSingleEntry, patchEntry } from "../../../services/manageContent"
+import { createEntry, deleteEntry, getSingleEntry, patchEntry, publishEntry, unpublishEntry } from "../../../services/manageContent"
 
 export default function FicheForm() {
 
     const router = useRouter();
     const [metadata, setMetadata] = useState({});
-    const [sys, setSys] = useState({ version: 1});
+    const [sys, setSys] = useState({ version: 1, publishedAt: null});
     const [nom, setNom] = useState('');
     const [organisation, setOrganisation] = useState('');
     const [type, setType] = useState('');
@@ -66,7 +66,8 @@ export default function FicheForm() {
                 tel,
                 email,
             };
-            const result = await createEntry('structure', payload)
+            const result = await createEntry('structure', payload);
+            router.push('/dashboard/fiches')
         } else {
             // update
             const payload = {
@@ -83,6 +84,29 @@ export default function FicheForm() {
             const result = await patchEntry(id, payload, sys.version)
             setSys({...result.sys});
             setMetadata({...result.metadata});
+            router.push('/dashboard/fiches')
+        }
+    }
+
+    async function publish() {
+        const id = router.query.id as string;
+        const result = await publishEntry(id, sys.version);
+        setSys({ ...result.sys });
+        setMetadata({ ...result.metadata });
+    }
+
+    async function unpublish() {
+        const id = router.query.id as string;
+        const result = await unpublishEntry(id, sys.version);
+        setSys({ ...result.sys });
+        setMetadata({ ...result.metadata });
+    }
+
+    async function requestDelete() {
+        if (confirm('La suppression est irréversible. Confirmer?')) {
+            const id = router.query.id as string;
+            await deleteEntry(id, sys.version);
+            router.push('/dashboard/fiches')
         }
     }
 
@@ -96,7 +120,31 @@ export default function FicheForm() {
     return (
         <Layout className="bg-gray-light">
             <SimpleHeader className="h-[250px]" title="Fiches pratiques" titleClassName="text-blue-default" subTitle="" >
-                <div></div>
+            {
+                    router.query.id !== 'new' &&
+                    <div className="flex">
+                        {!sys.publishedAt &&
+                            <>
+                                <button type="button" onClick={publish} className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                    Publier
+                                </button>
+                                <button type="button" onClick={requestDelete} className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                    Supprimer
+                                </button>
+                            </>
+                        }
+                        {sys.publishedAt &&
+                            <>
+                                <button type="button" onClick={unpublish} className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                    Passer en brouillon
+                                </button>
+                                <button type="button" onClick={requestDelete} disabled className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                    Supprimer
+                                </button>
+                            </>
+                        }
+                    </div>
+                }
             </SimpleHeader>
             <Container className="flex justify-around pb-12">
                 <form onSubmit={handleSubmit}>

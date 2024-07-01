@@ -68,7 +68,7 @@ export async function createEntry(contentType: string, payload: Record<string, a
 
 // update method seems to be absent from the entry object returned from the contentful client,
 // so we're using an axios call. 
-export async function patchEntry(id: string, payload: Record<string, any>, version: number): Promise<any> {
+export async function patchEntry(id: string, payload: Record<string, any>, version: number): Promise<Record<string, any>> {
     const operations = []
     for (let key in payload) {
         operations.push({
@@ -91,27 +91,32 @@ export async function patchEntry(id: string, payload: Record<string, any>, versi
         operations,
         config,
     )
+
+    return response;
 }
 
-export async function publishEntry(id: string, version: number) {
+export async function publishEntry(id: string, version: number): Promise<Record<string, any>>{
     const config = {
         headers: {
             'X-Contentful-Version': version,
+            'Authorization': `Bearer ${CONTENTFUL_MANAGEMENT_TOKEN}`,
         }
     }
 
     const response = await axios.put(
         `https://api.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${CONTENTFUL_ENVIRONMENT}/entries/${id}/published`,
+        {},
         config,
     );
 
     return response;
 }
 
-export async function unpublishEntry(id: string, version: number) {
+export async function unpublishEntry(id: string, version: number): Promise<Record<string, any>> {
     const config = {
         headers: {
             'X-Contentful-Version': version,
+            'Authorization': `Bearer ${CONTENTFUL_MANAGEMENT_TOKEN}`,
         }
     }
 
@@ -119,8 +124,20 @@ export async function unpublishEntry(id: string, version: number) {
         `https://api.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${CONTENTFUL_ENVIRONMENT}/entries/${id}/published`,
         config,
     );
+
+    return response;
 }
 
-export async function deleteEntry(id: string) {
+export async function deleteEntry(id: string, version: number) {
+    const config = {
+        headers: {
+            'X-Contentful-Version': version,
+            'Authorization': `Bearer ${CONTENTFUL_MANAGEMENT_TOKEN}`,
+        }
+    }
 
+    const response = await axios.delete(
+        `https://api.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${CONTENTFUL_ENVIRONMENT}/entries/${id}`,
+        config,
+    );
 }
