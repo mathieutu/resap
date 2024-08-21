@@ -65,8 +65,9 @@ export default function APropos() {
             <h2>Plusieurs organisations ont rapidement contribué au projet</h2>
 
             <h3>La délégation régionale Auvergne-Rhône-Alpes Médecins du Monde</h3>
-            <p>Elle déploie des programmes sur le territoire de Lyon, de Grenoble. </p>
-            <p>Pour faire vivre ces programmes, la délégation s&#39;appuie sur une équipe salariée mais également sur des bénévoles, et notamment de médecins bénévoles (qui pratiquent en cabinet par ailleurs). Afin de favoriser l&#39;accès aux soins des plus précaires, l&#39;association a mis en place (Grenoble/ Lyon) des partenariats avec certains médecins libéraux pour l&#39;orientation des patients en situation de précarité.</p>
+            <p>Les équipes de Médecins du Monde interviennent en France depuis 1986 à Grenoble et depuis 1987 à Lyon. Malgré la mise en place de nombreux dispositifs pour les populations précarisées (dont la création des PASS en 1998), les obstacles à l&#39;accès aux droits et aux soins perdurent : saturation des dispositifs de l&#39;hôpital, accès à la médecine de ville limité, carences de postes, manque de structures accueillant les mineur.e.s de moins de 16 ans, recours à l&#39;interprétariat aléatoire, politiques d&#39;expulsions des bidonvilles, etc.</p>
+            <p>Aujourd&#39;hui, Médecins du Monde gère 2 CASO : Centres d&#39;Accueil, de Soins et d&#39;Orientation à Lyon et Grenoble ainsi que 2 missions mobiles à Lyon : Une mission Bus « d&#39;aller-vers » qui propose un espace de lien, d&#39;écoute et d&#39;orientation dans la rue et une mission de médiation en santé en squats et bidonvilles.</p>
+            <p>Pour faire vivre ces programmes, la délégation s&#39;appuie sur l&#39;engagement de salarié·e·s et de nombreux bénévoles, et notamment soignants ou non soignants sans lesquels les activités ne pourraient pas avoir lieu.</p>
 
             <h3>La Fédération des Acteurs de la Solidarité Auvergne Rhône Alpes</h3>
             <p>Elle anime une commission santé qui réunit des professionnels des structures de l&#39;Accueil-Hébergement et Insertion. </p>
