@@ -15,7 +15,7 @@ if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_PREVIEW_ACCESS_TOKEN || !CONTENTFUL_ACCE
 export const SYS_TYPES = {
   asset: 'Asset',
   entry: 'Entry',
-}
+} as const
 
 export const CONTENT_TYPES = {
   auteur: 'auteur',

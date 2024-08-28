@@ -9,17 +9,17 @@ import {
 import { deleteStructure, refreshStructures, saveStructure } from '../../../services/algolia.server'
 
 const deleteStructureFromAlgolia = async (structureId: string, res: NextApiResponse) => {
-  console.log(`Deleting ${structureId}`)
+  console.log(`Deleting structure id ${structureId}`)
   return res.json(await deleteStructure(structureId))
 }
 
 const updateStructureInAlgolia = async (structureId: string, res: NextApiResponse) => {
-  console.log(`Updating ${structureId}...`)
+  console.log(`Updating structure id ${structureId}...`)
   const structure = await findAStructureForIndexing(structureId)
 
   if (!structure) return res.status(404).json({ error: 'Structure not found' })
 
-  console.log('Structure found.')
+  console.log(`Structure ${structure.nom} found.`)
 
   const savedObjectResponse = await saveStructure(structure)
 
@@ -50,6 +50,8 @@ const refreshStructuresIndex = async (res: NextApiResponse) => {
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const body = req.body as { id: string, sysType: SysType, contentType: ContentType }
+
+  if (!body.id) return res.status(400).json({ error: 'Missing id in request body' })
 
   if (req.method === 'DELETE') return deleteStructureFromAlgolia(body.id, res)
 
