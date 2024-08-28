@@ -7,6 +7,7 @@ import {
   SysType,
 } from '../../../services/contentful'
 import { deleteStructure, refreshStructures, saveStructure } from '../../../services/algolia.server'
+import { log } from 'console'
 
 const deleteStructureFromAlgolia = async (structureId: string, res: NextApiResponse) => {
   console.log(`Deleting structure id ${structureId}`)
@@ -50,6 +51,8 @@ const refreshStructuresIndex = async (res: NextApiResponse) => {
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const body = req.body as { id: string, sysType: SysType, contentType: ContentType }
+  
+  console.log(body)
 
   if (!body.id) return res.status(400).json({ error: 'Missing id in request body' })
 
