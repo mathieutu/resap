@@ -42,7 +42,7 @@ const Form = () => {
       <div className="sm:col-span-6">
         <div className="flex justify-between">
           <label htmlFor="message" className={classNames(errors.message && 'text-red-500', 'block text-sm font-medium text-gray-700')}>
-            Message
+            Message*
           </label>
           {errors.message && (
             <span className="text-sm text-red-500">

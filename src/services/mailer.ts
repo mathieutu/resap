@@ -16,7 +16,7 @@ export const mailer = Mailer({
     },
   },
   defaults: {
-    from: { name: 'Resap', address: 'noreply@resap.org' },
+    from: { name: 'Resap', address: 'noreply@resap.fr' },
   },
 }, {
   ContactEmail,
