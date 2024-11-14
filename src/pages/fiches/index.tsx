@@ -13,12 +13,14 @@ import { CategorieLink } from '../../components/CategorieLink'
 import { Container } from '../../components/Layout/Container'
 import { Fiche } from '../../types/models'
 import { isPreviewForced } from '../../services/contentful'
+import { Configure } from 'react-instantsearch-hooks'
 
 export default function ListFiches(algoliaProps: AlgoliaSSRProps) {
   return (
     <Layout className="bg-gray-light">
       <NextSeo title="Fiches pratiques" />
       <SearchContext indexName={IndicesNames.fiches} {...algoliaProps}>
+      <Configure  hitsPerPage={50} />
         <SimpleHeader className="h-[475px]" title="Fiches pratiques" titleClassName="text-blue-default" subTitle="">
           <div className="w-full block md:w-1/2 mx-auto mt-16 sm:flex">
             <div className="mt-1 relative rounded-md shadow-sm w-full">
