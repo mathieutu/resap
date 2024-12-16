@@ -1,15 +1,15 @@
-import { Fragment } from 'react'
-import { Popover, Transition } from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import { SearchIcon } from '@heroicons/react/solid'
-import { navigationEntries } from './Navbar'
-import { Link } from '../Links'
-import { PrimaryButton } from '../Buttons'
-import { useSearchFichesForm } from '../../utils/hooks'
-import { LogoFull, LogoIcon } from '../Logos'
+import { Fragment } from 'react';
+import { Popover, Transition } from '@headlessui/react';
+import { MenuIcon, XIcon } from '@heroicons/react/outline';
+import { SearchIcon } from '@heroicons/react/solid';
+import { navigationEntries } from './Navbar';
+import { Link } from '../Links';
+import { PrimaryButton } from '../Buttons';
+import { useSearchFichesForm } from '../../utils/hooks';
+import { LogoFull, LogoIcon } from '../Logos';
 
 const SearchForm = () => {
-  const { handleSubmit, onChange, value } = useSearchFichesForm()
+  const { handleSubmit, onChange, value } = useSearchFichesForm();
 
   return (
     <form onSubmit={handleSubmit} className="mt-3 sm:flex lg:w-3/4">
@@ -33,15 +33,15 @@ const SearchForm = () => {
         <PrimaryButton type="submit">Rechercher</PrimaryButton>
       </div>
     </form>
-  )
-}
+  );
+};
 
 export const HomeHeader = () => (
   <div className="relative bg-white overflow-hidden">
     <div className="max-w-7xl mx-auto">
       <Popover>
         <div className="bg-white flex justify-between lg:px-8 pt-6 px-4 relative sm:px-6 z-30">
-          <div>
+          <div className="w-full h-auto">
             <nav
               className="relative flex items-center justify-between sm:h-10 lg:justify-start"
               aria-label="Global"
@@ -52,9 +52,7 @@ export const HomeHeader = () => (
                     <LogoFull className="text-blue-default w-14" />
                   </Link>
                   <div className="-mr-2 flex items-center md:hidden">
-                    <Popover.Button
-                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-default hover:bg-gray-light focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default"
-                    >
+                    <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-default hover:bg-gray-light focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default">
                       <span className="sr-only">Menu principal</span>
                       <MenuIcon className="h-6 w-6" aria-hidden="true" />
                     </Popover.Button>
@@ -74,10 +72,18 @@ export const HomeHeader = () => (
               </div>
             </nav>
           </div>
-          <div className="flex justify-end flex-wrap gap-4 hidden lg:block">
+          <div className="justify-end flex-wrap gap-4 hidden lg:block">
             <p className="flex gap-8 items-center flex-nowrap">
-              <img className="h-10" src="/partenaires/logo-ars.png" alt="Logo ARS" />
-              <img className="h-12" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
+              <img
+                className="h-10"
+                src="/partenaires/logo-ars.png"
+                alt="Logo ARS"
+              />
+              <img
+                className="h-12"
+                src="/partenaires/logo-gouv.png"
+                alt="Logo gouvernement"
+              />
             </p>
           </div>
         </div>
@@ -95,17 +101,13 @@ export const HomeHeader = () => (
             focus
             className="absolute top-0 inset-x-0 p-2 transition  origin-top-right md:hidden z-10"
           >
-            <div
-              className="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
-            >
+            <div className="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden">
               <div className="px-5 pt-4 flex items-center justify-between">
                 <div>
                   <LogoFull className="text-blue-default w-14" />
                 </div>
                 <div className="-mr-2">
-                  <Popover.Button
-                    className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default"
-                  >
+                  <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default">
                     <span className="sr-only">Close main menu</span>
                     <XIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
@@ -131,14 +133,18 @@ export const HomeHeader = () => (
         <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
           <div className="sm:text-center lg:text-left">
             <h1 className="text-4xl tracking-tight font-extrabold text-blue-default sm:text-5xl md:text-6xl">
-              <span className="block">Ressources <br />Santé et Précarité</span>{' '}
-              <span className="block text-4xl text-green-default mt-4 ">Auvergne Rhône Alpes</span>
+              <span className="block">
+                Ressources <br />
+                Santé et Précarité
+              </span>{' '}
+              <span className="block text-4xl text-green-default mt-4 ">
+                Auvergne Rhône Alpes
+              </span>
             </h1>
-            <p
-              className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
-            >
-              Ce site se veut être un outil pratique à destination des professionnels de santé.
-              Par un système de mots clés, vous serez orientés vers des fiches thématiques.
+            <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+              Ce site se veut être un outil pratique à destination des
+              professionnels de santé. Par un système de mots clés, vous serez
+              orientés vers des fiches thématiques.
             </p>
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
               <SearchForm />
@@ -147,8 +153,16 @@ export const HomeHeader = () => (
           <div className="relative lg:right-0 px-1 pt-10 lg:hidden md:block">
             <div className="flex justify-center flex-wrap gap-4">
               <p className="flex gap-8 items-center flex-wrap">
-                <img className="h-10" src="/partenaires/logo-ars.png" alt="Logo ARS" />
-                <img className="h-12" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
+                <img
+                  className="h-10"
+                  src="/partenaires/logo-ars.png"
+                  alt="Logo ARS"
+                />
+                <img
+                  className="h-12"
+                  src="/partenaires/logo-gouv.png"
+                  alt="Logo gouvernement"
+                />
               </p>
             </div>
           </div>
@@ -159,4 +173,4 @@ export const HomeHeader = () => (
       <LogoIcon className="h-full text-green-default" />
     </div>
   </div>
-)
+);
