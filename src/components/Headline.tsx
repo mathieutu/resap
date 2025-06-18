@@ -1,4 +1,3 @@
-/* eslint-disable react/no-danger */
 // TODO à reprendre ? (virer html et utiliser du jsx)
 import classNames from 'classnames'
 import { ChildrenProp, ClassNameProp } from '../types/react'

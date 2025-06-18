@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import classNames from 'classnames'
 import { Fiche } from '../../types/models'
 import { Link } from '../Links'

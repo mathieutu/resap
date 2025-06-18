@@ -7,7 +7,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 import { MarkerClusterGroup as LMarkersGroup } from 'leaflet'
 
 export const MarkerClusterGroup = createPathComponent(
-  (props, ctx) => {
+  (_props, ctx) => {
     const markerClusterGroup = new LMarkersGroup({
       showCoverageOnHover: false,
       chunkedLoading: true,

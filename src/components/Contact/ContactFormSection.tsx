@@ -29,7 +29,7 @@ const Form = () => {
         'Votre message a été envoyé. Nous reviendrons vers vous dans les plus brefs délais.',
         { appearance: 'success' },
       )
-    } catch (e) {
+    } catch (_e) {
       addToast(
         'Nous n\'avons pu envoyer votre message en raison d\'une erreur technique. Merci de nous contacter par un autre moyen.',
         { appearance: 'error' },

@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { Link } from '../Links'
 import { LogoFull } from '../Logos'
 

@@ -10,7 +10,6 @@ if (!appId || !apiKey) {
 
 export const searchClient = algoliaSearch(appId, apiKey)
 
-// eslint-disable-next-line no-shadow -- bug eslint
 export const enum IndicesNames {
   fiches = 'fiches',
   structures = 'structures',
