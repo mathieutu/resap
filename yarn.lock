@@ -1748,17 +1748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.27.2":
-  version: 0.27.2
-  resolution: "axios@npm:0.27.2"
-  dependencies:
-    follow-redirects: "npm:^1.14.9"
-    form-data: "npm:^4.0.0"
-  checksum: 10c0/76d673d2a90629944b44d6f345f01e58e9174690f635115d5ffd4aca495d99bcd8f95c590d5ccb473513f5ebc1d1a6e8934580d0c57cdd0498c3a101313ef771
-  languageName: node
-  linkType: hard
-
-"axios@npm:^1.8.4":
+"axios@npm:^1.10.0, axios@npm:^1.8.4":
   version: 1.10.0
   resolution: "axios@npm:1.10.0"
   dependencies:
@@ -2260,10 +2250,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.5, classnames@npm:^2.3.1":
+"classnames@npm:^2.2.5":
   version: 2.3.1
   resolution: "classnames@npm:2.3.1"
   checksum: 10c0/e3b832219042802464e648c41c2e8be96c2c64d2522cfa22fbb5ec088418406c61ab351a682c077c07f691c8b00c9f0ee7939b20fabc6c23da69063252a4ab89
+  languageName: node
+  linkType: hard
+
+"classnames@npm:^2.5.1":
+  version: 2.5.1
+  resolution: "classnames@npm:2.5.1"
+  checksum: 10c0/afff4f77e62cea2d79c39962980bf316bacb0d7c49e13a21adaadb9221e1c6b9d3cdb829d8bb1b23c406f4e740507f37e1dcf506f7e3b7113d17c5bab787aa69
   languageName: node
   linkType: hard
 
@@ -3219,10 +3216,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.0.2":
-  version: 16.0.2
-  resolution: "dotenv@npm:16.0.2"
-  checksum: 10c0/e9b64fa45f0b693875db50f1876c1202be8e936500aa664478247ab06b2fe8096cc1ab238919771dbdd1f65490b7efe65b61401d3cd61bcea88eab7c2bf06964
+"dotenv@npm:^16.5.0":
+  version: 16.5.0
+  resolution: "dotenv@npm:16.5.0"
+  checksum: 10c0/5bc94c919fbd955bf0ba44d33922a1e93d1078e64a1db5c30faeded1d996e7a83c55332cb8ea4fae5a9ca4d0be44cbceb95c5811e70f9f095298df09d1997dd9
   languageName: node
   linkType: hard
 
@@ -4329,16 +4326,6 @@ __metadata:
   peerDependencies:
     react: ^15.0.2 || ^16.0.0 || ^17.0.0
   checksum: 10c0/4ac99ca6ed3fc7e414dd506f372db913789aff231e192df1ba9f6b015e0ee5befb4b388061dd6af83d7844c9b31a02e401dce6880bd0a3417fa05f0efcfef922
-  languageName: node
-  linkType: hard
-
-"follow-redirects@npm:^1.14.9":
-  version: 1.14.9
-  resolution: "follow-redirects@npm:1.14.9"
-  peerDependenciesMeta:
-    debug:
-      optional: true
-  checksum: 10c0/08c465c17cbf3011ad16516609ee476abffa8fd1ff78c2082f1ff43614cb06586a0ccc8e99e5ebe13da06d064367cb269789e3ca0e93e2ad5b24fdc30b4294b6
   languageName: node
   linkType: hard
 
@@ -5908,10 +5895,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"leaflet@npm:^1.8.0":
-  version: 1.8.0
-  resolution: "leaflet@npm:1.8.0"
-  checksum: 10c0/ab0ecc5829ea319202960dac9a34a49b05ecfbc2aa8129b5f30ac0aa4d17379b5f436162da512aa769169019f59ad3fe92762ed60a240a238f295f0d068c051d
+"leaflet@npm:^1.9.4":
+  version: 1.9.4
+  resolution: "leaflet@npm:1.9.4"
+  checksum: 10c0/f639441dbb7eb9ae3fcd29ffd7d3508f6c6106892441634b0232fafb9ffb1588b05a8244ec7085de2c98b5ed703894df246898477836cfd0ce5b96d4717b5ca1
   languageName: node
   linkType: hard
 
@@ -6979,10 +6966,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemailer@npm:^6.7.8":
-  version: 6.7.8
-  resolution: "nodemailer@npm:6.7.8"
-  checksum: 10c0/e5f691a7fd38b9694b80a7817fdeffceb2fa3e3ea3a746698abb6829d1c66f3a75238292f11ce3ca9e0cc34363c051a42a37c5190f1deb0dc72d223bc510d28c
+"nodemailer@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "nodemailer@npm:7.0.3"
+  checksum: 10c0/835492262328471b94a080cea43ea20f4232e19a915400cd71c7f4f4ab93a7d361775154eebe30a8fc40379eecf11a0bbc73e6cf4bbee9dccb6dd1cf7a1dc792
   languageName: node
   linkType: hard
 
@@ -7972,10 +7959,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ramda@npm:^0.28.0":
-  version: 0.28.0
-  resolution: "ramda@npm:0.28.0"
-  checksum: 10c0/0f9dc0cc3b0432ff047f1e2a5e58860c531a84574674c0f52fef535efc6e1e07fa3851102fff3da7dd551a592c743f6f6fa521379a6aa5fe50266f8af8f0b570
+"ramda@npm:^0.30.1":
+  version: 0.30.1
+  resolution: "ramda@npm:0.30.1"
+  checksum: 10c0/3ea3e35c80e1a1b78c23de0c72d3382c3446f42052b113b851f1b7fc421e33a45ce92e7aef3c705cc6de3812a209d03417af5c264f67126cda539fd66c8bea71
   languageName: node
   linkType: hard
 
@@ -8357,13 +8344,13 @@ __metadata:
     "@vercel/analytics": "npm:^1.2.2"
     algoliasearch: "npm:^4.14.2"
     autoprefixer: "npm:10.4.5"
-    axios: "npm:^0.27.2"
-    classnames: "npm:^2.3.1"
+    axios: "npm:^1.10.0"
+    classnames: "npm:^2.5.1"
     contentful: "npm:^11.7.2"
     contentful-cli: "npm:^3.8.8"
     contentful-management: "npm:^11.53.0"
     contentful-typescript-codegen: "npm:^3.4.0"
-    dotenv: "npm:^16.0.2"
+    dotenv: "npm:^16.5.0"
     eslint: "npm:8.22.*"
     eslint-config-airbnb: "npm:^19.0.4"
     eslint-config-next: "npm:^12.2.5"
@@ -8372,16 +8359,16 @@ __metadata:
     eslint-plugin-react: "npm:^7.31.1"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     instantsearch.js: "npm:^4.45.0"
-    leaflet: "npm:^1.8.0"
+    leaflet: "npm:^1.9.4"
     leaflet.markercluster: "npm:^1.5.3"
     next: "npm:^12.2.5"
     next-seo: "npm:^5.5.0"
-    nodemailer: "npm:^6.7.8"
+    nodemailer: "npm:^7.0.3"
     nodemailer-react: "npm:^1.0.2"
     nprogress: "npm:^0.2.0"
     postcss: "npm:^8.4.16"
     prettier: "npm:^2.7.1"
-    ramda: "npm:^0.28.0"
+    ramda: "npm:^0.30.1"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     react-hook-form: "npm:^7.34.2"
