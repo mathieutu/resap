@@ -22,7 +22,7 @@ export const ContactEmail: Email<ContactFields> = (contact) => ({
 
         <p>Un nouveau message a été envoyé depuis le formulaire de contact de ReSap :</p>
         <p />
-        <ul style={{padding: 0}}>
+        <ul style={{ padding: 0 }}>
           {contact.firstName ? <li><b>Prénom</b> : {contact.firstName}</li> : null}
           {contact.lastName ? <li><b>Nom</b> : {contact.lastName}</li> : null}
           {contact.email ? (

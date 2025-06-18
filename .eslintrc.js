@@ -58,6 +58,7 @@ module.exports = {
     'spaced-comment': ['error', 'always', { markers: ['/'] }],
     indent: 'off',
     semi: ['error', 'never'],
+    'consistent-return': 'off',
   },
   overrides: [
     {
