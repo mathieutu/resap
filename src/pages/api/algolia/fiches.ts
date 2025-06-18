@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { NextApiRequest, NextApiResponse } from 'next'
+import { flatten, pluck } from 'ramda'
 import { ContentType, CONTENT_TYPES, fetchAllFichesForIndexing, findAFicheForIndexing, findAllFichesLinkedToAssetForIndexing, findAllFichesLinkedToEntryForIndexing, SysType, SYS_TYPES } from '../../../services/contentful'
 import { deleteFiche, refreshFiches, saveFiche, saveFiches } from '../../../services/algolia.server'
 
@@ -55,17 +56,22 @@ const refreshFichesIndex = async (res: NextApiResponse) => {
 
   console.log(`Found ${fiches.length} fiches in contentful.`)
 
-  const savedObjectResponse = await refreshFiches(fiches)
+  const savedObjectsResponse = await refreshFiches(fiches)
 
-  return res.json(savedObjectResponse)
+  const objectsIDs = flatten(pluck('objectIDs', savedObjectsResponse))
+
+  res.json({ length: objectsIDs.length, objectsIDs })
+
+  console.log(`Inserted ${objectsIDs.length} objects in Algolia.`)
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const body = req.body as { id: string, sysType: SysType, contentType: ContentType }
+  if (req.method === 'GET') return refreshFichesIndex(res)
+
+  if (!body.id) return res.status(400).json({ error: 'Missing id in request body' })
 
   if (req.method === 'DELETE') return deleteFicheFromAlgolia(body.id, res)
-
-  if (req.method === 'GET') return refreshFichesIndex(res)
 
   if (req.method === 'PUT') {
     if (body.sysType === SYS_TYPES.asset) return updateAllFichesLinkedToAsset(body.id, res)
@@ -76,5 +82,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   return res
     .status(405)
-    .json({ error: `Method ${req.method} not allowed. You can only DELETE and PUT objects.` })
+    .json({ error: `Method ${req.method} not allowed. You can only GET, DELETE and PUT objects.` })
 }

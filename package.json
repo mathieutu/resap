@@ -24,11 +24,11 @@
     "@tailwindcss/line-clamp": "^0.4.0",
     "@types/leaflet.markercluster": "^1.5.1",
     "@vercel/analytics": "^1.2.2",
-    "algoliasearch": "^4.14.2",
+    "algoliasearch": "^5.28.0",
     "axios": "^1.10.0",
     "classnames": "^2.5.1",
     "contentful": "^11.7.2",
-    "instantsearch.js": "^4.45.0",
+    "instantsearch.js": "^4.79.0",
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
     "next": "^12.2.5",
@@ -40,8 +40,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.34.2",
-    "react-instantsearch-hooks": "^6.32.1",
-    "react-instantsearch-hooks-server": "^6.32.1",
+    "react-instantsearch-hooks": "^6.47.3",
+    "react-instantsearch-hooks-server": "^6.47.3",
     "react-json-view": "^1.21.3",
     "react-leaflet": "^4.0.2",
     "react-share": "^4.4.0",
@@ -75,7 +75,7 @@
     "prettier": "^2.7.1",
     "tailwind-config-viewer": "^1.7.1",
     "tailwindcss": "^3.1.8",
-    "typescript": "^4.8.2"
+    "typescript": "^4.9.5"
   },
   "packageManager": "yarn@4.9.2"
 }

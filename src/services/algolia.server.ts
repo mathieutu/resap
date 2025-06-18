@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import algoliaSearch, { SearchIndex } from 'algoliasearch'
+import { algoliasearch } from 'algoliasearch'
 import { Fiche, Structure } from '../types/models'
 
 const { NEXT_PUBLIC_ALGOLIA_APP_ID: appId, ALGOLIA_ADMIN_API_KEY: apiKey } = process.env
@@ -8,24 +8,10 @@ if (!appId || !apiKey) {
   throw new Error('Algolia env vars needed (NEXT_PUBLIC_ALGOLIA_APP_ID, ALGOLIA_ADMIN_API_KEY).')
 }
 
-const algoliaClient = algoliaSearch(appId, apiKey)
+const client = algoliasearch(appId, apiKey)
 
-// eslint-disable-next-line no-underscore-dangle,one-var-declaration-per-line,one-var
-let _fichesIndex: SearchIndex, _structuresIndex: SearchIndex
-
-const getFichesIndex = () => {
-  if (!_fichesIndex) _fichesIndex = algoliaClient.initIndex('fiches')
-
-  return _fichesIndex
-}
-
-const getStructuresIndex = () => {
-  if (!_structuresIndex) _structuresIndex = algoliaClient.initIndex('structures')
-
-  return _structuresIndex
-}
-
-export const deleteFiche = (objectId: string) => getFichesIndex().deleteObject(objectId)
+const fichesIndex = <T extends Record<string, any>>(payload: T) => ({ indexName: 'fiche', ...payload })
+const structuresIndex = <T extends Record<string, any>>(payload: T) => ({ indexName: 'structures', ...payload })
 
 const prepareFicheForIndexing = (fiche: Fiche) => ({
   ...fiche,
@@ -33,23 +19,24 @@ const prepareFicheForIndexing = (fiche: Fiche) => ({
   objectID: fiche.id,
 })
 
-export const saveFiche = (fiche: Fiche) => {
-  const objectToIndex = prepareFicheForIndexing(fiche)
+export const deleteFiche = (objectID: string) => client.deleteObject(fichesIndex({ objectID }))
 
-  return getFichesIndex().saveObject(objectToIndex)
+export const saveFiche = (fiche: Fiche) => {
+  const body = prepareFicheForIndexing(fiche)
+
+  return client.saveObject(fichesIndex({ body }))
 }
 
 export const saveFiches = (fiches: Fiche[]) => {
-  const objectsToIndex = fiches.map(prepareFicheForIndexing)
+  const objects = fiches.map(prepareFicheForIndexing)
 
-  return getFichesIndex().saveObjects(objectsToIndex)
+  return client.saveObjects(fichesIndex({ objects }))
 }
 
 export const refreshFiches = async (fiches: Fiche[]) => {
-  const objectsToIndex = fiches.map(prepareFicheForIndexing)
+  await client.clearObjects(fichesIndex({}))
 
-  await getFichesIndex().clearObjects()
-  return getFichesIndex().saveObjects(objectsToIndex)
+  return saveFiches(fiches)
 }
 
 const prepareStructureForIndexing = (structure: Structure) => ({
@@ -62,21 +49,21 @@ const prepareStructureForIndexing = (structure: Structure) => ({
   },
 })
 
-export const deleteStructure = (objectId: string) => getStructuresIndex().deleteObject(objectId)
+export const deleteStructure = (objectID: string) => client.deleteObject(structuresIndex({ objectID }))
 
 export const saveStructure = (structure: Structure) => {
-  const objectToIndex = prepareStructureForIndexing(structure)
+  const body = prepareStructureForIndexing(structure)
 
-  return getStructuresIndex().saveObject(objectToIndex)
+  return client.saveObject(structuresIndex({ body }))
 }
 
 export const saveStructures = (structures: Structure[]) => {
-  const objectsToIndex = structures.map(prepareStructureForIndexing)
-  return getStructuresIndex().saveObjects(objectsToIndex)
+  const objects = structures.map(prepareStructureForIndexing)
+  return client.saveObjects(structuresIndex({ objects }))
 }
 
 export const refreshStructures = async (structures: Structure[]) => {
-  await getStructuresIndex().clearObjects()
+  await client.clearObjects(structuresIndex({}))
   console.log('Structures index cleared.')
 
   return saveStructures(structures)
