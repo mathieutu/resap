@@ -1,10 +1,23 @@
-import { createClient } from 'contentful'
+import { createClient, EntrySkeletonType, FieldsType } from 'contentful'
 import { documentToHtmlString, Options } from '@contentful/rich-text-html-renderer'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { map } from 'ramda'
 import { BLOCKS, Document } from '@contentful/rich-text-types'
-import { Fiche, Structure } from '../types/models'
+import { EntrySelectFilterWithFields } from 'contentful/dist/types/types/query/select'
+import { EntryFieldsQueries } from 'contentful/dist/types/types/query/query'
+import type { EntryFieldsExistenceFilter } from 'contentful/dist/types/types/query/existence'
+import type { EntryFieldsEqualityFilter, EntryFieldsInequalityFilter } from 'contentful/dist/types/types/query/equality'
+import type { EntryFieldsFullTextSearchFilters } from 'contentful/dist/types/types/query/search'
+import type { EntryFieldsSubsetFilters } from 'contentful/dist/types/types/query/subset'
+import type { EntryFieldsSetFilter } from 'contentful/dist/types/types/query/set'
+import type { LocationSearchFilters } from 'contentful/dist/types/types/query/location'
+import type { EntryFieldsRangeFilters } from 'contentful/dist/types/types/query/range'
+import type { ReferenceSearchFilters } from 'contentful/dist/types/types/query/reference'
+import * as tty from 'node:tty'
+import type { EntriesQueries } from 'contentful/dist/types/types/query'
 import { CategorieSlug } from '../data/categories'
+import { Fiche, Structure } from '../types/models'
+import { dump } from '../utils/logs'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
 
@@ -27,10 +40,10 @@ export const CONTENT_TYPES = {
 export type ContentType = typeof CONTENT_TYPES[keyof typeof CONTENT_TYPES]
 export type SysType = typeof SYS_TYPES[keyof typeof SYS_TYPES]
 
-type GetEntriesOptions = {
+type GetEntriesOptions<Fields extends FieldsType> = {
   preview?: boolean,
-  select?: string[],
-  where?: Record<string, string>,
+  select?: EntrySelectFilterWithFields<Fields>['select'],
+  where?: Record<string, string | string[]>,
 }
 
 type FicheEntry = Fiche & {
@@ -62,10 +75,10 @@ const parseContentfulEntries = (element: any): any => {
 
 export const isPreviewForced = ['true', '1'].includes(FORCE_CONTENTFUL_PREVIEW!)
 
-const getEntries = async <T extends Record<string, unknown>>(
+const getEntries = async <Fields extends FieldsType>(
   contentType: ContentType,
-  options: GetEntriesOptions = {},
-): Promise<T[]> => {
+  options: GetEntriesOptions<Fields> = {},
+): Promise<Fields[]> => {
   const { preview, select = [], where = {} } = options
 
   const client = createClient({
@@ -79,8 +92,8 @@ const getEntries = async <T extends Record<string, unknown>>(
 
     const response = await client.getEntries({
       content_type: contentType,
-      select: select.join(','),
-      order: 'sys.createdAt',
+      select: select.length ? [...select, 'sys.id', 'sys.createdAt', 'sys.updatedAt'] : undefined,
+      order: ['sys.createdAt'],
       limit,
       skip: offset,
       ...where,
@@ -171,7 +184,7 @@ export const fetchAllStructuresForIndexing = async (): Promise<Structure[] | nul
 export const listAllFiches = (preview = false): Promise<Fiche[]> => (
   getEntries<FicheEntry>(
     CONTENT_TYPES.fiche,
-    { preview, select: ['fields.slug', 'sys.createdAt', 'fields.titre', 'fields.illustration', 'fields.description'] },
+    { preview, select: ['fields.slug', 'fields.titre', 'fields.illustration', 'fields.description'] },
   )
 )
 
@@ -204,7 +217,7 @@ export const findAFiche = async (slug: string, preview = false): Promise<Fiche |
     contenu: convertContentfulContentToHtml(fiche.contenu),
     structures: (await getEntries<StructureEntry>(
       CONTENT_TYPES.structure,
-      { preview, where: { 'fields.type[in]': (fiche.typeDispositif || []).join(',') } },
+      { preview, where: { 'fields.type[in]': fiche.typeDispositif } },
     )).map(formatStructure),
   }
 }
