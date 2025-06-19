@@ -54,15 +54,15 @@ export const SearchFacet = ({
 
             <Transition
               show={open}
-              as={Fragment}
               leave="transition ease-in duration-100"
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-sm ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-hidden sm:text-sm">
+              <Listbox.Options as="ul" className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-sm ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-hidden sm:text-sm">
                 {items.map((item) => (
                   <Listbox.Option
                     key={item.value}
+                    as="li"
                     className={({ active }) => classNames(
                       active
                         ? getItemClassName(item)

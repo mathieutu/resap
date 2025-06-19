@@ -135,6 +135,7 @@ export default function FichePage({ fiche }: Props) {
                 enter="transition-opacity ease-linear duration-700"
                 enterFrom="opacity-0"
                 enterTo="opacity-100"
+                as="div"
               >
                 <Prose html={fiche.contenu} />
                 <SecondaryButton type="button" className="block my-5 w-1/2 mx-auto" onClick={toggleDetails}>
