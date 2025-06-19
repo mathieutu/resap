@@ -1,13 +1,15 @@
+'use client'
+
 import dynamic from 'next/dynamic'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { AtSymbolIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/20/solid'
-import { useRouter } from 'next/router'
-import { Structure } from '../../types/models'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Structure } from '@/types/models'
+import { types } from '@/data/structures_types'
+import { ChildrenProp } from '@/types/react'
 import type { MapProps } from './Map'
-import { types } from '../../data/structures_types'
-import { ChildrenProp } from '../../types/react'
 
 type StructureListItemProps = {
   structure: Structure,
@@ -86,9 +88,10 @@ export const StructuresList = ({
   structures,
   mapChildren,
 }: StructuresListProps) => {
+  const searchParams = useSearchParams()!
+  const selectedStructureId = searchParams.get('id')
   const router = useRouter()
-  const { id: selectedStructureId } = router.query
-  const selectStructure = ({ id }: Structure) => router.push(`/annuaire/${id === selectedStructureId ? '' : id}`, undefined, { shallow: true, scroll: false })
+  const selectStructure = ({ id }: Structure) => router.push(`/annuaire/${id === selectedStructureId ? '' : id}`, { scroll: false })
 
   const [selectedStructure, setSelectedStructure] = useState<Structure | undefined>()
 

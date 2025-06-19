@@ -1,5 +1,5 @@
 import { categories, CategorieSlug } from '@/data/categories'
-import { SearchFiches } from '@/components/Search/SearchFiches'
+import { SearchFiches } from '../SearchFiches'
 
 export const generateMetadata = async ({ params }: { params: Promise<{ categorie: CategorieSlug }> }) => {
   const { categorie: slug } = await params
@@ -12,9 +12,7 @@ export const generateMetadata = async ({ params }: { params: Promise<{ categorie
   }
 }
 
-export default async function ListFichesByCategory({
-  params,
-}: { params: Promise<{ categorie: CategorieSlug }> }) {
+export default async function ListFichesByCategory({ params }: { params: Promise<{ categorie: CategorieSlug }> }) {
   const { categorie } = await params
 
   return (

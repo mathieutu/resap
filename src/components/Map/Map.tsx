@@ -1,14 +1,16 @@
+'use client'
+
 import 'leaflet/dist/leaflet.css'
 
 import { GeoJSON, MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
 import L, { LatLngTuple } from 'leaflet'
 import { ReactNode, useEffect, useMemo } from 'react'
 import { groupBy } from 'ramda'
-import { Structure } from '../../types/models'
+import { Structure } from '@/types/models'
+import { types } from '@/data/structures_types'
 import { departementsBoundaries } from './departements'
 import { MarkerClusterGroup } from './Cluster'
 import { ResetViewControl } from './ResetViewControl'
-import { types } from '../../data/structures_types'
 import { CurrentLocationControl } from './CurrentLocationControl'
 
 const initialCenter: LatLngTuple = [45.40, 4.66]

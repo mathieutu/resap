@@ -1,4 +1,4 @@
-import { SearchFiches } from '@/components/Search/SearchFiches'
+import { SearchFiches } from './SearchFiches'
 
 export const metadata = {
   title: 'Fiches pratiques',
