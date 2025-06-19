@@ -1,5 +1,6 @@
 import '@/assets/styles.css'
 import { Dosis, IBM_Plex_Sans as IBMPlexSans } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata = {
   title: {
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fr">
       <body>
         {children}
+        <Analytics />
       </body>
     </html>
   )

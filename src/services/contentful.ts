@@ -1,11 +1,10 @@
-import { createClient, FieldsType } from 'contentful'
+import { createClient, FieldsType, EntrySelectFilterWithFields } from 'contentful'
 import { documentToHtmlString, Options } from '@contentful/rich-text-html-renderer'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { map } from 'ramda'
 import { BLOCKS, Document } from '@contentful/rich-text-types'
-import { EntrySelectFilterWithFields } from 'contentful/dist/types/types/query/select'
-import { CategorieSlug } from '../data/categories'
-import { Fiche, Structure } from '../types/models'
+import { Fiche, Structure } from '@/types/models'
+import { CategorieSlug } from '@/data/categories'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
 

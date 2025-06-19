@@ -1,29 +1,27 @@
-import { InstantSearch, InstantSearchSSRProvider } from 'react-instantsearch-core'
+'use client'
+
+import { InstantSearchSSRProvider } from 'react-instantsearch-core'
 import { ReactNode } from 'react'
-import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
-import singletonRouter from 'next/router'
 import { IndicesNames, searchClient } from '@/services/algolia.browser'
+import { InstantSearchNext } from 'react-instantsearch-nextjs'
 
 type SearchContextProps = {
   children: ReactNode,
   indexName: IndicesNames,
 }
 
-const router = createInstantSearchRouterNext({ singletonRouter, routerOptions: { cleanUrlOnDispose: false } })
-
 export const SearchContext = ({
   children,
   indexName,
 }: SearchContextProps) => (
   <InstantSearchSSRProvider>
-    <InstantSearch
+    <InstantSearchNext
       indexName={indexName}
       searchClient={searchClient}
       future={{ preserveSharedStateOnUnmount: true }}
       routing={{
-        router,
+        router: { cleanUrlOnDispose: false },
         stateMapping: {
-          // @ts-expect-error We don't want the indexName in the route state
           stateToRoute(uiState) {
             const {
               query,
@@ -48,6 +46,6 @@ export const SearchContext = ({
       }}
     >
       {children}
-    </InstantSearch>
+    </InstantSearchNext>
   </InstantSearchSSRProvider>
   )

@@ -1,6 +1,8 @@
+'use client'
+
 import { InputHTMLAttributes, useEffect, useState } from 'react'
 import { useSearchBox } from 'react-instantsearch-core'
-import { useDebounce } from '../../utils/hooks'
+import { useDebounce } from '@/utils/hooks'
 
 type Props = InputHTMLAttributes<any> & { label: string }
 export const SearchInput = ({
