@@ -39,7 +39,7 @@ export const SearchFacet = ({
                     <span
                       key={item.value}
                       className={classNames(
-                        'inline-flex items-center px-2 py-0.5 rounded text-xs truncate',
+                        'inline-flex items-center px-2 py-0.5 rounded-sm text-xs truncate',
                         getItemClassName(item),
                       )}
                     >
@@ -59,7 +59,7 @@ export const SearchFacet = ({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-sm ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-sm ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-hidden sm:text-sm">
                 {items.map((item) => (
                   <Listbox.Option
                     key={item.value}

@@ -117,13 +117,13 @@ const convertContentfulContentToHtml = (content: Document): string => {
         if (file.contentType.includes('image') || file.contentType.includes('svg')) {
           return `
             <a href=${attr(file.url)} target="_blank" rel="noopener noreferer">
-              <img class="rounded" src=${attr(file.url)} alt=${attr(title)}/>
+              <img class="rounded-sm" src=${attr(file.url)} alt=${attr(title)}/>
             </a>
           `
         }
 
         return `
-          <a href=${attr(file.url)} target="_blank" rel="noopener noreferer" class="not-prose print:hidden inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded text-blue-default bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-default">
+          <a href=${attr(file.url)} target="_blank" rel="noopener noreferer" class="not-prose print:hidden inline-flex items-center px-3 py-2 border border-gray-300 shadow-xs text-sm font-medium rounded-sm text-blue-default bg-white hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-blue-default">
             <svg class="-ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
             </svg>

@@ -18,7 +18,7 @@ export const Navbar = () => {
   const { handleSubmit, onChange, value } = useSearchFichesForm()
 
   return (
-    <Popover as="header" className="bg-white shadow print:hidden">
+    <Popover as="header" className="bg-white shadow-sm print:hidden">
       {({ open }) => (
         <>
           <Container>
@@ -52,7 +52,7 @@ export const Navbar = () => {
                   <input
                     id="search"
                     name="search"
-                    className="w-full block pl-10 l-10  py-2 border border-gray-default rounded-md leading-5 bg-white placeholder-gray-default focus:outline-none focus:placeholder-gray-default focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm"
+                    className="w-full block pl-10 l-10  py-2 border border-gray-default rounded-md leading-5 bg-white placeholder-gray-default focus:outline-hidden focus:placeholder-gray-default focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm"
                     placeholder="Recherchez parmi nos fiches"
                     type="search"
                     size={42}
@@ -64,7 +64,7 @@ export const Navbar = () => {
               <div className="flex items-center lg:hidden">
                 {/* Mobile menu button */}
                 <Popover.Button
-                  className="inline-flex items-center justify-center p-2 rounded-md text-blue-default hover:text-blue-default hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default"
+                  className="inline-flex items-center justify-center p-2 rounded-md text-blue-default hover:text-blue-default hover:bg-gray-100 focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-blue-default"
                 >
                   <span className="sr-only">Open main menu</span>
                   {open ? (
@@ -99,7 +99,7 @@ export const Navbar = () => {
                   </div>
                   <div className="-mr-2">
                     <Popover.Button
-                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default"
+                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-500 hover:bg-gray-100 focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-blue-default"
                     >
                       <span className="sr-only">Close main menu</span>
                       <XIcon className="h-6 w-6" aria-hidden="true" />

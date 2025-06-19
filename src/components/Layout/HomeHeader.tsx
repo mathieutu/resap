@@ -16,8 +16,8 @@ const SearchForm = () => {
       <label htmlFor="search" className="sr-only">
         Rechercher par mots-clefs...
       </label>
-      <div className="mt-1 flex rounded-md shadow-sm w-full flex-wrap gap-3">
-        <div className="relative flex items-stretch flex-grow focus-within:z-10">
+      <div className="mt-1 flex rounded-md shadow-xs w-full flex-wrap gap-3">
+        <div className="relative flex items-stretch grow focus-within:z-10">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
           </div>
@@ -46,14 +46,14 @@ export const HomeHeader = () => (
               className="relative flex items-center justify-between sm:h-10 lg:justify-start"
               aria-label="Global"
             >
-              <div className="flex items-center flex-grow shrink-0 lg:grow-0">
+              <div className="flex items-center grow shrink-0 lg:grow-0">
                 <div className="flex items-center justify-between w-full md:w-auto">
                   <Link href="/" title="Page d'accueil">
                     <LogoFull className="text-blue-default w-14" />
                   </Link>
                   <div className="-mr-2 flex items-center md:hidden">
                     <Popover.Button
-                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-default hover:bg-gray-light focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default"
+                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-default hover:bg-gray-light focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-blue-default"
                     >
                       <span className="sr-only">Menu principal</span>
                       <MenuIcon className="h-6 w-6" aria-hidden="true" />
@@ -104,7 +104,7 @@ export const HomeHeader = () => (
                 </div>
                 <div className="-mr-2">
                   <Popover.Button
-                    className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-default"
+                    className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-500 hover:bg-gray-100 focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-blue-default"
                   >
                     <span className="sr-only">Close main menu</span>
                     <XIcon className="h-6 w-6" aria-hidden="true" />

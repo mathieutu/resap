@@ -54,7 +54,7 @@ const Form = () => {
           <textarea
             id="message"
             rows={4}
-            className={classNames(errors.message && 'border-red-500 focus:ring-red-500 focus:border-red-500', 'py-3 px-4 block w-full shadow-sm focus:ring-blue-default focus:border-blue-default border border-gray-300 rounded-md')}
+            className={classNames(errors.message && 'border-red-500 focus:ring-red-500 focus:border-red-500', 'py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border border-gray-300 rounded-md')}
             defaultValue=""
             {...register('message', { required: true })}
           />
@@ -69,7 +69,7 @@ const Form = () => {
             type="text"
             id="firstName"
             autoComplete="given-name"
-            className="py-3 px-4 block w-full shadow-sm focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
+            className="py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
             {...register('firstName')}
           />
         </div>
@@ -83,7 +83,7 @@ const Form = () => {
             type="text"
             id="lastName"
             autoComplete="family-name"
-            className="py-3 px-4 block w-full shadow-sm focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
+            className="py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
             {...register('lastName')}
           />
         </div>
@@ -97,7 +97,7 @@ const Form = () => {
             type="tel"
             id="phone"
             autoComplete="tel"
-            className="py-3 px-4 block w-full shadow-sm focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
+            className="py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
             {...register('phone')}
           />
         </div>
@@ -118,7 +118,7 @@ const Form = () => {
             id="email"
             type="email"
             autoComplete="email"
-            className={classNames(errors.email && 'border-red-500 focus:ring-red-500 focus:border-red-500', 'py-3 px-4 block w-full shadow-sm focus:ring-blue-default focus:border-blue-default border border-gray-300 rounded-md')}
+            className={classNames(errors.email && 'border-red-500 focus:ring-red-500 focus:border-red-500', 'py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border border-gray-300 rounded-md')}
             {...register('email', { pattern: emailRegexp })}
           />
         </div>
@@ -132,7 +132,7 @@ const Form = () => {
             type="text"
             id="organization"
             autoComplete="organization"
-            className="py-3 px-4 block w-full shadow-sm focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
+            className="py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
             {...register('organization')}
           />
         </div>
@@ -147,7 +147,7 @@ const Form = () => {
         <PrimaryButton
           type="submit"
           disabled={isSubmitting}
-          className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium"
+          className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-xs text-base font-medium"
         >
           {isSubmitting
             && <span aria-hidden="true" className="-ml-1 mr-3 w-5 h-5 border-2 border-transparent border-l-white rounded-full animate-spin" />}
