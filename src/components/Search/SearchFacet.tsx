@@ -1,7 +1,7 @@
 import { useRefinementList } from 'react-instantsearch-core'
 import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import classNames from 'classnames'
 import type { RefinementListItem } from 'instantsearch.js/es/connectors/refinement-list/connectRefinementList'
 import { ClassNameProp } from '../../types/react'
@@ -48,7 +48,7 @@ export const SearchFacet = ({
                   )) : <span className="text-gray-default text-sm">{label}</span>}
               </span>
               <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </span>
             </Listbox.Button>
 

@@ -1,5 +1,5 @@
 import { NextSeo } from 'next-seo'
-import { SearchIcon } from '@heroicons/react/solid'
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { GetStaticProps } from 'next'
 import { Configure } from 'react-instantsearch-core'
 import dynamic from 'next/dynamic'
@@ -27,7 +27,7 @@ const ALGOLIA_MAX_HITS_PER_PAGE = 1000
 const SearchField = () => (
   <div className="mt-1 relative rounded-md shadow-xs w-full">
     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-      <SearchIcon className="h-5 w-5 text-gray-400 " aria-hidden="true" />
+      <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 " aria-hidden="true" />
     </div>
     <SearchInput
       className="w-full border border-gray-default placeholder-gray-default rounded-md shadow-xs pl-3 pl-10 py-2 text-left cursor-default focus:outline-hidden focus:ring-1 focus:ring-blue-default focus:border-blue-default text-sm"

@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { ArrowLeftIcon } from '@heroicons/react/solid'
+import { ArrowLeftIcon } from '@heroicons/react/20/solid'
 import { Link } from './Links'
 import { Categorie } from '../data/categories'
 

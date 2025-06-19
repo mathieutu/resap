@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import { SearchIcon } from '@heroicons/react/solid'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { navigationEntries } from './Navbar'
 import { Link } from '../Links'
 import { PrimaryButton } from '../Buttons'
@@ -19,7 +19,7 @@ const SearchForm = () => {
       <div className="mt-1 flex rounded-md shadow-xs w-full flex-wrap gap-3">
         <div className="relative flex items-stretch grow focus-within:z-10">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+            <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
           </div>
           <input
             type="search"
@@ -56,7 +56,7 @@ export const HomeHeader = () => (
                       className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-default hover:bg-gray-light focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-blue-default"
                     >
                       <span className="sr-only">Menu principal</span>
-                      <MenuIcon className="h-6 w-6" aria-hidden="true" />
+                      <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                     </Popover.Button>
                   </div>
                 </div>
@@ -107,7 +107,7 @@ export const HomeHeader = () => (
                     className="bg-white rounded-md p-2 inline-flex items-center justify-center text-blue-default hover:text-gray-500 hover:bg-gray-100 focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-blue-default"
                   >
                     <span className="sr-only">Close main menu</span>
-                    <XIcon className="h-6 w-6" aria-hidden="true" />
+                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
                 </div>
               </div>

@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
-import { XIcon } from '@heroicons/react/outline'
-import { AtSymbolIcon, LocationMarkerIcon, PhoneIcon } from '@heroicons/react/solid'
+import { XMarkIcon } from '@heroicons/react/24/outline'
+import { AtSymbolIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/20/solid'
 import { useRouter } from 'next/router'
 import { Structure } from '../../types/models'
 import type { MapProps } from './Map'
@@ -44,7 +44,7 @@ const StructureListItem = ({
     <p className={classNames('inline-block w-fit py-1 px-2 rounded-md text-xs', types[s.type].colorClassname)}>{types[s.type].nom}</p>
     <p>
       <LinkToCoordinate selected={selected!} href={`https://maps.google.fr/maps?hl=fr&q=${s.nom} ${s.adresse}`}>
-        <LocationMarkerIcon className="h-4 w-4" /> {s.adresse}
+        <MapPinIcon className="h-4 w-4" /> {s.adresse}
       </LinkToCoordinate>
     </p>
     {s.tel
@@ -63,7 +63,7 @@ const StructureListItem = ({
             </LinkToCoordinate>
           </p>
         )}
-    {selected && <XIcon className="absolute top-1 right-2 h-5 w-5 text-gray-300 group-hover:text-blue-default" />}
+    {selected && <XMarkIcon className="absolute top-1 right-2 h-5 w-5 text-gray-300 group-hover:text-blue-default" />}
   </div>
 )
 
