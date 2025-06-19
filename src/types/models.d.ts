@@ -1,5 +1,5 @@
-import { CategorieSlug } from '../data/categories'
-import { StructureType } from '../data/structures_types'
+import { CategorieSlug } from '@/data/categories'
+import { StructureType } from '@/data/structures_types'
 
 type ImageSize = {
   width: number,
@@ -45,7 +45,7 @@ export type Structure = {
   tel?: string,
 }
 
-type Link = {
+export type Lien = {
   id: string,
   titre: string,
   createdAt: string,
@@ -64,9 +64,9 @@ export type Fiche = {
   contenu: string,
   date: string,
   tags: string[],
-  pourEnSavoirPlus?: Link[],
-  outils?: Link[],
-  patients?: Link[],
+  pourEnSavoirPlus?: Lien[],
+  outils?: Lien[],
+  patients?: Lien[],
   typeDispositif: StructureType[],
   structures: Structure[],
 }

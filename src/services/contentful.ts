@@ -3,7 +3,7 @@ import { documentToHtmlString, Options } from '@contentful/rich-text-html-render
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { map } from 'ramda'
 import { BLOCKS, Document } from '@contentful/rich-text-types'
-import { Fiche, Structure } from '@/types/models'
+import { Fiche, Structure, Lien } from '@/types/models'
 import { CategorieSlug } from '@/data/categories'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
@@ -18,10 +18,9 @@ export const SYS_TYPES = {
 } as const
 
 export const CONTENT_TYPES = {
-  auteur: 'auteur',
-  categorie: 'categorie',
   fiche: 'fiche',
   structure: 'structure',
+  lien: 'lien',
 } as const
 
 export type ContentType = typeof CONTENT_TYPES[keyof typeof CONTENT_TYPES]
@@ -252,6 +251,21 @@ export const fetchAllFichesForIndexing = async (): Promise<Fiche[] | null> => {
   if (!entries.length) return null
 
   return entries.map(formatFicheForSearch)
+}
+
+// endregion
+
+// region Lien methods
+
+export const findALien = async (id: string): Promise<Lien | null> => {
+  const entries = await getEntries<Lien>(
+    CONTENT_TYPES.lien,
+    { where: { 'sys.id': id } },
+  )
+
+  if (!entries.length) return null
+
+  return entries[0]
 }
 
 // endregion
