@@ -10,7 +10,7 @@ export const PreviewAlert = () => (
             Attention ! Vous êtes en mode brouillon, et pouvez voir les modifications non publiées.
           </span>
           <span className="block sm:ml-2 sm:inline-block">
-            <Link href="/api/exit-preview" className="text-white font-bold underline">
+            <Link href="preview/disable" className="text-white font-bold underline">
               {' '}
               Revenir à la normal <span aria-hidden="true">&rarr;</span>
             </Link>
