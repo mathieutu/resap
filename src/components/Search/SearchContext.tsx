@@ -2,8 +2,7 @@ import { InstantSearch, InstantSearchSSRProvider } from 'react-instantsearch-cor
 import { ReactNode } from 'react'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
 import singletonRouter from 'next/router'
-import type { RouterProps } from 'instantsearch.js/es/middlewares/createRouterMiddleware'
-import { IndicesNames, searchClient } from '../../services/algolia.browser'
+import { IndicesNames, searchClient } from '@/services/algolia.browser'
 
 type SearchContextProps = {
   children: ReactNode,

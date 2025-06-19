@@ -1,6 +1,5 @@
 import classNames from 'classnames'
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
 import {
   EmailIcon,
   FacebookIcon,
@@ -12,7 +11,7 @@ import {
   WhatsappIcon,
   WhatsappShareButton,
 } from 'react-share'
-import { ClassNameProp } from '../types/react'
+import { ClassNameProp } from '@/types/react'
 
 const buttonClassName = 'print:hidden w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-green-default hover:bg-blue-default flex items-center justify-center cursor-pointer'
 

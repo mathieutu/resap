@@ -2,8 +2,8 @@
 
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
-import { ToastProvider, useToasts } from 'react-toast-notifications'
 import { sendContactEmail } from '@/services/mailer'
+import toast from 'react-hot-toast'
 import { PrimaryButton } from '../Buttons'
 
 // @see https://www.emailregex.com
@@ -21,20 +21,17 @@ export type ContactFields = {
 
 const Form = () => {
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<ContactFields>()
-  const { addToast } = useToasts()
 
   const onSubmit = async (contact: ContactFields) => {
     try {
       await sendContactEmail(contact)
       reset()
-      addToast(
-        'Votre message a été envoyé. Nous reviendrons vers vous dans les plus brefs délais.',
-        { appearance: 'success' },
+      toast.success(
+        'Votre message a été envoyé. \n\nNous reviendrons vers vous dans les plus brefs délais.',
       )
     } catch (_e) {
-      addToast(
-        'Nous n\'avons pu envoyer votre message en raison d\'une erreur technique. Merci de nous contacter par un autre moyen.',
-        { appearance: 'error' },
+      toast.error(
+        'Nous n\'avons pas pu envoyer votre message en raison d\'une erreur technique. \n\nMerci de nous contacter par un autre moyen.',
       )
     }
   }
@@ -214,9 +211,7 @@ export const ContactFormSection = () => (
         </p>
       </div>
       <div className="mt-12">
-        <ToastProvider>
-          <Form />
-        </ToastProvider>
+        <Form />
       </div>
     </div>
   </div>

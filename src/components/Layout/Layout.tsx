@@ -1,8 +1,9 @@
 import { ReactElement, ReactNode } from 'react'
+import { ClassNameProp } from '@/types/react'
+import { Toaster } from 'react-hot-toast'
 import { Footer } from './Footer'
 import { BannerContact } from './BannerContact'
 import { Navbar } from './Navbar'
-import { ClassNameProp } from '../../types/react'
 
 type Props = {
   header?: ReactElement<any>,
@@ -16,5 +17,6 @@ export const Layout = ({ header, children, withoutContactBanner, ...props }: Pro
     {children}
     {withoutContactBanner ? null : <BannerContact />}
     <Footer />
+    <Toaster position="bottom-right" />
   </div>
 )
