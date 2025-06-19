@@ -1,7 +1,9 @@
-import { useRouter } from 'next/router'
+'use client'
+
 import classNames from 'classnames'
 import NextLink from 'next/link'
-import { ChildrenProp, ClassNameProp } from '../types/react'
+import { ChildrenProp, ClassNameProp } from '@/types/react'
+import { usePathname } from 'next/navigation'
 import { primaryClassName, secondaryClassName } from './Buttons'
 
 type Props = {
@@ -15,7 +17,7 @@ type Props = {
 } & ClassNameProp & ChildrenProp
 
 const InternalLink = ({ href, children, className, activeClassName, inactiveClassName, exact, scroll, shallow, ...props }: Props) => {
-  const { pathname } = useRouter() ?? {}
+  const pathname = usePathname()
 
   const sanitizedHref = `/${href.replace(/^\//, '')}`
 
