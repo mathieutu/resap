@@ -29,7 +29,7 @@ export const SearchFacet = ({
   return (
     <Listbox value="" onChange={refine}>
       {({ open }) => (
-        <>
+        <div>
           <Listbox.Label className="sr-only">{label}</Listbox.Label>
           <div className="mt-1 relative">
             <Listbox.Button className={className}>
@@ -101,7 +101,7 @@ export const SearchFacet = ({
               </Listbox.Options>
             </Transition>
           </div>
-        </>
+        </div>
       )}
     </Listbox>
   )

@@ -5,7 +5,7 @@ import { ReactNode, useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { AtSymbolIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/20/solid'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { Structure } from '@/types/models'
 import { types } from '@/data/structures_types'
 import { ChildrenProp } from '@/types/react'
@@ -73,10 +73,7 @@ const Loader = () => <div />
 
 const Map = dynamic<MapProps>(
   () => import('./Map').then(module => module.Map),
-  {
-    ssr: false,
-    loading: Loader,
-  },
+  { ssr: false, loading: Loader },
 )
 
 type StructuresListProps = {
@@ -88,8 +85,7 @@ export const StructuresList = ({
   structures,
   mapChildren,
 }: StructuresListProps) => {
-  const searchParams = useSearchParams()!
-  const selectedStructureId = searchParams.get('id')
+  const { structure: selectedStructureId } = useParams()!
   const router = useRouter()
   const selectStructure = ({ id }: Structure) => router.push(`/annuaire/${id === selectedStructureId ? '' : id}`, { scroll: false })
 

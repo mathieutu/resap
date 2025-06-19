@@ -2,7 +2,7 @@ import { useMapEvents } from 'react-leaflet'
 import { useEffect, useState } from 'react'
 import { Configure } from 'react-instantsearch-core'
 import { LatLng, LatLngBounds } from 'leaflet'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 
 const PADDING = 0.05
 
@@ -31,7 +31,7 @@ const getFiltersFromBounds = (bounds: LatLngBounds) => (
 
 export const GeoSearch = () => {
   const [bounds, setBounds] = useState<LatLngBounds>()
-  const router = useRouter()
+  const searchParams = useSearchParams()!
 
   const map = useMapEvents({
     moveend() {
@@ -41,7 +41,7 @@ export const GeoSearch = () => {
   })
 
   useEffect(() => {
-    const filters = router.query['configure[filters]']
+    const filters = searchParams.get('configure[filters]')
     if (typeof filters === 'string') {
       const computedBounds = getBoundsFromFilters(filters)
 
@@ -49,7 +49,7 @@ export const GeoSearch = () => {
         map.fitBounds(computedBounds)
       }
     }
-  }, [map, router.query])
+  }, [map, searchParams])
 
   if (!bounds) return null
 

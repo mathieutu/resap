@@ -4,7 +4,7 @@ import { flatten, pluck } from 'ramda'
 import {
   ContentType,
   fetchAllStructuresForIndexing,
-  findAStructureForIndexing,
+  findAStructure,
   SysType,
 } from '@/services/contentful'
 import { deleteStructure, refreshStructures, saveStructure } from '@/services/algolia.server'
@@ -48,7 +48,7 @@ export async function PUT(req: Request) {
   }
 
   console.log(`Updating structure id ${body.id}...`)
-  const structure = await findAStructureForIndexing(body.id)
+  const structure = await findAStructure(body.id)
 
   if (!structure) {
     return Response.json({ error: 'Structure not found' }, { status: 404 })

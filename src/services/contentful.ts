@@ -145,7 +145,7 @@ function formatStructure(structure: StructureEntry): Structure {
   }
 }
 
-export const findAStructureForIndexing = async (id: string): Promise<Structure | null> => {
+export const findAStructure = async (id: string): Promise<Structure | null> => {
   const entries = await getEntries<StructureEntry>(
     CONTENT_TYPES.structure,
     { where: { 'sys.id': id } },
