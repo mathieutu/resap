@@ -4,6 +4,9 @@ import { Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { useSearchFichesForm } from '@/utils/hooks'
+import Image from 'next/image'
+import LogoArs from '@/assets/images/partenaires/logo-ars.png'
+import LogoGouv from '@/assets/images/partenaires/logo-gouv.png'
 import { navigationEntries } from './Navbar'
 import { Link } from '../Links'
 import { PrimaryButton } from '../Buttons'
@@ -75,10 +78,10 @@ export const HomeHeader = () => (
               </div>
             </nav>
           </div>
-          <div className="justify-end flex-wrap gap-4 hidden lg:block">
-            <p className="flex gap-8 items-center flex-nowrap">
-              <img className="h-10" src="/partenaires/logo-ars.png" alt="Logo ARS" />
-              <img className="h-12" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
+          <div className="hidden lg:block">
+            <p className="flex gap-8 items-center flex-nowrap relative">
+              <Image height={40} src={LogoArs} alt="Logo ARS" />
+              <Image height={48} src={LogoGouv} alt="Logo gouvernement" />
             </p>
           </div>
         </div>
@@ -147,8 +150,8 @@ export const HomeHeader = () => (
           <div className="relative lg:right-0 px-1 pt-10 lg:hidden md:block">
             <div className="flex justify-center flex-wrap gap-4">
               <p className="flex gap-8 items-center flex-wrap">
-                <img className="h-10" src="/partenaires/logo-ars.png" alt="Logo ARS" />
-                <img className="h-12" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
+                <img className="h-10" src="/src/assets/images/partenaires/logo-ars.png" alt="Logo ARS" />
+                <img className="h-12" src="/src/assets/images/partenaires/logo-gouv.png" alt="Logo gouvernement" />
               </p>
             </div>
           </div>

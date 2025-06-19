@@ -1,5 +1,8 @@
-import { Link } from '../Links'
+import Image from 'next/image'
+import LogoArs from '@/assets/images/partenaires/logo-ars.png'
+import LogoGouv from '@/assets/images/partenaires/logo-gouv.png'
 import { LogoFull } from '../Logos'
+import { Link } from '../Links'
 
 const socialIcons = [
   {
@@ -54,8 +57,8 @@ export const Footer = () => (
       </div>
       <div className="mt-6 border-t border-gray-200 pt-6 flex justify-between items-center flex-wrap gap-4">
         <p className="flex gap-8 items-center flex-wrap">
-          <img className="h-10 brightness-0 invert" src="/partenaires/logo-ars.png" alt="Logo ARS" />
-          <img className="h-12 brightness-0 invert" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />
+          <Image className="brightness-0 invert" height={40} src={LogoArs} alt="Logo ARS" />
+          <Image className="brightness-0 invert" height={48} src={LogoGouv} alt="Logo gouvernement" />
         </p>
         <p className="text-base text-white">&copy; {new Date().getFullYear()} RESAP</p>
       </div>
