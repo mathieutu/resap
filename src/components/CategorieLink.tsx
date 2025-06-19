@@ -1,12 +1,12 @@
 import classNames from 'classnames'
 import { ArrowLeftIcon } from '@heroicons/react/20/solid'
+import { Categorie } from '@/data/categories'
 import { Link } from './Links'
-import { Categorie } from '../data/categories'
 
-type TypeProps = { categorie: Categorie, scroll?: boolean, inverted?: boolean }
+type TypeProps = { categorie: Categorie, inverted?: boolean }
 
-export const CategorieLink = ({ categorie, scroll = true, inverted = false }: TypeProps) => (
-  <Link href={categorie.href} className="text-sm font-medium group" scroll={scroll} shallow>
+export const CategorieLink = ({ categorie, inverted = false }: TypeProps) => (
+  <Link href={categorie.href} className="text-sm font-medium group">
     <div
       className={classNames(
         inverted ? ['border-white', 'group-hover:bg-white'] : [categorie.borderColor, categorie.groupHoverBgColor],
@@ -32,7 +32,7 @@ export const CategorieLink = ({ categorie, scroll = true, inverted = false }: Ty
 )
 
 export const BackToHomeLink = () => (
-  <Link href="/fiches" className="text-sm font-medium" scroll={false} shallow>
+  <Link href="/fiches" className="text-sm font-medium">
     <div
       className="border-gray-400 text-gray-400 hover:bg-gray-400 hover:text-white inline-flex justify-center items-center rounded-xl px-[10px] border"
     >

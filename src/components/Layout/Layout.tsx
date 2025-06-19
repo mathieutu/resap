@@ -12,7 +12,7 @@ type Props = {
 } & ClassNameProp
 
 export const Layout = ({ header, children, withoutContactBanner, ...props }: Props) => (
-  <div {...props}>
+  <div className="bg-gray-50" {...props}>
     {header ?? <Navbar />}
     {children}
     {withoutContactBanner ? null : <BannerContact />}

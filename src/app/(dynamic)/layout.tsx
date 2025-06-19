@@ -9,7 +9,7 @@ export default async function DynamicLayout({
 }) {
   const { isEnabled } = await draftMode()
   return (
-    <Layout className="bg-gray-light">
+    <Layout>
       {isEnabled && <PreviewAlert />}
       {children}
     </Layout>

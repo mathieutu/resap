@@ -12,11 +12,10 @@ type Props = {
   inactiveClassName?: string,
   exact?: boolean,
   scroll ?: boolean,
-  shallow ?: boolean,
   title ?: string,
 } & ClassNameProp & ChildrenProp
 
-const InternalLink = ({ href, children, className, activeClassName, inactiveClassName, exact, scroll, shallow, ...props }: Props) => {
+const InternalLink = ({ href, children, className, activeClassName, inactiveClassName, exact, scroll, ...props }: Props) => {
   const pathname = usePathname()
 
   const sanitizedHref = `/${href.replace(/^\//, '')}`
@@ -24,7 +23,7 @@ const InternalLink = ({ href, children, className, activeClassName, inactiveClas
   const isActive = exact ? pathname === sanitizedHref : pathname?.startsWith(sanitizedHref)
 
   return (
-    <NextLink href={sanitizedHref} scroll={scroll} shallow={shallow} {...props} className={classNames(className, isActive ? activeClassName : inactiveClassName)}>
+    <NextLink href={sanitizedHref} scroll={scroll} {...props} className={classNames(className, isActive ? activeClassName : inactiveClassName)}>
       {children}
     </NextLink>
   )

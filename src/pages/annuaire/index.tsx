@@ -38,7 +38,7 @@ const SearchField = () => (
 
 export default function Annuaire() {
   return (
-    <Layout className="bg-gray-50">
+    <Layout>
       <NextSeo title="Annuaire" />
       <div className="py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
         <div className="relative max-w-7xl mx-auto">
