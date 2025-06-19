@@ -1,7 +1,9 @@
+'use client'
+
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
-import axios from 'axios'
 import { ToastProvider, useToasts } from 'react-toast-notifications'
+import { sendContactEmail } from '@/services/mailer'
 import { PrimaryButton } from '../Buttons'
 
 // @see https://www.emailregex.com
@@ -23,7 +25,7 @@ const Form = () => {
 
   const onSubmit = async (contact: ContactFields) => {
     try {
-      await axios.post('/api/contact', { contact })
+      await sendContactEmail(contact)
       reset()
       addToast(
         'Votre message a été envoyé. Nous reviendrons vers vous dans les plus brefs délais.',
