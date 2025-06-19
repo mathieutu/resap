@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next'
 import { SearchIcon } from '@heroicons/react/solid'
 import { NextSeo } from 'next-seo'
-import { Configure } from 'react-instantsearch-hooks'
+import { Configure } from 'react-instantsearch-core'
 import { Layout } from '../../components/Layout/Layout'
 import { FicheCard } from '../../components/Card/FicheCard'
 import { SimpleHeader } from '../../components/Layout/SimpleHeader'

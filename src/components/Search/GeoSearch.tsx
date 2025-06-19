@@ -1,6 +1,6 @@
 import { useMapEvents } from 'react-leaflet'
 import { useEffect, useState } from 'react'
-import { Configure } from 'react-instantsearch-hooks'
+import { Configure } from 'react-instantsearch-core'
 import { LatLng, LatLngBounds } from 'leaflet'
 import { useRouter } from 'next/router'
 

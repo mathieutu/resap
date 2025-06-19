@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo'
 import { SearchIcon } from '@heroicons/react/solid'
 import { GetStaticProps } from 'next'
-import { Configure } from 'react-instantsearch-hooks'
+import { Configure } from 'react-instantsearch-core'
 import dynamic from 'next/dynamic'
 import { Layout } from '../../components/Layout/Layout'
 import { SearchContext } from '../../components/Search/SearchContext'
@@ -52,6 +52,7 @@ export default function Annuaire() {
               <Configure aroundLatLngViaIP hitsPerPage={ALGOLIA_MAX_HITS_PER_PAGE} />
               <div className="mb-4 grid sm:grid-cols-3 sm:gap-4 gap-2 print:hidden">
                 <div className="sm:col-span-2">
+                  {/* TODO pouvoir vider le filtre */}
                   <SearchFacet
                     attribute="type"
                     label="Filtrer par dispositifs dans la zone"

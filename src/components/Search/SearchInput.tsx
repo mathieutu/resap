@@ -1,5 +1,5 @@
 import { InputHTMLAttributes, useEffect, useState } from 'react'
-import { useSearchBox } from 'react-instantsearch-hooks'
+import { useSearchBox } from 'react-instantsearch-core'
 import { useDebounce } from '../../utils/hooks'
 
 type Props = InputHTMLAttributes<any> & { label: string }

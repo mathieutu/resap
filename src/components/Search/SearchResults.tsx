@@ -1,5 +1,5 @@
 import { Fragment, ReactElement } from 'react'
-import { useHits } from 'react-instantsearch-hooks'
+import { useHits } from 'react-instantsearch-core'
 import { BaseHit } from 'instantsearch.js'
 import { ClassNameProp } from '../../types/react'
 
