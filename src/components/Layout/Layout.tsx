@@ -5,7 +5,7 @@ import { Navbar } from './Navbar'
 import { ClassNameProp } from '../../types/react'
 
 type Props = {
-  header?: ReactElement,
+  header?: ReactElement<any>,
   withoutContactBanner?: boolean,
   children: ReactNode,
 } & ClassNameProp

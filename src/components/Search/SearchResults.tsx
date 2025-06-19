@@ -5,7 +5,7 @@ import { ClassNameProp } from '../../types/react'
 
 type Props<Hit extends BaseHit> =
   ClassNameProp
-  & ({ renderHit: (hit: Hit) => ReactElement } | { render: (hits: Hit[]) => ReactElement })
+  & ({ renderHit: (hit: Hit) => ReactElement<any> } | { render: (hits: Hit[]) => ReactElement<any> })
 
 export const SearchResults = <Hit extends BaseHit>({
   className,

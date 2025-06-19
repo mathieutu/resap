@@ -1,3 +1,5 @@
+import type { JSX } from 'react'
+
 const canUseDOM = (
   typeof window !== 'undefined'
   && window.document

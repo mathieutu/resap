@@ -22,10 +22,8 @@ const InternalLink = ({ href, children, className, activeClassName, inactiveClas
   const isActive = exact ? pathname === sanitizedHref : pathname?.startsWith(sanitizedHref)
 
   return (
-    <NextLink href={sanitizedHref} scroll={scroll} shallow={shallow}>
-      <a {...props} className={classNames(className, isActive ? activeClassName : inactiveClassName)}>
-        {children}
-      </a>
+    <NextLink href={sanitizedHref} scroll={scroll} shallow={shallow} {...props} className={classNames(className, isActive ? activeClassName : inactiveClassName)}>
+      {children}
     </NextLink>
   )
 }
