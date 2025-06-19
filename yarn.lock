@@ -605,12 +605,15 @@ __metadata:
   linkType: hard
 
 "@headlessui/react@npm:^1.6.6":
-  version: 1.6.6
-  resolution: "@headlessui/react@npm:1.6.6"
+  version: 1.7.19
+  resolution: "@headlessui/react@npm:1.7.19"
+  dependencies:
+    "@tanstack/react-virtual": "npm:^3.0.0-beta.60"
+    client-only: "npm:^0.0.1"
   peerDependencies:
     react: ^16 || ^17 || ^18
     react-dom: ^16 || ^17 || ^18
-  checksum: 10c0/6d005570bf52b516e0f0b813e43883708a8233d3eccfd1d003e4e665a772d109494808e52778b89e41334980f8d0036cfa97c291793c2d962631c27b23b4df67
+  checksum: 10c0/c0ece0db6ca15092439177a5322de50b60fa5fd90354ae0f999b3e56abab0065ed54fa7b4b69994ec1bdc23adc6ae9919d7dd57f97922d0b9bb6515d27e3a7e5
   languageName: node
   linkType: hard
 
@@ -1049,14 +1052,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-leaflet/core@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@react-leaflet/core@npm:2.0.1"
+"@react-leaflet/core@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@react-leaflet/core@npm:3.0.0"
   peerDependencies:
-    leaflet: ^1.8.0
-    react: ^18.0.0
-    react-dom: ^18.0.0
-  checksum: 10c0/2d7c4be77afdc1aaf6e49d0e7568844d1a916bffa15638c2b71415834073378b90e60a2f9747b26a8ab221ff3afd614d1e6eb164feb60b08aaa0acfac88fbee2
+    leaflet: ^1.9.0
+    react: ^19.0.0
+    react-dom: ^19.0.0
+  checksum: 10c0/1e20f92ea99d378121d7ba57b9571ca3a67a86247729d8cd5726ded26105fcbffbbdf727da34b2ad5976438979819a38c93b94389313abb3ff80ca81632609a6
   languageName: node
   linkType: hard
 
@@ -1359,6 +1362,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/react-virtual@npm:^3.0.0-beta.60":
+  version: 3.13.10
+  resolution: "@tanstack/react-virtual@npm:3.13.10"
+  dependencies:
+    "@tanstack/virtual-core": "npm:3.13.10"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/587ef4db703cc9d870ee68b3f1471118fe69920e8f59cf627a359d518331c6684069fb3e159cd35ac458ea60a829b66953b774314833e1cb10b365255791559e
+  languageName: node
+  linkType: hard
+
+"@tanstack/virtual-core@npm:3.13.10":
+  version: 3.13.10
+  resolution: "@tanstack/virtual-core@npm:3.13.10"
+  checksum: 10c0/ecfe56cc37db088416abb1f1b9641cc7b05b387bb532e4fe42f30a5477e55fdbb724f54e8dc5c3d8b380a5e9f80cc11426519825f8ecbcb6ca717639ba702cc8
+  languageName: node
+  linkType: hard
+
 "@tybys/wasm-util@npm:^0.9.0":
   version: 0.9.0
   resolution: "@tybys/wasm-util@npm:0.9.0"
@@ -1417,12 +1439,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/leaflet.markercluster@npm:^1.5.1":
-  version: 1.5.1
-  resolution: "@types/leaflet.markercluster@npm:1.5.1"
+"@types/leaflet.markercluster@npm:^1.5.5":
+  version: 1.5.5
+  resolution: "@types/leaflet.markercluster@npm:1.5.5"
   dependencies:
     "@types/leaflet": "npm:*"
-  checksum: 10c0/4d47b960779f2c7316243a3894ed1ad86deecedcc4a40ee629f19f7e2a763c0d7b1ace1e2f61163b7439ef17ae09b43dbc867d4ab64580da3ca63b6bd4ba272d
+  checksum: 10c0/3645fc0f49fefe955732335f89746c9063b9e9cd2ecca254b3d98376ffd44e49d0b0c7a50dc5b8753b1f65a7bd95def129c76e5407c4a15a65f1e5f2d7db65e3
   languageName: node
   linkType: hard
 
@@ -1435,12 +1457,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/leaflet@npm:^1.7.11":
-  version: 1.7.11
-  resolution: "@types/leaflet@npm:1.7.11"
+"@types/leaflet@npm:^1.9.18":
+  version: 1.9.18
+  resolution: "@types/leaflet@npm:1.9.18"
   dependencies:
     "@types/geojson": "npm:*"
-  checksum: 10c0/9d34a937da68b2a85f6e6b9eb46c38242747c0a94acf333b0192fd6d44a33e13da6ea34d07d8806cc145e3a0b8d578a90e96b2c48fc3104c55605bd78606bff6
+  checksum: 10c0/376ef5b5d60664e8cc22908a75149c020ad668330ef61f0e7486a61e85285b3f1b9dafcce9462bd3375be537e4d1227fc0c0524e5c071a4a45ed16bf3fc71608
   languageName: node
   linkType: hard
 
@@ -1514,11 +1536,11 @@ __metadata:
   linkType: hard
 
 "@types/ramda@npm:^0.28.15":
-  version: 0.28.15
-  resolution: "@types/ramda@npm:0.28.15"
+  version: 0.28.25
+  resolution: "@types/ramda@npm:0.28.25"
   dependencies:
     ts-toolbelt: "npm:^6.15.1"
-  checksum: 10c0/649f136de6823b0a47b06aab5e8e35833221ed190e1dff624c28d7b0e1d091ca62ae114ae9ff7ac915cd28e071fdd2109364359f5b89ece67a4460e3b6d640f7
+  checksum: 10c0/4abb7c8539eadb11a62ddd80072363870bb33b189096a1dc71d2351ccba9796c26a43b79435312b8e1f3335ac7d5a77fc4deb2f5b747217bfdf262f519c9caf3
   languageName: node
   linkType: hard
 
@@ -2771,14 +2793,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.5":
-  version: 2.3.1
-  resolution: "classnames@npm:2.3.1"
-  checksum: 10c0/e3b832219042802464e648c41c2e8be96c2c64d2522cfa22fbb5ec088418406c61ab351a682c077c07f691c8b00c9f0ee7939b20fabc6c23da69063252a4ab89
-  languageName: node
-  linkType: hard
-
-"classnames@npm:^2.5.1":
+"classnames@npm:^2.3.2, classnames@npm:^2.5.1":
   version: 2.5.1
   resolution: "classnames@npm:2.5.1"
   checksum: 10c0/afff4f77e62cea2d79c39962980bf316bacb0d7c49e13a21adaadb9221e1c6b9d3cdb829d8bb1b23c406f4e740507f37e1dcf506f7e3b7113d17c5bab787aa69
@@ -2918,7 +2933,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"client-only@npm:0.0.1":
+"client-only@npm:0.0.1, client-only@npm:^0.0.1":
   version: 0.0.1
   resolution: "client-only@npm:0.0.1"
   checksum: 10c0/9d6cfd0c19e1c96a434605added99dff48482152af791ec4172fb912a71cff9027ff174efd8cdb2160cc7f377543e0537ffc462d4f279bc4701de3f2a3c4b358
@@ -7565,13 +7580,13 @@ __metadata:
   linkType: hard
 
 "next-seo@npm:^5.5.0":
-  version: 5.5.0
-  resolution: "next-seo@npm:5.5.0"
+  version: 5.15.0
+  resolution: "next-seo@npm:5.15.0"
   peerDependencies:
     next: ^8.1.1-canary.54 || >=9.0.0
     react: ">=16.0.0"
     react-dom: ">=16.0.0"
-  checksum: 10c0/9c55ac951f47ef9bdd8092a70c836bf7fa19fc211405e745c4322cf260d019ab0b6c32b89e2f6b07b06444f7840fc9f833c644b568965908ced287773a43deec
+  checksum: 10c0/9f5793a8910cb86f95d1eeb28b373d93524425126089235ad337b9824fc39a7acb9a396c2c63a9966e0e6d2be5cd54a963aa64ee6f1b69f4359780015e524bf3
   languageName: node
   linkType: hard
 
@@ -8508,11 +8523,11 @@ __metadata:
   linkType: hard
 
 "react-hook-form@npm:^7.34.2":
-  version: 7.34.2
-  resolution: "react-hook-form@npm:7.34.2"
+  version: 7.58.1
+  resolution: "react-hook-form@npm:7.58.1"
   peerDependencies:
-    react: ^16.8.0 || ^17 || ^18
-  checksum: 10c0/da4f1c519ad4e365c7094166df638ed9d3f72579e6c7803c182567c51676e6fd16c84e5adb0a756a052be5850aa114403476d03fa694c6ae95c242983042aaed
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10c0/981b9982b7eb497c3afff86c219175fdd4d92a24e3533518035239545dda23f5ebc6ba647fb29a250f768bdf811ba413094ce0103fbf36b436737fc18aa1bb49
   languageName: node
   linkType: hard
 
@@ -8581,16 +8596,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-leaflet@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "react-leaflet@npm:4.0.2"
+"react-leaflet@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "react-leaflet@npm:5.0.0"
   dependencies:
-    "@react-leaflet/core": "npm:^2.0.1"
+    "@react-leaflet/core": "npm:^3.0.0"
   peerDependencies:
-    leaflet: ^1.8.0
-    react: ^18.0.0
-    react-dom: ^18.0.0
-  checksum: 10c0/46d804e1bfd18d1a22e3ef663979dba1b4dcae160a97817eb5261d394963b98ac8bb084896ade126b5a664afa5ce09d4d2216a2b18fb312bf840436a9d52b528
+    leaflet: ^1.9.0
+    react: ^19.0.0
+    react-dom: ^19.0.0
+  checksum: 10c0/f0b6fb797cc2d81bc8cbb54e0cb32aefa689d35ca5f52d203ce3c5a1d14668e51244f10844bd2c88d5cb4aca5eb05bc280794e6d1652727ff9da2358e89d1b86
   languageName: node
   linkType: hard
 
@@ -8602,14 +8617,14 @@ __metadata:
   linkType: hard
 
 "react-share@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "react-share@npm:4.4.0"
+  version: 4.4.1
+  resolution: "react-share@npm:4.4.1"
   dependencies:
-    classnames: "npm:^2.2.5"
+    classnames: "npm:^2.3.2"
     jsonp: "npm:^0.2.1"
   peerDependencies:
-    react: ^16.3.0 || ^17
-  checksum: 10c0/6fc5442ffbd530b5d002665d0cdeb9e4a63f92dd7d0e2e2671a65bead20fe7343f5e5c1859d2aeb5bcd868af6b1c2be3ba623d4135b2451f31c4b68cfc27155a
+    react: ^16.3.0 || ^17 || ^18
+  checksum: 10c0/9670ab18c1b7711a3501c6c8fdf62c596d6ac23137760b5792ef85ce35b6c51f478ab515f148ba47f7a2583ee570fafb317848d4ffe3f9d23b4e02d308079deb
   languageName: node
   linkType: hard
 
@@ -8852,14 +8867,14 @@ __metadata:
     "@eslint/js": "npm:^9.29.0"
     "@headlessui/react": "npm:^1.6.6"
     "@heroicons/react": "npm:^1.0.6"
-    "@react-leaflet/core": "npm:^2.0.1"
+    "@react-leaflet/core": "npm:^3.0.0"
     "@tailwindcss/aspect-ratio": "npm:^0.4.2"
     "@tailwindcss/forms": "npm:^0.5.10"
     "@tailwindcss/line-clamp": "npm:^0.4.4"
     "@tailwindcss/postcss": "npm:^4.1.10"
     "@tailwindcss/typography": "npm:^0.5.16"
-    "@types/leaflet": "npm:^1.7.11"
-    "@types/leaflet.markercluster": "npm:^1.5.1"
+    "@types/leaflet": "npm:^1.9.18"
+    "@types/leaflet.markercluster": "npm:^1.5.5"
     "@types/node": "npm:^24.0.3"
     "@types/nodemailer": "npm:^6.4.17"
     "@types/nprogress": "npm:^0.2.3"
@@ -8901,7 +8916,7 @@ __metadata:
     react-instantsearch-core: "npm:^7.16.0"
     react-instantsearch-router-nextjs: "npm:^7.16.0"
     react-json-view: "npm:^1.21.3"
-    react-leaflet: "npm:^4.0.2"
+    react-leaflet: "npm:^5.0.0"
     react-share: "npm:^4.4.0"
     react-toast-notifications: "npm:^2.5.1"
     tailwind-config-viewer: "npm:^2.0.4"
