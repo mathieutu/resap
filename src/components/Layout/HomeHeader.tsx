@@ -1,10 +1,12 @@
+'use client'
+
 import { Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { useSearchFichesForm } from '@/utils/hooks'
 import { navigationEntries } from './Navbar'
 import { Link } from '../Links'
 import { PrimaryButton } from '../Buttons'
-import { useSearchFichesForm } from '../../utils/hooks'
 import { LogoFull, LogoIcon } from '../Logos'
 
 const SearchForm = () => {
@@ -73,7 +75,7 @@ export const HomeHeader = () => (
               </div>
             </nav>
           </div>
-          <div className="flex justify-end flex-wrap gap-4 hidden lg:block">
+          <div className="justify-end flex-wrap gap-4 hidden lg:block">
             <p className="flex gap-8 items-center flex-nowrap">
               <img className="h-10" src="/partenaires/logo-ars.png" alt="Logo ARS" />
               <img className="h-12" src="/partenaires/logo-gouv.png" alt="Logo gouvernement" />

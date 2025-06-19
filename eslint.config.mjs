@@ -77,7 +77,7 @@ const eslintConfig = [
     },
   },
   {
-    files: ['src/pages/**/*', 'src/app/**/page.tsx', 'src/app/**/layout.tsx', '**/*.mjs'],
+    files: ['src/pages/**/*.tsx', 'src/app/**/*.tsx', '**/*.mjs'],
 
     rules: {
       'import/no-default-export': 'off',
