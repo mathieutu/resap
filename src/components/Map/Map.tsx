@@ -76,7 +76,7 @@ export const Map = ({
       {Object.entries(structuresByDepartements)
         .map(([departement, structs]) => (
           <MarkerClusterGroup key={departement}>
-            {structs.filter(s => s.id !== selectedStructure?.id)
+            {structs!.filter(s => s.id !== selectedStructure?.id)
               .map((s) => (
                 <Marker
                   key={s.id}

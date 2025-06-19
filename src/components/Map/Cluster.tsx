@@ -1,11 +1,12 @@
 import { createPathComponent } from '@react-leaflet/core'
+import L from 'leaflet'
 import 'leaflet.markercluster'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
-import L from 'leaflet'
 
 export const MarkerClusterGroup = createPathComponent(
   (_props, ctx) => {
+    // @ts-expect-error The markerClusterGroup function does exist 🤷
     const markerClusterGroup = L.markerClusterGroup({
       showCoverageOnHover: false,
       chunkedLoading: true,

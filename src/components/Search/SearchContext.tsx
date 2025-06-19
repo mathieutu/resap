@@ -24,6 +24,7 @@ export const SearchContext = ({
       routing={{
         router,
         stateMapping: {
+          // @ts-expect-error We don't want the indexName in the route state
           stateToRoute(uiState) {
             const {
               query,
