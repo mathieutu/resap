@@ -10,7 +10,7 @@ if (!appId || !apiKey) {
 
 const client = algoliasearch(appId, apiKey)
 
-const fichesIndex = <T extends Record<string, any>>(payload: T) => ({ indexName: 'fiche', ...payload })
+const fichesIndex = <T extends Record<string, any>>(payload: T) => ({ indexName: 'fiches', ...payload })
 const structuresIndex = <T extends Record<string, any>>(payload: T) => ({ indexName: 'structures', ...payload })
 
 const prepareFicheForIndexing = (fiche: Fiche) => ({
