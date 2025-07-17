@@ -1,10 +1,10 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
-import classNames from 'classnames'
-import { sendContactEmail } from '@/services/mailer'
 import toast from 'react-hot-toast'
+import { sendContactEmail } from '@/services/mailer'
 import { PrimaryButton } from '../Buttons'
+import { FormField, FormInput, FormTextarea } from '../Forms'
 
 // @see https://www.emailregex.com
 // eslint-disable-next-line no-control-regex
@@ -38,110 +38,68 @@ const Form = () => {
 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-8">
-      <div className="sm:col-span-6">
-        <div className="flex justify-between">
-          <label htmlFor="message" className={classNames(errors.message && 'text-red-500', 'block text-sm font-medium text-gray-700')}>
-            Message*
-          </label>
-          {errors.message && (
-            <span className="text-sm text-red-500">
-              Le champ est requis.
-            </span>
-          )}
-        </div>
-        <div className="mt-1">
-          <textarea
-            id="message"
-            rows={4}
-            className={classNames(errors.message && 'border-red-500 focus:ring-red-500 focus:border-red-500', 'py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border border-gray-300 rounded-md')}
-            defaultValue=""
-            {...register('message', { required: true })}
-          />
-        </div>
-      </div>
-      <div className="sm:col-span-3">
-        <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-          Prénom
-        </label>
-        <div className="mt-1">
-          <input
-            type="text"
-            id="firstName"
-            autoComplete="given-name"
-            className="py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
-            {...register('firstName')}
-          />
-        </div>
-      </div>
-      <div className="sm:col-span-3">
-        <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-          Nom
-        </label>
-        <div className="mt-1">
-          <input
-            type="text"
-            id="lastName"
-            autoComplete="family-name"
-            className="py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
-            {...register('lastName')}
-          />
-        </div>
-      </div>
-      <div className="sm:col-span-2">
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-          Téléphone
-        </label>
-        <div className="mt-1 ">
-          <input
-            type="tel"
-            id="phone"
-            autoComplete="tel"
-            className="py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
-            {...register('phone')}
-          />
-        </div>
-      </div>
-      <div className="sm:col-span-4">
-        <div className="flex justify-between">
-          <label htmlFor="email" className={classNames(errors.email && 'text-red-500', 'block text-sm font-medium text-gray-700')}>
-            Email
-          </label>
-          {errors.email && (
-            <span className="text-sm text-red-500">
-              Merci de renseigner un email valide.
-            </span>
-          )}
-        </div>
-        <div className="mt-1">
-          <input
-            id="email"
-            type="email"
-            autoComplete="email"
-            className={classNames(errors.email && 'border-red-500 focus:ring-red-500 focus:border-red-500', 'py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border border-gray-300 rounded-md')}
-            {...register('email', { pattern: emailRegexp })}
-          />
-        </div>
-      </div>
-      <div className="sm:col-span-6">
-        <label htmlFor="organization" className="block text-sm font-medium text-gray-700">
-          Structure / Organisation
-        </label>
-        <div className="mt-1">
-          <input
-            type="text"
-            id="organization"
-            autoComplete="organization"
-            className="py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border-gray-300 rounded-md"
-            {...register('organization')}
-          />
-        </div>
-      </div>
+      <FormField className="sm:col-span-6" name="message" required error={errors.message && 'Le champ est requis.'} label="Message">
+        <FormTextarea
+          id="message"
+          error={!!errors.message}
+          defaultValue=""
+          {...register('message', { required: true })}
+        />
+      </FormField>
+
+      <FormField className="sm:col-span-3" name="firstName" required error={errors.firstName && 'Le champ est requis.'} label="Prénom">
+        <FormInput
+          type="text"
+          id="firstName"
+          autoComplete="given-name"
+          {...register('firstName')}
+        />
+      </FormField>
+
+      <FormField className="sm:col-span-3" name="lastName" required error={errors.lastName && 'Le champ est requis.'} label="Nom">
+        <FormInput
+          type="text"
+          id="lastName"
+          autoComplete="family-name"
+          {...register('lastName')}
+        />
+      </FormField>
+
+      <FormField className="sm:col-span-2" name="phone" required error={errors.phone && 'Le champ est requis.'} label="Téléphone">
+        <FormInput
+          type="tel"
+          id="phone"
+          autoComplete="tel"
+          {...register('phone')}
+        />
+      </FormField>
+
+      <FormField className="sm:col-span-4" name="email" required error={errors.email && 'Merci de renseigner un email valide.'} label="Email">
+        <FormInput
+          id="email"
+          type="email"
+          autoComplete="email"
+          error={!!errors.email}
+          {...register('email', { pattern: emailRegexp })}
+        />
+      </FormField>
+
+      <FormField className="sm:col-span-6" name="organization" label="Structure / Organisation">
+        <FormInput
+          type="text"
+          id="organization"
+          autoComplete="organization"
+          {...register('organization')}
+        />
+      </FormField>
+
       <div className="sm:col-span-6">
         <p className="text-sm text-gray-500">
           Nous vous remercions de renseigner vos informations de contact si vous souhaitez que nous revenions vers vous.
           N&apos;hésitez pas à préciser dans le corps du message toute information qui pourrait être utile au traitement de votre demande.
         </p>
       </div>
+
       <div className="sm:col-span-6">
         <PrimaryButton
           type="submit"

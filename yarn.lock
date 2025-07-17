@@ -3275,7 +3275,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"contentful-management@npm:^11.39.0, contentful-management@npm:^11.48.1, contentful-management@npm:^11.52.1, contentful-management@npm:^11.53.0":
+"contentful-management@npm:^11.39.0, contentful-management@npm:^11.48.1, contentful-management@npm:^11.52.1":
   version: 11.53.0
   resolution: "contentful-management@npm:11.53.0"
   dependencies:
@@ -3285,6 +3285,19 @@ __metadata:
     fast-copy: "npm:^3.0.0"
     globals: "npm:^15.15.0"
   checksum: 10c0/dd727db54ecdeae1198e841664cc9204cdb9b1d04e53e2f65cec1cb1f678cf4631324e2afa9e2b2c1f079525b2e3be0bb473aff90821bf9ed3571880fbaac88d
+  languageName: node
+  linkType: hard
+
+"contentful-management@npm:^11.54.2":
+  version: 11.54.2
+  resolution: "contentful-management@npm:11.54.2"
+  dependencies:
+    "@contentful/rich-text-types": "npm:^16.6.1"
+    axios: "npm:^1.8.4"
+    contentful-sdk-core: "npm:^9.0.1"
+    fast-copy: "npm:^3.0.0"
+    globals: "npm:^15.15.0"
+  checksum: 10c0/a62038264dfed1bbf5eb438cf384eb514c48377b28c209093b66a942b48722aab41e63ba474e6b0e68ed5491c26d45c7c256167fc335ad4e423446f047598bc0
   languageName: node
   linkType: hard
 
@@ -8819,7 +8832,7 @@ __metadata:
     classnames: "npm:^2.5.1"
     contentful: "npm:^11.7.2"
     contentful-cli: "npm:^3.8.8"
-    contentful-management: "npm:^11.53.0"
+    contentful-management: "npm:^11.54.2"
     contentful-typescript-codegen: "npm:^3.4.0"
     dotenv: "npm:^16.5.0"
     eslint: "npm:^9.29.0"
