@@ -79,6 +79,11 @@ export const types = {
     colorClassname: 'bg-teal-200 text-teal-700',
     markerClassname: 'text-teal-500',
   },
+  'Équipes mobiles': {
+    nom: 'Équipes mobiles',
+    colorClassname: 'bg-indigo-200 text-indigo-700',
+    markerClassname: 'text-indigo-500',
+  },
   'Filières gérontologiques': {
     nom: 'Filières gérontologiques',
     colorClassname: 'bg-sky-200 text-sky-700',
