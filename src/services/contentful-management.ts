@@ -8,6 +8,16 @@ if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN) {
   throw new Error('CONTENTFUL env vars needed (SPACE_ID, MANAGEMENT_API_ACCESS_TOKEN).')
 }
 
+const getContentfulEnvironment = async () => {
+  const client = createClient({
+    accessToken: CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
+  })
+
+  const space = await client.getSpace(CONTENTFUL_SPACE_ID)
+
+  return space.getEnvironment('master')
+}
+
 export type CreateStructureData = {
   nom: string
   organisation: string
@@ -48,12 +58,7 @@ const findCoordinates = async (address: string): Promise<{ lat: number, lon: num
 }
 
 export const createStructureInContentful = async (data: CreateStructureData): Promise<{ id: string, url: string }> => {
-  const client = createClient({
-    accessToken: CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
-  })
-
-  const space = await client.getSpace(CONTENTFUL_SPACE_ID)
-  const environment = await space.getEnvironment('master')
+  const environment = await getContentfulEnvironment()
 
   const { lat, lon } = await findCoordinates(data.adresse)
 
@@ -96,4 +101,37 @@ export const createStructureInContentful = async (data: CreateStructureData): Pr
     id: structureEntry.sys.id,
     url: contentfulUrl,
   }
+}
+
+export type FicheWithStatus = {
+  id: string
+  titre: string
+  slug: string
+  categorie: string
+  description: string
+  createdAt: string
+  updatedAt: string
+  isPublished: boolean
+  publishedAt?: string
+}
+
+export const getAllFichesForAdmin = async (): Promise<FicheWithStatus[]> => {
+  const environment = await getContentfulEnvironment()
+
+  const entries = await environment.getEntries({
+    content_type: 'fiche',
+    limit: 1000,
+  })
+
+  return entries.items.map((entry) => ({
+    id: entry.sys.id,
+    titre: entry.fields.titre?.fr || '',
+    slug: entry.fields.slug?.fr || '',
+    categorie: entry.fields.categorie?.fr || '',
+    description: entry.fields.description?.fr || '',
+    createdAt: entry.sys.createdAt,
+    updatedAt: entry.sys.updatedAt,
+    isPublished: entry.isPublished(),
+    publishedAt: entry.sys.publishedAt,
+  }))
 }
