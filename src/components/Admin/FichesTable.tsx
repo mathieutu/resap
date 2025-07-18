@@ -3,7 +3,6 @@
 import {
   Group,
   Badge,
-  ActionIcon,
   Text,
   Alert,
   Table,
@@ -11,7 +10,7 @@ import {
   TextInput,
   Button,
 } from '@mantine/core'
-import { IconEdit, IconTrash, IconEye, IconChevronUp, IconChevronDown, IconSearch, IconSelector } from '@tabler/icons-react'
+import { IconEdit, IconEye, IconChevronUp, IconChevronDown, IconSearch, IconSelector } from '@tabler/icons-react'
 import Link from 'next/link'
 import { categories } from '@/data/categories'
 import { useState } from 'react'
@@ -31,11 +30,21 @@ const normalizeText = (text: string) => text
 const getCategoryName = (categorieSlug: string) => categories[categorieSlug as keyof typeof categories]?.name || categorieSlug
 const formatDate = (dateString: string) => new Date(dateString).toLocaleDateString('fr-FR')
 
-const StatusBadge = ({ isPublished }: { isPublished: boolean }) => (
-  isPublished
-  ? <Badge color="green" variant="light" size="sm">Publié</Badge>
-  : <Badge color="orange" variant="light" size="sm">Brouillon</Badge>
-)
+export const ficheStatuses = {
+  published: 'Publié',
+  updated: 'Mis à jour',
+  archived: 'Archivé',
+  draft: 'Brouillon',
+  unknown: 'Inconnu',
+} satisfies Record<FicheWithStatus['status'], string>
+
+const StatusBadge = ({ fiche }: { fiche: FicheWithStatus }) => {
+  if (fiche.status === 'published') return <Badge color="green" variant="light" size="sm">{ficheStatuses.published}</Badge>
+  if (fiche.status === 'updated') return <Badge color="yellow" variant="light" size="sm">{ficheStatuses.updated}</Badge>
+  if (fiche.status === 'archived') return <Badge color="gray" variant="light" size="sm">{ficheStatuses.archived}</Badge>
+  if (fiche.status === 'draft') return <Badge color="orange" variant="light" size="sm">{ficheStatuses.draft}</Badge>
+  return <Badge color="red" variant="light" size="sm">{ficheStatuses.unknown}</Badge>
+}
 
 export function FichesTable({ fiches }: FichesTableProps) {
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null)
@@ -63,8 +72,7 @@ export function FichesTable({ fiches }: FichesTableProps) {
 
       // Filtre par statut
       if (statusFilter) {
-        if (statusFilter === 'published' && !fiche.isPublished) return false
-        if (statusFilter === 'draft' && fiche.isPublished) return false
+        if (statusFilter !== fiche.status) return false
       }
 
       return true
@@ -103,8 +111,7 @@ export function FichesTable({ fiches }: FichesTableProps) {
 
   const statusOptions = [
     { value: '', label: 'Tous les statuts' },
-    { value: 'published', label: 'Publié' },
-    { value: 'draft', label: 'Brouillon' },
+    ...Object.entries(ficheStatuses).map(([value, label]) => ({ value, label })),
   ]
 
   return (
@@ -183,13 +190,13 @@ export function FichesTable({ fiches }: FichesTableProps) {
             {filteredAndSortedFiches.map((fiche) => (
               <Table.Tr key={fiche.id}>
                 <Table.Td style={{ width: '40%' }}>
-                  <Text fw={500} truncate title={fiche.titre}>{fiche.titre}</Text>
+                  <Text size="sm" truncate title={fiche.titre}>{fiche.titre}</Text>
                 </Table.Td>
                 <Table.Td style={{ width: '20%' }}>
                   <Badge variant="light" size="sm">{getCategoryName(fiche.categorie)}</Badge>
                 </Table.Td>
                 <Table.Td style={{ width: '12%' }}>
-                  <StatusBadge isPublished={fiche.isPublished} />
+                  <StatusBadge fiche={fiche} />
                 </Table.Td>
                 <Table.Td style={{ width: '15%', whiteSpace: 'nowrap' }}>{formatDate(fiche.updatedAt)}</Table.Td>
                 <Table.Td style={{ width: '13%' }}>

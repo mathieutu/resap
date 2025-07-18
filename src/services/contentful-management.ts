@@ -1,6 +1,7 @@
 'use server'
 
-import { createClient } from 'contentful-management'
+import { createClient, Entry } from 'contentful-management'
+import { revalidatePath } from 'next/cache'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN } = process.env
 
@@ -111,8 +112,80 @@ export type FicheWithStatus = {
   description: string
   createdAt: string
   updatedAt: string
-  isPublished: boolean
-  publishedAt?: string
+  status: 'published' | 'draft' | 'updated' | 'archived' | 'unknown'
+}
+
+export type FicheData = {
+  id: string
+  titre: string
+  slug: string
+  categorie: string
+  description: string
+  resume: any // RichText content
+  contenu: any // RichText content
+  tags: string[]
+  typeDispositif: string[]
+  illustration?: string // Asset ID
+  pourEnSavoirPlus?: string[] // Link IDs
+  outils?: string[] // Link IDs
+  patients?: string[] // Link IDs
+}
+
+export const getFicheForEdit = async (ficheId: string): Promise<FicheData | null> => {
+  const environment = await getContentfulEnvironment()
+
+  try {
+    const entry = await environment.getEntry(ficheId)
+
+    if (entry.sys.contentType.sys.id !== 'fiche') {
+      return null
+    }
+
+    return {
+      id: entry.sys.id,
+      titre: entry.fields.titre?.fr || '',
+      slug: entry.fields.slug?.fr || '',
+      categorie: entry.fields.categorie?.fr || '',
+      description: entry.fields.description?.fr || '',
+      resume: entry.fields.resume?.fr || null,
+      contenu: entry.fields.contenu?.fr || null,
+      tags: entry.fields.tags?.fr || [],
+      typeDispositif: entry.fields.typeDispositif?.fr || [],
+      illustration: entry.fields.illustration?.fr?.sys?.id,
+      pourEnSavoirPlus: entry.fields.pourEnSavoirPlus?.fr?.map((link: any) => link.sys.id) || [],
+      outils: entry.fields.outils?.fr?.map((link: any) => link.sys.id) || [],
+      patients: entry.fields.patients?.fr?.map((link: any) => link.sys.id) || [],
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error fetching fiche:', error)
+    return null
+  }
+}
+
+export const updateFiche = async (fiche: FicheData): Promise<void> => {
+  const environment = await getContentfulEnvironment()
+
+  try {
+    const entry = await environment.getEntry(fiche.id)
+
+    entry.fields.titre = { fr: fiche.titre }
+    entry.fields.slug = { fr: fiche.slug }
+    entry.fields.categorie = { fr: fiche.categorie }
+    entry.fields.description = { fr: fiche.description }
+    entry.fields.resume = { fr: fiche.resume }
+    entry.fields.contenu = { fr: fiche.contenu }
+    entry.fields.tags = { fr: fiche.tags }
+    entry.fields.typeDispositif = { fr: fiche.typeDispositif }
+
+    await entry.update()
+
+    await revalidatePath('/fiches')
+    await revalidatePath(`/fiches/${fiche.categorie}/${fiche.slug}`)
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error updating fiche:', error)
+  }
 }
 
 export const getAllFichesForAdmin = async (): Promise<FicheWithStatus[]> => {
@@ -123,6 +196,14 @@ export const getAllFichesForAdmin = async (): Promise<FicheWithStatus[]> => {
     limit: 1000,
   })
 
+  const getStatus = (entry: Entry): FicheWithStatus['status'] => {
+    if (entry.isArchived()) return 'archived'
+    if (entry.isUpdated()) return 'updated'
+    if (entry.isDraft()) return 'draft'
+    if (entry.isPublished()) return 'published'
+    return 'unknown'
+  }
+
   return entries.items.map((entry) => ({
     id: entry.sys.id,
     titre: entry.fields.titre?.fr || '',
@@ -131,7 +212,6 @@ export const getAllFichesForAdmin = async (): Promise<FicheWithStatus[]> => {
     description: entry.fields.description?.fr || '',
     createdAt: entry.sys.createdAt,
     updatedAt: entry.sys.updatedAt,
-    isPublished: entry.isPublished(),
-    publishedAt: entry.sys.publishedAt,
+    status: getStatus(entry),
   }))
 }
