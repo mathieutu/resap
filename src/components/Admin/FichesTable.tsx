@@ -10,11 +10,13 @@ import {
   TextInput,
   Button,
 } from '@mantine/core'
-import { IconEdit, IconEye, IconChevronUp, IconChevronDown, IconSearch, IconSelector } from '@tabler/icons-react'
+import { IconEdit, IconEye, IconChevronUp, IconChevronDown, IconSearch, IconSelector, IconUpload } from '@tabler/icons-react'
 import Link from 'next/link'
 import { categories } from '@/data/categories'
 import { useState } from 'react'
-import { type FicheWithStatus } from '@/services/contentful-management'
+import { type FicheWithStatus, publishAllUpdatedFiches } from '@/services/contentful-management'
+import { notifications } from '@mantine/notifications'
+import { redirect } from 'next/navigation'
 
 type SortField = 'titre' | 'updatedAt'
 type SortDirection = 'asc' | 'desc'
@@ -52,6 +54,7 @@ export function FichesTable({ fiches }: FichesTableProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [sortField, setSortField] = useState<SortField>('updatedAt')
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
+  const [isPublishing, setIsPublishing] = useState(false)
 
   const getSortIcon = (field: SortField) => {
     if (sortField === field) {
@@ -100,7 +103,33 @@ export function FichesTable({ fiches }: FichesTableProps) {
     }
   }
 
-  // Options pour les filtres
+  const updatedFichesCount = fiches.filter(fiche => fiche.status === 'updated').length
+
+  const handlePublishUpdatedFiches = async () => {
+    if (updatedFichesCount === 0) return
+
+    setIsPublishing(true)
+
+    try {
+      const publishedFiches = await publishAllUpdatedFiches()
+
+      notifications.show({
+        title: 'Publication réussie',
+        message: `${publishedFiches.length} fiche${publishedFiches.length > 1 ? 's ont' : ' a'} été publiée${publishedFiches.length > 1 ? 's' : ''} avec succès.`,
+        color: 'green',
+      })
+    } catch (_err) {
+      notifications.show({
+        title: 'Erreur',
+        message: 'Une erreur inattendue est survenue.',
+        color: 'red',
+      })
+      return
+    }
+
+    redirect('/admin/fiches')
+  }
+
   const categoryOptions = [
     { value: '', label: 'Toutes les catégories' },
     ...Object.entries(categories).map(([key, category]) => ({
@@ -145,6 +174,19 @@ export function FichesTable({ fiches }: FichesTableProps) {
             clearable
             style={{ minWidth: 180 }}
           />
+
+          {/* Bouton pour publier les fiches mises à jour */}
+          {updatedFichesCount > 0 && (
+            <Button
+              color="green"
+              onClick={handlePublishUpdatedFiches}
+              loading={isPublishing}
+              leftSection={<IconUpload size="1rem" />}
+              size="sm"
+            >
+              Publier les fiches mises à jour ({updatedFichesCount})
+            </Button>
+          )}
         </Group>
 
         {/* Compteur de fiches */}
@@ -217,7 +259,7 @@ export function FichesTable({ fiches }: FichesTableProps) {
                       size="compact-xs"
                       color="orange"
                       component={Link}
-                      href={`/admin/fiches/${fiche.id}/modifier`}
+                      href={`/admin/fiches/${fiche.id}`}
                       leftSection={<IconEdit size="1rem" />}
                     >
                       Modifier

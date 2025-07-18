@@ -1,7 +1,6 @@
 'use server'
 
 import { createClient, Entry } from 'contentful-management'
-import { revalidatePath } from 'next/cache'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN } = process.env
 
@@ -179,14 +178,30 @@ export const updateFiche = async (fiche: FicheData): Promise<void> => {
     entry.fields.typeDispositif = { fr: fiche.typeDispositif }
 
     await entry.update()
-
-    await revalidatePath('/fiches')
-    await revalidatePath(`/fiches/${fiche.categorie}/${fiche.slug}`)
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error updating fiche:', error)
   }
 }
+
+const getFicheStatus = (entry: Entry): FicheWithStatus['status'] => {
+  if (entry.isArchived()) return 'archived'
+  if (entry.isUpdated()) return 'updated'
+  if (entry.isDraft()) return 'draft'
+  if (entry.isPublished()) return 'published'
+  return 'unknown'
+}
+
+const mapEntryToFiche = (entry: Entry) => ({
+  id: entry.sys.id,
+  titre: entry.fields.titre?.fr || '',
+  slug: entry.fields.slug?.fr || '',
+  categorie: entry.fields.categorie?.fr || '',
+  description: entry.fields.description?.fr || '',
+  createdAt: entry.sys.createdAt,
+  updatedAt: entry.sys.updatedAt,
+  status: getFicheStatus(entry),
+})
 
 export const getAllFichesForAdmin = async (): Promise<FicheWithStatus[]> => {
   const environment = await getContentfulEnvironment()
@@ -196,22 +211,23 @@ export const getAllFichesForAdmin = async (): Promise<FicheWithStatus[]> => {
     limit: 1000,
   })
 
-  const getStatus = (entry: Entry): FicheWithStatus['status'] => {
-    if (entry.isArchived()) return 'archived'
-    if (entry.isUpdated()) return 'updated'
-    if (entry.isDraft()) return 'draft'
-    if (entry.isPublished()) return 'published'
-    return 'unknown'
+  return entries.items.map(mapEntryToFiche)
+}
+
+export const publishAllUpdatedFiches = async (): Promise<FicheWithStatus[]> => {
+  const environment = await getContentfulEnvironment()
+
+  // Récupérer toutes les fiches avec le statut "updated"
+  const entries = await environment.getEntries({
+    content_type: 'fiche',
+    limit: 1000,
+  })
+
+  const updatedEntries = entries.items.filter(entry => entry.isUpdated())
+
+  if (updatedEntries.length === 0) {
+    return []
   }
 
-  return entries.items.map((entry) => ({
-    id: entry.sys.id,
-    titre: entry.fields.titre?.fr || '',
-    slug: entry.fields.slug?.fr || '',
-    categorie: entry.fields.categorie?.fr || '',
-    description: entry.fields.description?.fr || '',
-    createdAt: entry.sys.createdAt,
-    updatedAt: entry.sys.updatedAt,
-    status: getStatus(entry),
-  }))
+  return Promise.all(updatedEntries.map(entry => entry.publish().then(mapEntryToFiche)))
 }
