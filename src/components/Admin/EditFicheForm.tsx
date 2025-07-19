@@ -12,14 +12,19 @@ import {
   Title,
   Alert,
   TagsInput,
+  Image,
+  Text,
+  Box,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { notifications } from '@mantine/notifications'
 import { IconCheck, IconX } from '@tabler/icons-react'
-import { updateFiche, type FicheData } from '@/services/contentful-management'
+import { updateFiche, type FicheData, createOrUpdateLink, deleteLink, uploadFileToContentful } from '@/services/contentful-management'
+import { LinkEditor, type PendingLink } from '@/components/Admin/LinkEditor'
 import { categories } from '@/data/categories'
 import { types } from '@/data/structures_types'
 import { redirect } from 'next/navigation'
+import { useState } from 'react'
 
 interface EditFicheFormProps {
   fiche: FicheData
@@ -34,9 +39,34 @@ const generateSlug = (titre: string): string => titre
   .replace(/-+/g, '-') // Replace multiple hyphens with single
   .replace(/^-|-$/g, '') // Remove leading/trailing hyphens
 
+// Convertir les liens existants vers le format PendingLink
+const convertToPendingLinks = (links: FicheData['pourEnSavoirPlus']): PendingLink[] => links.map(link => ({
+    id: link.id,
+    titre: link.titre,
+    url: link.url,
+    fichier: link.fichier,
+    description: link.description,
+  }))
+
 export function EditFicheForm({ fiche }: EditFicheFormProps) {
-  const form = useForm<FicheData>({
-    initialValues: fiche,
+  const [pourEnSavoirPlus, setPourEnSavoirPlus] = useState<PendingLink[]>(convertToPendingLinks(fiche.pourEnSavoirPlus))
+  const [outils, setOutils] = useState<PendingLink[]>(convertToPendingLinks(fiche.outils))
+  const [patients, setPatients] = useState<PendingLink[]>(convertToPendingLinks(fiche.patients))
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const form = useForm<Omit<FicheData, 'pourEnSavoirPlus' | 'outils' | 'patients'>>({
+    initialValues: {
+      id: fiche.id,
+      titre: fiche.titre,
+      slug: fiche.slug,
+      categorie: fiche.categorie,
+      illustration: fiche.illustration,
+      description: fiche.description,
+      typeDispositif: fiche.typeDispositif,
+      tags: fiche.tags,
+      resume: fiche.resume,
+      contenu: fiche.contenu,
+    },
     validate: {
       titre: (value) => (!value ? 'Le titre est requis' : null),
       slug: (value) => {
@@ -47,6 +77,7 @@ export function EditFicheForm({ fiche }: EditFicheFormProps) {
         return null
       },
       categorie: (value) => (!value ? 'La catégorie est requise' : null),
+      illustration: (value) => (!value?.id ? 'L\'illustration est requise' : null),
       description: (value) => {
         if (!value) return 'La description est requise'
         if (value.length > 280) return 'La description ne peut pas dépasser 280 caractères'
@@ -56,9 +87,76 @@ export function EditFicheForm({ fiche }: EditFicheFormProps) {
     },
   })
 
-  const handleSubmit = async (values: FicheData) => {
+  // Traiter les liens lors de l'enregistrement
+  const processLinks = async (pendingLinks: PendingLink[]) => {
+    const processedLinkIds: string[] = []
+
+    for (const link of pendingLinks) {
+      if (link.isDeleted && !link.isNew) {
+        // Supprimer les liens existants marqués pour suppression
+        try {
+          await deleteLink(link.id)
+        } catch (error) {
+          console.error('Erreur lors de la suppression du lien:', error)
+          throw new Error(`Erreur lors de la suppression du lien "${link.titre}"`)
+        }
+      } else if (!link.isDeleted) {
+        // Traiter les nouveaux liens et les liens modifiés
+        try {
+          let linkData = {
+            titre: link.titre,
+            description: link.description,
+            url: link.url,
+            fichier: link.fichier,
+          }
+
+          // Si c'est un nouveau lien avec un fichier à uploader
+          if (link.isNew && link.file) {
+            const assetId = await uploadFileToContentful(link.file)
+            linkData = {
+              ...linkData,
+              fichier: assetId,
+              url: undefined, // Fichier et URL sont mutuellement exclusifs
+            }
+          }
+
+          // Créer ou mettre à jour le lien
+          const linkId = await createOrUpdateLink({
+            ...linkData,
+            id: link.isNew ? undefined : link.id,
+          })
+
+          processedLinkIds.push(linkId)
+        } catch (error) {
+          console.error('Erreur lors du traitement du lien:', error)
+          throw new Error(`Erreur lors du traitement du lien "${link.titre}"`)
+        }
+      }
+    }
+
+    return processedLinkIds
+  }
+
+  const handleSubmit = async (values: Omit<FicheData, 'pourEnSavoirPlus' | 'outils' | 'patients'>) => {
+    setIsSubmitting(true)
+
     try {
-      await updateFiche(values)
+      // Traiter tous les liens en parallèle
+      const [pourEnSavoirPlusIds, outilsIds, patientsIds] = await Promise.all([
+        processLinks(pourEnSavoirPlus),
+        processLinks(outils),
+        processLinks(patients),
+      ])
+
+      // Construire les données de la fiche avec les IDs des liens traités
+      const ficheData: FicheData = {
+        ...values,
+        pourEnSavoirPlus: pourEnSavoirPlusIds.map(id => ({ id, titre: '', url: '', description: '' })), // Les données complètes seront récupérées par updateFiche
+        outils: outilsIds.map(id => ({ id, titre: '', url: '', description: '' })),
+        patients: patientsIds.map(id => ({ id, titre: '', url: '', description: '' })),
+      }
+
+      await updateFiche(ficheData)
 
       notifications.show({
         title: 'Succès',
@@ -66,20 +164,20 @@ export function EditFicheForm({ fiche }: EditFicheFormProps) {
         color: 'green',
         icon: <IconCheck size="1rem" />,
       })
-    } catch (_err) {
-      // eslint-disable-next-line no-console
-      console.log('Error updating fiche:', _err)
+
+      redirect('/admin/fiches')
+    } catch (error) {
+      console.error('Error updating fiche:', error)
 
       notifications.show({
         title: 'Erreur',
-        message: 'Une erreur est survenue lors de la mise à jour',
+        message: error instanceof Error ? error.message : 'Une erreur est survenue lors de la mise à jour',
         color: 'red',
         icon: <IconX size="1rem" />,
       })
-      return
+    } finally {
+      setIsSubmitting(false)
     }
-
-    redirect('/admin/fiches')
   }
 
   const handleTitreChange = (value: string) => {
@@ -128,6 +226,22 @@ export function EditFicheForm({ fiche }: EditFicheFormProps) {
             {...form.getInputProps('categorie')}
           />
 
+          <Box>
+            {form.values.illustration?.url && (
+              <Box mt="sm">
+                <Text size="sm" c="dimmed" mb="xs">Aperçu :</Text>
+                <Image
+                  src={`https:${form.values.illustration.url}`}
+                  alt={form.values.illustration.title}
+                  h={120}
+                  w="auto"
+                  fit="contain"
+                  radius="md"
+                />
+              </Box>
+            )}
+          </Box>
+
           <Textarea
             label="Description"
             placeholder="Description courte (max 280 caractères)"
@@ -159,10 +273,38 @@ export function EditFicheForm({ fiche }: EditFicheFormProps) {
 
           <Alert color="blue">
             Les champs de contenu riche (Résumé et Contenu) nécessitent un éditeur spécialisé qui sera implémenté prochainement.
+            Pour le moment, ces champs conservent leur contenu existant.
           </Alert>
 
+          <Title order={3} mt="xl">Liens et ressources (optionnels)</Title>
+
+          <Alert color="yellow">
+            Les modifications des liens ne seront appliquées qu'à l'enregistrement de la fiche.
+          </Alert>
+
+          <LinkEditor
+            label="Pour aller plus loin"
+            description="Liens pour approfondir le sujet"
+            links={pourEnSavoirPlus}
+            onLinksChangeAction={setPourEnSavoirPlus}
+          />
+
+          <LinkEditor
+            label="Quelques outils"
+            description="Outils pratiques liés à cette fiche"
+            links={outils}
+            onLinksChangeAction={setOutils}
+          />
+
+          <LinkEditor
+            label="Pour les patients"
+            description="Ressources destinées aux patients"
+            links={patients}
+            onLinksChangeAction={setPatients}
+          />
+
           <Group justify="flex-end" mt="xl">
-            <Button type="submit" loading={form.submitting} size="md">
+            <Button type="submit" loading={isSubmitting} size="md">
               Enregistrer les modifications
             </Button>
           </Group>

@@ -4,7 +4,6 @@ import { getFicheForEdit } from '@/services/contentful-management'
 import { EditFicheForm } from '@/components/Admin/EditFicheForm'
 
 export default async function EditFichePage({ params }) {
-  // Récupérer toutes les fiches pour trouver celle à modifier
   const fiche = await getFicheForEdit((await params).id)
 
   if (!fiche) {
