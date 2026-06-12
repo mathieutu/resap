@@ -1,6 +1,6 @@
 import '@/assets/styles.css'
 import { Dosis, IBM_Plex_Sans as IBMPlexSans } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/react'
+import Script from 'next/script'
 
 export const metadata = {
   title: {
@@ -33,12 +33,29 @@ const ibm = IBMPlexSans({
   subsets: ['latin'],
 })
 
+const analyticsEnabled = process.env.NODE_ENV === 'production'
+  && (!process.env.NEXT_PUBLIC_VERCEL_ENV || process.env.NEXT_PUBLIC_VERCEL_ENV === 'production')
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
       <body>
         {children}
-        <Analytics />
+
+        {/* Privacy-friendly analytics by Plausible */}
+        {analyticsEnabled && <Script async src="https://e.mathieutu.dev/js/pa-LnN_yHHAOj6u7LaW6VoIL.js" />}
+        {analyticsEnabled && (
+        <Script
+          id="next-plausible-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+          window.plausible=window.plausible||function(){(plausible.q = plausible.q || []).push(arguments)},plausible.init=plausible.init||function(i){plausible.o = i || {}};
+          plausible.init()
+          `,
+          }}
+        />
+)}
+
       </body>
     </html>
   )
