@@ -1,0 +1,154 @@
+'use client'
+
+import { useEditor } from './EditorContext'
+import { TextField } from './fields/TextField'
+import { TextareaField } from './fields/TextareaField'
+import { SelectField } from './fields/SelectField'
+import { CheckboxGroupField } from './fields/CheckboxGroupField'
+import { TagsField } from './fields/TagsField'
+import { RichTextEditor } from './RichTextEditor'
+import { LiensPicker } from './LiensPicker'
+import { IllustrationField } from './fields/IllustrationField'
+
+export function InspectorPanel() {
+  const { selectedField, values, updateValue, clearSelection, ficheId } = useEditor()
+
+  if (!selectedField) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full text-center px-6 py-12">
+        <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mb-4 text-2xl">
+          👆
+        </div>
+        <p className="text-sm font-semibold text-gray-700 mb-1">
+          Cliquez sur un élément
+        </p>
+        <p className="text-xs text-gray-400 leading-relaxed">
+          Survolez n&apos;importe quel texte, image ou bloc dans la preview
+          pour voir le contour bleu, puis cliquez pour l&apos;éditer ici.
+        </p>
+      </div>
+    )
+  }
+
+  const value = values[selectedField.key]
+  const handleChange = (newValue: any) => updateValue(selectedField.key, newValue)
+
+  let fieldTypeLabel = 'Texte'
+  if (selectedField.type === 'richtext') {
+    fieldTypeLabel = 'Contenu riche'
+  } else if (selectedField.type === 'checkboxGroup') {
+    fieldTypeLabel = 'Cases à cocher'
+  } else if (selectedField.type === 'select') {
+    fieldTypeLabel = 'Liste déroulante'
+  } else if (selectedField.type === 'textarea') {
+    fieldTypeLabel = 'Texte long'
+  } else if (selectedField.type === 'image') {
+    fieldTypeLabel = 'Image'
+  }
+
+  return (
+    <div className="flex flex-col h-full overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 flex-shrink-0">
+        <div className="min-w-0">
+          <p className="text-sm font-semibold text-gray-900 truncate">{selectedField.label}</p>
+          <p className="text-xs text-gray-400 mt-0.5">
+            {fieldTypeLabel}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={clearSelection}
+          className="w-6 h-6 flex items-center justify-center rounded text-gray-400 hover:bg-gray-100 flex-shrink-0 ml-2"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* Wrapper scrollable + resize */}
+      <div
+        className={[
+          'flex-1 overflow-y-auto p-4 min-h-0',
+        ].join(' ')}
+      >
+        {selectedField.type === 'text' && (
+          <TextField field={selectedField} value={value ?? ''} onChange={handleChange} />
+        )}
+
+        {selectedField.type === 'textarea' && (
+          <TextareaField field={selectedField} value={value ?? ''} onChange={handleChange} />
+        )}
+
+        {selectedField.type === 'richtext' && (
+          <RichTextEditor
+            value={value ?? ''}
+            onChange={handleChange}
+            placeholder={`Rédigez le ${selectedField.label.toLowerCase()}...`}
+            minHeight={
+              { contenu: 400, resume: 300 }[selectedField.key] ?? 150
+            }
+          />
+        )}
+
+        {selectedField.type === 'select' && (
+          <SelectField field={selectedField} value={value ?? ''} onChange={handleChange} />
+        )}
+
+        {selectedField.type === 'checkboxGroup' && (
+          <CheckboxGroupField field={selectedField} value={value ?? []} onChange={handleChange} />
+        )}
+
+        {selectedField.type === 'tags' && (
+          <TagsField
+            value={Array.isArray(value) ? value : []}
+            onChange={handleChange}
+          />
+        )}
+
+        {selectedField.hint && (
+          <p className="text-xs text-gray-400 mt-3 leading-relaxed">
+            💡 {selectedField.hint}
+          </p>
+        )}
+
+        {selectedField.type === 'liens' && (
+          <div className="p-4 border-t border-gray-100">
+            <p className="text-xs text-gray-400 mb-3">
+              {selectedField.hint ?? ''}
+            </p>
+            {(() => {
+              let bloc: 'pourEnSavoirPlus' | 'outils' | 'patients' = 'pourEnSavoirPlus'
+              if (selectedField.key === 'outilsIds') {
+                bloc = 'outils'
+              } else if (selectedField.key === 'patientsIds') {
+                bloc = 'patients'
+              }
+              return (
+                <LiensPicker
+                  titre={selectedField.label}
+                  selectedIds={value ?? []}
+                  onChange={handleChange}
+                  ficheId={ficheId}
+                  bloc={bloc}
+                />
+              )
+            })()}
+          </div>
+        )}
+
+        {selectedField.type === 'image' && (
+          <div className="p-4 border-t border-gray-100">
+            <IllustrationField
+              ficheId={ficheId}
+              value={value ?? ''}
+              onChange={(url, assetId) => {
+                handleChange(url)
+                updateValue('illustrationId', assetId)
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}

@@ -1,6 +1,11 @@
 'use server'
 
 import { createClient } from 'contentful-management'
+import { richTextFromMarkdown } from '@contentful/rich-text-from-markdown'
+import { documentToHtmlString, Options } from '@contentful/rich-text-html-renderer'
+import { BLOCKS, INLINES, MARKS, Document } from '@contentful/rich-text-types'
+import { unified } from 'unified'
+import rehypeParse from 'rehype-parse'
 
 const { CONTENTFUL_SPACE_ID, CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN } = process.env
 
@@ -13,6 +18,7 @@ export type CreateStructureData = {
   organisation: string
   type: string
   description: string
+  specialites?: string[]
   adresse: string
   siteWeb: string
   email: string
@@ -53,8 +59,7 @@ export const createStructureInContentful = async (data: CreateStructureData): Pr
   })
 
   const space = await client.getSpace(CONTENTFUL_SPACE_ID)
-  const environment = await space.getEnvironment('master')
-
+  const environment = await space.getEnvironment(process.env.CONTENTFUL_ENVIRONMENT ?? 'master')
   const { lat, lon } = await findCoordinates(data.adresse)
 
   const structureEntry = await environment.createEntry('structure', {
@@ -64,6 +69,12 @@ export const createStructureInContentful = async (data: CreateStructureData): Pr
       },
       organisation: data.organisation ? {
         fr: data.organisation,
+      } : undefined,
+      specialites: data.specialites?.length ? {
+        fr: data.specialites,
+      } : undefined,
+      description: data.description ? {
+        fr: await richTextFromMarkdown(data.description),
       } : undefined,
       type: {
         fr: data.type,
@@ -96,4 +107,1071 @@ export const createStructureInContentful = async (data: CreateStructureData): Pr
     id: structureEntry.sys.id,
     url: contentfulUrl,
   }
+}
+
+const getEnvironment = async () => {
+  const client = createClient({
+    accessToken: CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
+  })
+  const space = await client.getSpace(CONTENTFUL_SPACE_ID)
+  return space.getEnvironment(process.env.CONTENTFUL_ENVIRONMENT ?? 'master')
+}
+
+// ─── STRUCTURES ────────────────────────────────────────────────────────────
+
+// Retourne toutes les structures (publiées ET brouillons)
+export const listStructures = async () => {
+  const environment = await getEnvironment()
+  const limit = 1000
+  let skip = 0
+  let allItems: any[] = []
+  let total = 0
+
+  do {
+    // eslint-disable-next-line no-await-in-loop
+    const response = await environment.getEntries({
+      content_type: 'structure',
+      limit,
+      skip,
+    })
+
+    allItems = [...allItems, ...response.items]
+    total = response.total
+    skip += limit
+  } while (skip < total)
+
+  return allItems.map((entry) => ({
+    id: entry.sys.id,
+    nom: (entry.fields.nom as { fr: string })?.fr ?? '',
+    organisation: (entry.fields.organisation as { fr: string } | undefined)?.fr ?? '',
+    type: (entry.fields.type as { fr: string })?.fr ?? '',
+    adresse: (entry.fields.adresse as { fr: string })?.fr ?? '',
+    email: (entry.fields.email as { fr: string } | undefined)?.fr ?? '',
+    tel: (entry.fields.tel as { fr: string } | undefined)?.fr ?? '',
+    siteWeb: (entry.fields.siteWeb as { fr: string } | undefined)?.fr ?? '',
+    description: (entry.fields.description as { fr: string } | undefined)?.fr ?? '',
+    statut: entry.sys.publishedAt ? 'published' : 'draft' as const,
+    updatedAt: entry.sys.updatedAt,
+    contentfulUrl: `https://app.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${process.env.CONTENTFUL_ENVIRONMENT ?? 'master'}/entries/${entry.sys.id}`,
+  }))
+}
+
+// Retourne une seule structure par son id (pour pré-remplir le formulaire d'édition)
+export const getStructureById = async (id: string) => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(id)
+
+  // Extrait le texte brut du rich text description
+  const extractText = (doc: any): string => {
+    if (!doc?.content) return ''
+    const extract = (nodes: any[]): string =>
+      nodes.flatMap((n: any) => {
+        if (n.nodeType === 'text') return [n.value ?? '']
+        if (n.content) return extract(n.content)
+        return []
+      }).join('\n')
+    return extract(doc.content)
+  }
+
+  return {
+    id: entry.sys.id,
+    nom: (entry.fields.nom as { fr: string })?.fr ?? '',
+    organisation: (entry.fields.organisation as { fr: string } | undefined)?.fr ?? '',
+    type: (entry.fields.type as { fr: string })?.fr ?? '',
+    adresse: (entry.fields.adresse as { fr: string })?.fr ?? '',
+    email: (entry.fields.email as { fr: string } | undefined)?.fr ?? '',
+    tel: (entry.fields.tel as { fr: string } | undefined)?.fr ?? '',
+    siteWeb: (entry.fields.siteWeb as { fr: string } | undefined)?.fr ?? '',
+    description: extractText((entry.fields.description as { fr: any } | undefined)?.fr),
+    specialites: (entry.fields.specialites as { fr: string[] } | undefined)?.fr ?? [],
+    statut: entry.sys.publishedAt ? 'published' : 'draft' as const,
+  }
+}
+
+// Met à jour une structure existante → sauvegarde en BROUILLON
+export const updateStructureInContentful = async (
+  id: string,
+  data: Partial<CreateStructureData>,
+): Promise<void> => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(id)
+
+  if (data.nom !== undefined) entry.fields.nom = { fr: data.nom }
+  if (data.organisation !== undefined) {
+    entry.fields.organisation = data.organisation ? { fr: data.organisation } : undefined
+  }
+  if (data.type !== undefined) entry.fields.type = { fr: data.type }
+  if (data.specialites !== undefined) {
+    entry.fields.specialites = { fr: data.specialites }
+  }
+  if (data.siteWeb !== undefined) entry.fields.siteWeb = data.siteWeb ? { fr: data.siteWeb } : undefined
+  if (data.email !== undefined) entry.fields.email = data.email ? { fr: data.email } : undefined
+  if (data.tel !== undefined) entry.fields.tel = data.tel ? { fr: data.tel } : undefined
+
+  // Description = rich text
+  if (data.description !== undefined) {
+    entry.fields.description = data.description
+      ? { fr: await richTextFromMarkdown(data.description) }
+      : undefined
+  }
+
+  // Adresse : une seule saisie → remplit les 2 champs Contentful
+  if (data.adresse !== undefined) {
+    entry.fields.adresse = { fr: data.adresse }
+    const { lat, lon } = await findCoordinates(data.adresse)
+    entry.fields.latLon = { fr: { lat, lon } }
+  }
+
+  await entry.update()
+}
+
+// Publie une structure → visible sur le site public
+export const publishStructure = async (id: string): Promise<void> => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(id)
+  await entry.publish()
+}
+
+// Dépublie une structure → repasse en brouillon
+export const unpublishStructure = async (id: string): Promise<void> => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(id)
+  await entry.unpublish()
+}
+
+// ─── LIENS
+
+export type CreateLienData = {
+  titre: string
+  url?: string
+  fichierAssetId?: string
+}
+
+export const listLiens = async () => {
+  const environment = await getEnvironment()
+
+  const entries = await environment.getEntries({
+    content_type: 'lien',
+    limit: 1000,
+  })
+
+  return entries.items.map((entry) => ({
+    id: entry.sys.id,
+    titre: (entry.fields.titre as { fr: string })?.fr ?? '',
+    url: (entry.fields.url as { fr: string } | undefined)?.fr,
+    hasFichier: !!entry.fields.fichier,
+    statut: entry.sys.publishedAt ? 'published' : 'draft' as const,
+    updatedAt: entry.sys.updatedAt,
+    // estVide = true si ni url ni fichier → c'est le bug à corriger
+    estVide: !entry.fields.url && !entry.fields.fichier,
+  }))
+}
+
+export const getLienById = async (id: string) => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(id)
+
+  return {
+    id: entry.sys.id,
+    titre: (entry.fields.titre as { fr: string })?.fr ?? '',
+    url: (entry.fields.url as { fr: string } | undefined)?.fr ?? '',
+    hasFichier: !!entry.fields.fichier,
+    statut: entry.sys.publishedAt ? 'published' : 'draft' as const,
+    estVide: !entry.fields.url && !entry.fields.fichier,
+  }
+}
+
+export const createLienInContentful = async (data: CreateLienData) => {
+  const environment = await getEnvironment()
+
+  const entry = await environment.createEntry('lien', {
+    fields: {
+      titre: { fr: data.titre },
+      ...(data.url ? { url: { fr: data.url } } : {}),
+      ...(data.fichierAssetId
+        ? {
+            fichier: {
+              fr: {
+                sys: { type: 'Link', linkType: 'Asset', id: data.fichierAssetId },
+              },
+            },
+          }
+        : {}),
+    },
+  })
+
+  return { id: entry.sys.id }
+}
+
+export const updateFicheLiens = async (
+  ficheId: string,
+  {
+    outils,
+    patients,
+    pourEnSavoirPlus,
+  }: {
+    outils: string[]
+    patients: string[]
+    pourEnSavoirPlus: string[]
+  },
+): Promise<void> => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(ficheId)
+
+  const toLinks = (ids: string[]) =>
+    ids.map((id) => ({
+      sys: {
+        type: 'Link' as const,
+        linkType: 'Entry' as const,
+        id,
+      },
+    }))
+
+  entry.fields.outils = { fr: toLinks(outils) }
+  entry.fields.patients = { fr: toLinks(patients) }
+  entry.fields.pourEnSavoirPlus = { fr: toLinks(pourEnSavoirPlus) }
+
+  const wasPublished = !!entry.sys.publishedAt
+
+  await entry.update()
+
+  if (wasPublished) {
+    const freshEntry = await environment.getEntry(ficheId)
+    await freshEntry.publish()
+  }
+}
+
+export const publishLien = async (id: string): Promise<void> => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(id)
+
+  // Vérification : on refuse de publier un lien vide
+  const hasUrl = !!(entry.fields.url as { fr: string } | undefined)?.fr
+  const hasFichier = !!entry.fields.fichier
+
+  if (!hasUrl && !hasFichier) {
+    throw new Error('Impossible de publier un lien sans URL ni fichier.')
+  }
+
+  await entry.publish()
+}
+
+// Liens intégrés à une fiche
+export const createLienAndLinkToFiche = async (
+  ficheId: string,
+  bloc: 'outils' | 'patients' | 'pourEnSavoirPlus',
+  lienData: CreateLienData,
+): Promise<{ id: string }> => {
+  const environment = await getEnvironment()
+
+  if (!lienData.url && !lienData.fichierAssetId) {
+    throw new Error('Un lien doit contenir une URL ou un fichier.')
+  }
+
+  if (lienData.fichierAssetId) {
+    const asset = await environment.getAsset(lienData.fichierAssetId)
+    if (!asset.sys.publishedVersion) {
+      await asset.publish()
+    }
+  }
+
+  // 1. Créer le lien
+  const lienEntry = await environment.createEntry('lien', {
+    fields: {
+      titre: { fr: lienData.titre },
+      ...(lienData.url ? { url: { fr: lienData.url } } : {}),
+      ...(lienData.fichierAssetId
+        ? {
+            fichier: {
+              fr: {
+                sys: { type: 'Link', linkType: 'Asset', id: lienData.fichierAssetId },
+              },
+            },
+          }
+        : {}),
+    },
+  })
+
+  // 2. Lire la fiche courante
+  const ficheEntry = await environment.getEntry(ficheId)
+
+  // Nom du champ Contentful selon le bloc
+  const fieldMap = {
+    outils: 'outils',
+    patients: 'patients',
+    pourEnSavoirPlus: 'pourEnSavoirPlus',
+  }
+  const fieldName = fieldMap[bloc]
+
+  // 3. Récupérer la liste existante (peut être undefined)
+  const existing = (ficheEntry.fields[fieldName] as { fr: any[] } | undefined)?.fr ?? []
+
+  // 4. Ajouter le nouveau lien à la liste
+  ficheEntry.fields[fieldName] = {
+    fr: [
+      ...existing,
+      { sys: { type: 'Link', linkType: 'Entry', id: lienEntry.sys.id } },
+    ],
+  }
+
+  // 5. Sauvegarder la fiche
+  const wasPublished = !!ficheEntry.sys.publishedAt
+  await ficheEntry.update()
+
+  if (wasPublished) {
+    const fresh = await environment.getEntry(ficheId)
+    await fresh.publish()
+  }
+
+  return { id: lienEntry.sys.id }
+}
+
+// ─── FICHES ────────────────────────────────────────────────────────────────
+
+export const listFiches = async () => {
+  const environment = await getEnvironment()
+
+  const entries = await environment.getEntries({
+    content_type: 'fiche',
+    limit: 1000,
+  })
+
+  return Promise.all(entries.items.map(async (entry: any) => {
+    let illustrationUrl: string | undefined
+
+        const illustrationLink = getEntryLinkField(entry.fields.illustration)
+        const illustrationId = illustrationLink?.sys?.id
+
+    if (illustrationId) {
+      try {
+        const asset = await environment.getAsset(illustrationId)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const fileField = getAssetFileField(asset)
+        const rawUrl = fileField?.url as string | undefined
+        if (rawUrl) {
+          illustrationUrl = rawUrl.startsWith('//') ? `https:${rawUrl}` : rawUrl
+        }
+      } catch {
+        illustrationUrl = undefined
+      }
+    }
+
+    return {
+      id: entry.sys.id,
+      titre: (entry.fields.titre as { fr: string } | undefined)?.fr ?? '',
+      slug: (entry.fields.slug as { fr: string } | undefined)?.fr ?? '',
+      categorie: (entry.fields.categorie as { fr: string } | undefined)?.fr ?? '',
+      tags: (entry.fields.tags as { fr: string[] } | undefined)?.fr ?? [],
+      illustrationUrl,
+      statut: entry.sys.publishedAt ? 'published' as const : 'draft' as const,
+      updatedAt: entry.sys.updatedAt,
+      contentfulUrl: `https://app.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/environments/${process.env.CONTENTFUL_ENVIRONMENT ?? 'master'}/entries/${entry.sys.id}`,
+    }
+  }))
+}
+
+type ResolvedAsset = {
+  id: string
+  title: string
+  url: string
+  contentType: string
+}
+
+const getLocalizedFieldValue = <T>(field?: Record<string, T>): T | undefined => {
+  if (!field || typeof field !== 'object') return undefined
+  return field.fr ?? field['en-US'] ?? Object.values(field)[0]
+}
+
+const getAssetFileField = (asset: any) => getLocalizedFieldValue<any>(asset.fields.file)
+const getAssetTitleField = (asset: any) => getLocalizedFieldValue<string>(asset.fields.title)
+const getEntryLinkField = (field: any) => getLocalizedFieldValue<any>(field)
+
+const collectEmbeddedAssetIds = (node: any, ids = new Set<string>()) => {
+  if (!node || typeof node !== 'object') return ids
+
+  if (node.nodeType === BLOCKS.EMBEDDED_ASSET) {
+    const id = node?.data?.target?.sys?.id
+    if (id) ids.add(id)
+  }
+
+  if (Array.isArray(node.content)) {
+    node.content.forEach((child: any) => collectEmbeddedAssetIds(child, ids))
+  }
+
+  return ids
+}
+
+const convertContentfulRichTextToHtml = (
+  content: Document,
+  resolvedAssets: Record<string, ResolvedAsset> = {},
+): string => {
+  const attr = (value: string) => `"${value.replace(/"/g, '&quot;')}"`
+
+  const options: Options = {
+    renderNode: {
+      [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
+        const targetId = node?.data?.target?.sys?.id
+        const directFields = node?.data?.target?.fields
+        const resolved = targetId ? resolvedAssets[targetId] : undefined
+
+        const title = directFields?.title?.fr
+          ?? directFields?.title
+          ?? resolved?.title
+          ?? 'Asset'
+
+        const file = directFields?.file?.fr
+          ?? directFields?.file
+          ?? (resolved ? {
+            url: resolved.url,
+            contentType: resolved.contentType,
+          } : undefined)
+
+        if (!file?.url || !targetId) return ''
+
+        const url = String(file.url).startsWith('//') ? `https:${file.url}` : file.url
+        const contentType = file.contentType ?? ''
+
+        if (contentType.includes('image') || contentType.includes('svg')) {
+          return `<img src=${attr(url)} alt=${attr(title)} data-asset-id=${attr(targetId)} class="rounded-sm" />`
+        }
+
+        return `
+          <a href=${attr(url)} target="_blank" rel="noopener noreferrer">
+            ${title}
+          </a>
+        `
+      },
+    },
+  }
+
+  return documentToHtmlString(content, options)
+}
+
+export const getFicheById = async (id: string) => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(id)
+
+  const resumeDoc = (entry.fields.resume as { fr: Document } | undefined)?.fr ?? ({
+    nodeType: BLOCKS.DOCUMENT,
+    data: {},
+    content: [],
+  } as Document)
+
+  const contenuDoc = (entry.fields.contenu as { fr: Document } | undefined)?.fr ?? ({
+    nodeType: BLOCKS.DOCUMENT,
+    data: {},
+    content: [],
+  } as Document)
+
+  const embeddedAssetIds = [
+    ...collectEmbeddedAssetIds(resumeDoc),
+    ...collectEmbeddedAssetIds(contenuDoc),
+  ]
+
+  const resolvedAssetsEntries = await Promise.all(
+    [...new Set(embeddedAssetIds)].map(async (assetId) => {
+      try {
+        const asset = await environment.getAsset(assetId)
+        const rawUrl = (asset.fields.file as any)?.fr?.url as string | undefined
+        const contentType = (asset.fields.file as any)?.fr?.contentType as string | undefined
+        const title = (asset.fields.title as any)?.fr as string | undefined
+
+        if (!rawUrl || !contentType) return null
+
+        return [
+          assetId,
+          {
+            id: assetId,
+            title: title ?? 'Asset',
+            url: rawUrl.startsWith('//') ? `https:${rawUrl}` : rawUrl,
+            contentType,
+          },
+        ] as const
+      } catch {
+        return null
+      }
+    }),
+  )
+
+   const resolvedAssets = Object.fromEntries(
+    resolvedAssetsEntries.filter(Boolean) as Array<readonly [string, ResolvedAsset]>,
+  )
+  // Extrait les IDs des entries liées (liens)
+  const extractEntryIds = (field: unknown): string[] => {
+    if (!field || typeof field !== 'object') return []
+    const obj = field as { fr?: Array<{ sys?: { id: string } }> }
+    return (obj.fr ?? []).map((l) => l.sys?.id ?? '').filter(Boolean)
+  }
+
+  let illustrationUrl: string | undefined
+  let illustrationId: string | undefined
+
+  const illustrationField = getEntryLinkField(entry.fields.illustration)
+
+  if (illustrationField?.sys?.id) {
+    const currentIllustrationId = illustrationField.sys.id
+    illustrationId = currentIllustrationId
+    try {
+      const asset = await environment.getAsset(currentIllustrationId)
+      const fileField = getAssetFileField(asset)
+      const rawUrl = fileField?.url as string | undefined
+      if (rawUrl) {
+        illustrationUrl = rawUrl.startsWith('//') ? `https:${rawUrl}` : rawUrl
+      }
+    } catch {
+      illustrationUrl = undefined
+    }
+  }
+
+  return {
+    id: entry.sys.id,
+    titre: (entry.fields.titre as { fr: string })?.fr ?? '',
+    slug: (entry.fields.slug as { fr: string })?.fr ?? '',
+    categorie: (entry.fields.categorie as { fr: string })?.fr ?? '',
+    tags: (entry.fields.tags as { fr: string[] } | undefined)?.fr ?? [],
+    description: (entry.fields.description as { fr: string } | undefined)?.fr ?? '',
+    resume: convertContentfulRichTextToHtml(resumeDoc, resolvedAssets),
+    contenu: convertContentfulRichTextToHtml(contenuDoc, resolvedAssets),
+    typeDispositif: (entry.fields.typeDispositif as { fr: string[] } | undefined)?.fr ?? [],
+    illustrationUrl,
+    illustrationId,
+    // Liens associés (IDs)
+    outilsIds: extractEntryIds(entry.fields.outils),
+    patientsIds: extractEntryIds(entry.fields.patients),
+    pourEnSavoirPlusIds: extractEntryIds(entry.fields.pourEnSavoirPlus),
+    statut: entry.sys.publishedAt ? 'published' : 'draft' as const,
+    updatedAt: entry.sys.updatedAt,
+  }
+}
+
+export type UpdateFicheData = {
+  titre?: string
+  categorie?: string
+  tags?: string[]
+  description?: string
+  resume?: string
+  contenu?: string
+  typeDispositif?: string[]
+  illustrationId?: string
+
+}
+
+// Crée une nouvelle fiche dans Contentful
+export type CreateFicheData = {
+  titre: string
+  slug: string
+  categorie: string
+  tags: string[]
+  description: string
+  resume: string
+  contenu: string
+  typeDispositif: string[]
+}
+
+export const createFicheInContentful = async (data: CreateFicheData) => {
+  const environment = await getEnvironment()
+
+  const entry = await environment.createEntry('fiche', {
+    fields: {
+      titre: { fr: data.titre },
+      slug: { fr: data.slug },
+      categorie: { fr: data.categorie },
+      tags: { fr: data.tags },
+      description: { fr: data.description },
+      typeDispositif: { fr: data.typeDispositif },
+      resume: { fr: await richTextFromMarkdown(data.resume || '_À rédiger_') },
+      contenu: { fr: await richTextFromMarkdown(data.contenu || '_À rédiger_') },
+    },
+  })
+
+  return { id: entry.sys.id }
+}
+
+type RichTextMark = { type: string }
+
+const textNode = (value: string, marks: RichTextMark[] = []) => ({
+  nodeType: 'text',
+  value,
+  marks,
+  data: {},
+})
+
+const emptyDocument = (): Document => ({
+  nodeType: BLOCKS.DOCUMENT,
+  data: {},
+  content: [],
+})
+
+const htmlToContentfulRichText = (html: string): Document => {
+  if (!html || !html.trim()) return emptyDocument()
+
+  const tree: any = unified()
+    .use(rehypeParse, { fragment: true })
+    .parse(html)
+
+  const markForTag = (tagName: string): RichTextMark[] => {
+    if (tagName === 'strong' || tagName === 'b') return [{ type: MARKS.BOLD }]
+    if (tagName === 'em' || tagName === 'i') return [{ type: MARKS.ITALIC }]
+    if (tagName === 'u') return [{ type: MARKS.UNDERLINE }]
+    if (tagName === 'code') return [{ type: MARKS.CODE }]
+    return []
+  }
+
+  const walkInline = (nodes: any[], inheritedMarks: RichTextMark[] = []): any[] => (
+    nodes.flatMap((node) => {
+      if (node.type === 'text') {
+        return [textNode(node.value ?? '', inheritedMarks)]
+      }
+
+      if (node.type !== 'element') return []
+
+      if (node.tagName === 'a') {
+        return [{
+          nodeType: INLINES.HYPERLINK,
+          data: { uri: node.properties?.href ?? '' },
+          content: walkInline(node.children ?? [], inheritedMarks),
+        }]
+      }
+
+      const nextMarks = [...inheritedMarks, ...markForTag(node.tagName)]
+      return walkInline(node.children ?? [], nextMarks)
+    })
+  )
+
+  const paragraphFromChildren = (children: any[]) => ({
+    nodeType: BLOCKS.PARAGRAPH,
+    data: {},
+    content: walkInline(children),
+  })
+
+  const walkBlocks = (nodes: any[]): any[] => (
+    nodes.flatMap((node) => {
+      if (node.type === 'text') {
+        const value = node.value?.trim?.() ?? ''
+        if (!value) return []
+        return [paragraphFromChildren([node])]
+      }
+
+      if (node.type !== 'element') return []
+
+      if (node.tagName === 'img') {
+        // rehype can expose data attributes as either kebab-case or camelCase.
+        const rawAssetId =
+          node.properties?.['data-asset-id']
+          ?? node.properties?.dataAssetId
+          ?? node.dataset?.assetId
+        const assetId = Array.isArray(rawAssetId) ? rawAssetId[0] : rawAssetId
+
+        if (!assetId) return []
+
+        return [{
+          nodeType: BLOCKS.EMBEDDED_ASSET,
+          data: {
+            target: {
+              sys: {
+                type: 'Link',
+                linkType: 'Asset',
+                id: String(assetId),
+              },
+            },
+          },
+          content: [],
+        }]
+      }
+
+      if (node.tagName === 'p') {
+        return [{
+          nodeType: BLOCKS.PARAGRAPH,
+          data: {},
+          content: walkInline(node.children ?? []),
+        }]
+      }
+
+      if (node.tagName === 'h1') {
+        return [{ nodeType: BLOCKS.HEADING_1, data: {}, content: walkInline(node.children ?? []) }]
+      }
+
+      if (node.tagName === 'h2') {
+        return [{ nodeType: BLOCKS.HEADING_2, data: {}, content: walkInline(node.children ?? []) }]
+      }
+
+      if (node.tagName === 'h3') {
+        return [{ nodeType: BLOCKS.HEADING_3, data: {}, content: walkInline(node.children ?? []) }]
+      }
+
+      if (node.tagName === 'h4') {
+        return [{ nodeType: BLOCKS.HEADING_4, data: {}, content: walkInline(node.children ?? []) }]
+      }
+
+      if (node.tagName === 'h5') {
+        return [{ nodeType: BLOCKS.HEADING_5, data: {}, content: walkInline(node.children ?? []) }]
+      }
+
+      if (node.tagName === 'h6') {
+        return [{ nodeType: BLOCKS.HEADING_6, data: {}, content: walkInline(node.children ?? []) }]
+      }
+
+      if (node.tagName === 'blockquote') {
+        return [{
+          nodeType: BLOCKS.QUOTE,
+          data: {},
+          content: (node.children ?? []).flatMap((child: any) => {
+            if (child.tagName === 'p') {
+              return [{
+                nodeType: BLOCKS.PARAGRAPH,
+                data: {},
+                content: walkInline(child.children ?? []),
+              }]
+            }
+            return []
+          }),
+        }]
+      }
+
+      if (node.tagName === 'ul') {
+        return [{
+          nodeType: BLOCKS.UL_LIST,
+          data: {},
+          content: (node.children ?? [])
+            .filter((child: any) => child.tagName === 'li')
+            .map((child: any) => ({
+              nodeType: BLOCKS.LIST_ITEM,
+              data: {},
+              content: [{
+                nodeType: BLOCKS.PARAGRAPH,
+                data: {},
+                content: walkInline(child.children ?? []),
+              }],
+            })),
+        }]
+      }
+
+      if (node.tagName === 'ol') {
+        return [{
+          nodeType: BLOCKS.OL_LIST,
+          data: {},
+          content: (node.children ?? [])
+            .filter((child: any) => child.tagName === 'li')
+            .map((child: any) => ({
+              nodeType: BLOCKS.LIST_ITEM,
+              data: {},
+              content: [{
+                nodeType: BLOCKS.PARAGRAPH,
+                data: {},
+                content: walkInline(child.children ?? []),
+              }],
+            })),
+        }]
+      }
+
+      if (node.tagName === 'hr') {
+        return [{ nodeType: BLOCKS.HR, data: {}, content: [] }]
+      }
+
+      return walkBlocks(node.children ?? [])
+    })
+  )
+
+  return {
+    nodeType: BLOCKS.DOCUMENT,
+    data: {},
+    content: walkBlocks(tree.children ?? []),
+  }
+}
+
+export const updateFicheInContentful = async (
+  id: string,
+  data: UpdateFicheData,
+): Promise<void> => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(id)
+
+  if (data.titre !== undefined) entry.fields.titre = { fr: data.titre }
+  if (data.categorie !== undefined) entry.fields.categorie = { fr: data.categorie }
+  if (data.tags !== undefined) entry.fields.tags = { fr: data.tags }
+  if (data.description !== undefined) entry.fields.description = { fr: data.description }
+  if (data.typeDispositif !== undefined) entry.fields.typeDispositif = { fr: data.typeDispositif }
+
+  if (data.resume !== undefined) {
+    entry.fields.resume = { fr: htmlToContentfulRichText(data.resume) }
+  }
+  if (data.contenu !== undefined) {
+    entry.fields.contenu = { fr: htmlToContentfulRichText(data.contenu) }
+  }
+
+  await entry.update()
+
+  if (entry.sys.publishedAt) {
+    const freshEntry = await environment.getEntry(id)
+    await freshEntry.publish()
+  }
+}
+
+export const publishFiche = async (id: string): Promise<void> => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(id)
+
+  const illustrationField = getEntryLinkField(entry.fields.illustration)
+  const illustrationId = illustrationField?.sys?.id
+
+  if (illustrationId) {
+    const asset = await environment.getAsset(illustrationId)
+    if (!asset.sys.publishedVersion) {
+      await asset.publish()
+    }
+  }
+
+  const resumeDoc = getLocalizedFieldValue<Document>(entry.fields.resume)
+  const contenuDoc = getLocalizedFieldValue<Document>(entry.fields.contenu)
+  const embeddedAssetIds = [
+    ...collectEmbeddedAssetIds(resumeDoc),
+    ...collectEmbeddedAssetIds(contenuDoc),
+  ]
+
+  await Promise.all(
+    [...new Set(embeddedAssetIds)].map(async (assetId) => {
+      const asset = await environment.getAsset(assetId)
+      if (!asset.sys.publishedVersion) {
+        await asset.publish()
+      }
+    }),
+  )
+
+  await entry.publish()
+}
+
+// ─── SUPPRESSION (communes aux 3 entités) ──────────────────────────────────
+
+// Supprime définitivement une entrée.
+// Si elle est publiée, il faut d'abord la dépublier avant de supprimer.
+const deleteEntry = async (id: string): Promise<void> => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(id)
+
+  // Si publiée → dépublier d'abord, sinon Contentful refuse la suppression
+  if (entry.sys.publishedAt) {
+    await entry.unpublish()
+  }
+
+  await entry.delete()
+}
+
+export const deleteStructure = deleteEntry
+export const deleteLien = deleteEntry
+export const deleteFiche = deleteEntry
+
+// Récupère les structures filtrées par types de dispositif
+// Utilisé dans l'éditeur pour afficher la carte avec les vraies données
+export const getStructuresByTypes = async (types: string[]) => {
+  if (!types || types.length === 0) return []
+
+  const environment = await getEnvironment()
+
+  const entries = await environment.getEntries({
+    content_type: 'structure',
+    // Filtre par type — équivalent de 'fields.type[in]' dans Delivery API
+    'fields.type[in]': types.join(','),
+    limit: 500,
+  })
+
+  return entries.items.map((entry) => ({
+    id: entry.sys.id,
+    nom: (entry.fields.nom as { fr: string })?.fr ?? '',
+    adresse: (entry.fields.adresse as { fr: string })?.fr ?? '',
+    type: (entry.fields.type as { fr: string })?.fr ?? '',
+    email: (entry.fields.email as { fr: string } | undefined)?.fr,
+    tel: (entry.fields.tel as { fr: string } | undefined)?.fr,
+    latLon: (entry.fields.latLon as { fr: { lat: number; lon: number } } | undefined)?.fr,
+  }))
+}
+
+// ─── ASSETS (illustrations, PDFs) ─────────────────────────────────────────
+
+// Upload un fichier local comme Asset Contentful
+// Retourne l'id de l'asset créé
+export const uploadAssetToContentful = async (
+  file: File,
+  titre: string,
+): Promise<{ id: string; url: string }> => {
+  const environment = await getEnvironment()
+  const buffer = await file.arrayBuffer()
+
+  const asset = await environment.createAssetFromFiles({
+    fields: {
+      title: { fr: titre },
+      description: { fr: '' },
+      file: {
+        fr: {
+          contentType: file.type || 'application/octet-stream',
+          fileName: file.name,
+          file: buffer,
+        },
+      },
+    },
+  })
+
+  await asset.processForAllLocales({
+    processingCheckWait: 1000,
+    processingCheckRetries: 15,
+  })
+
+  const processed = await environment.getAsset(asset.sys.id)
+  const published = await processed.publish()
+
+  const fileField = published.fields.file?.fr
+    ?? published.fields.file?.['en-US']
+    ?? Object.values(published.fields.file ?? {})[0] as any
+
+  const rawUrl = fileField?.url ?? ''
+  if (!rawUrl) throw new Error("L'asset a été créé mais Contentful n'a pas généré d'URL.")
+
+  return {
+    id: published.sys.id,
+    url: rawUrl.startsWith('//') ? `https:${rawUrl}` : rawUrl,
+  }
+}
+
+// Liste tous les assets existants (pour le picker d'assets dans l'éditeur)
+export const listAssets = async (search?: string, skip = 0, limit = 24) => {
+  const environment = await getEnvironment()
+
+  const query: Record<string, any> = { limit, skip, order: '-sys.createdAt' }
+  if (search) query['fields.title[match]'] = search
+
+  const result = await environment.getAssets(query)
+
+  const items = result.items.map((asset: any) => {
+    const fileField = getAssetFileField(asset)
+    const rawUrl = fileField?.url ?? ''
+    const finalUrl = rawUrl
+      ? (String(rawUrl).startsWith('//') ? `https:${rawUrl}` : String(rawUrl))
+      : ''
+    return {
+      id: asset.sys.id,
+      titre: getAssetTitleField(asset) ?? '',
+      url: finalUrl,
+      contentType: fileField?.contentType ?? '',
+      fileName: fileField?.fileName ?? '',
+    }
+  })
+
+  return {
+    items,
+    total: result.total,
+    skip,
+    limit,
+  }
+}
+
+// Met à jour l'illustration d'une fiche
+export const setFicheIllustration = async (
+  ficheId: string,
+  assetId: string,
+): Promise<void> => {
+  const environment = await getEnvironment()
+
+  const asset = await environment.getAsset(assetId)
+  if (!asset.sys.publishedVersion) {
+    await asset.publish()
+  }
+
+  const entry = await environment.getEntry(ficheId)
+
+  entry.fields.illustration = {
+    fr: {
+      sys: { type: 'Link', linkType: 'Asset', id: assetId },
+    },
+  }
+
+  const updated = await entry.update()
+
+  // Publier l'entry si elle était déjà publiée
+  if (updated.sys.publishedVersion) {
+    await updated.publish()
+  }
+}
+
+// Crée une fiche avec des valeurs minimales obligatoires
+export const createFicheVide = async (titre: string): Promise<{ id: string }> => {
+  const environment = await getEnvironment()
+
+  const slug = titre
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    || `fiche-${Date.now()}`
+
+  const entry = await environment.createEntry('fiche', {
+    fields: {
+      titre: { fr: titre },
+      slug: { fr: slug },
+      categorie: { fr: 'sante' },
+      description: { fr: 'À compléter...' },
+      resume: {
+        fr: {
+          nodeType: 'document',
+          data: {},
+          content: [{
+            nodeType: 'paragraph',
+            data: {},
+            content: [{ nodeType: 'text', value: 'À rédiger...', marks: [], data: {} }],
+          }],
+        },
+      },
+      contenu: {
+        fr: {
+          nodeType: 'document',
+          data: {},
+          content: [{
+            nodeType: 'paragraph',
+            data: {},
+            content: [{ nodeType: 'text', value: '', marks: [], data: {} }],
+          }],
+        },
+      },
+      tags: { fr: [] },
+      typeDispositif: { fr: [] },
+    },
+  })
+
+  return { id: entry.sys.id }
+}
+
+export const unpublishFiche = async (id: string): Promise<void> => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(id)
+  if (entry.sys.publishedAt) {
+    await entry.unpublish()
+  }
+}
+
+export const updateLienInContentful = async (
+  id: string,
+  data: { titre?: string; url?: string; fichierAssetId?: string; clearFichier?: boolean },
+): Promise<void> => {
+  const environment = await getEnvironment()
+  const entry = await environment.getEntry(id)
+  if (data.titre !== undefined) entry.fields.titre = { fr: data.titre }
+  if (data.url !== undefined) entry.fields.url = data.url ? { fr: data.url } : undefined
+
+  if (data.fichierAssetId) {
+    const asset = await environment.getAsset(data.fichierAssetId)
+    if (!asset.sys.publishedVersion) {
+      await asset.publish()
+    }
+    entry.fields.fichier = {
+      fr: {
+        sys: { type: 'Link', linkType: 'Asset', id: data.fichierAssetId },
+      },
+    }
+  }
+
+  if (data.clearFichier) {
+    entry.fields.fichier = undefined
+  }
+
+  await entry.update()
 }

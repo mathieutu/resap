@@ -31,3 +31,65 @@ html, body, #__next {
 .leaflet-bar {
   @apply print:hidden;
 }
+
+/* ── Tiptap Editor ── */
+.ProseMirror {
+  outline: none;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.ProseMirror img {
+  max-width: 100%;
+  border-radius: 6px;
+  margin: 8px 0;
+  /* L'image est inline donc on peut la placer au milieu du texte */
+  vertical-align: middle;
+}
+
+.ProseMirror img.ProseMirror-selectednode {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.ProseMirror a {
+  color: #2563eb;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ProseMirror blockquote {
+  border-left: 3px solid #e5e7eb;
+  padding-left: 1rem;
+  color: #6b7280;
+  margin: 1rem 0;
+  font-style: italic;
+}
+
+.ProseMirror hr {
+  border: none;
+  border-top: 2px solid #e5e7eb;
+  margin: 1.5rem 0;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 1.5rem;
+}
+
+.ProseMirror h1 { font-size: 1.75rem; font-weight: 700; margin: 1.2rem 0 0.6rem; }
+.ProseMirror h2 { font-size: 1.4rem; font-weight: 600; margin: 1rem 0 0.5rem; }
+.ProseMirror h3 { font-size: 1.15rem; font-weight: 600; margin: 0.8rem 0 0.4rem; }
+
+/* Désactive tous les liens dans la preview de l'éditeur admin */
+[style*="--preview-mode"] a,
+[style*="--preview-mode"] button[data-nav] {
+  pointer-events: none;
+  cursor: default;
+}
