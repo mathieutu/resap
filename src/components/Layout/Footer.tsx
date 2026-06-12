@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import LogoArs from '@/assets/images/partenaires/logo-ars.png'
 import LogoGouv from '@/assets/images/partenaires/logo-gouv.png'
-import { LogoFull } from '../Logos'
 import { Link } from '../Links'
+import { LogoFull } from '../Logos'
 
 const socialIcons = [
   {
@@ -22,32 +22,72 @@ const navigation = [
   { label: 'Contact', href: '/contact' },
 ]
 
+const currentYear = new Date().getFullYear()
+
 export const Footer = () => (
-  <footer className="bg-blue-default print:hidden" aria-labelledby="footer-heading">
+  <footer
+    className="
+      bg-blue-default
+      print:hidden
+    "
+    aria-labelledby="footer-heading"
+  >
     <h2 className="sr-only">
       Pied de page
     </h2>
-    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-      <LogoFull className="text-white w-20" />
-      <div className="md:grid md:grid-cols-2 md:gap-8 mt-8">
+    <div className="
+      mx-auto max-w-7xl px-4 py-12
+      sm:px-6
+      lg:px-8 lg:py-16
+    "
+    >
+      <LogoFull className="w-20 text-white" />
+      <div className="
+        mt-8
+        md:grid md:grid-cols-2 md:gap-8
+      "
+      >
         <div className="space-y-8">
-          <p className="text-white text-base">
-            Ce site se destine en première intention aux professionnels de santé, mais peut aussi être utile aux travailleurs sociaux, bénévoles et toutes personnes susceptibles d&apos;accompagner vers la santé une personne en situation de précarité.
+          <p className="text-base text-white">
+            Ce site se destine en première intention aux professionnels de santé, mais peut aussi être utile aux
+            travailleurs sociaux, bénévoles et toutes personnes susceptibles d&apos;accompagner vers la santé
+            une personne en situation de précarité.
           </p>
           <div className="flex space-x-6">
-            {socialIcons.map((item) => (
-              <Link key={item.name} href={item.href} className="text-white hover:text-green-default">
+            {socialIcons.map(item => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="
+                  text-white
+                  hover:text-green-default
+                "
+              >
                 <span className="sr-only">{item.name}</span>
-                <item.icon className="h-6 w-6" aria-hidden="true" />
+                <item.icon className="size-6" aria-hidden="true" />
               </Link>
             ))}
           </div>
         </div>
-        <div className="mt-12 md:mt-0">
-          <ul className="md:text-right space-y-4">
-            {navigation.map((item) => (
+        <div className="
+          mt-12
+          md:mt-0
+        "
+        >
+          <ul className="
+            space-y-4
+            md:text-right
+          "
+          >
+            {navigation.map(item => (
               <li key={item.label}>
-                <Link href={item.href} className="text-base text-white hover:text-green-default">
+                <Link
+                  href={item.href}
+                  className="
+                    text-base text-white
+                    hover:text-green-default
+                  "
+                >
                   {item.label}
                 </Link>
               </li>
@@ -55,12 +95,21 @@ export const Footer = () => (
           </ul>
         </div>
       </div>
-      <div className="mt-6 border-t border-gray-200 pt-6 flex justify-between items-center flex-wrap gap-4">
-        <p className="flex gap-8 items-center flex-wrap">
+      <div className="
+        mt-6 flex flex-wrap items-center justify-between gap-4 border-t
+        border-gray-200 pt-6
+      "
+      >
+        <p className="flex flex-wrap items-center gap-8">
           <Image className="brightness-0 invert" height={40} src={LogoArs} alt="Logo ARS" />
           <Image className="brightness-0 invert" height={48} src={LogoGouv} alt="Logo gouvernement" />
         </p>
-        <p className="text-base text-white">&copy; {new Date().getFullYear()} RESAP</p>
+        <p className="text-base text-white">
+          &copy;
+          {currentYear}
+          {' '}
+          RESAP
+        </p>
       </div>
     </div>
   </footer>

@@ -1,5 +1,5 @@
-import { ContactInfoSection } from '@/components/Contact/ContactInfoSection'
 import { ContactFormSection } from '@/components/Contact/ContactFormSection'
+import { ContactInfoSection } from '@/components/Contact/ContactInfoSection'
 
 export const metadata = {
   title: 'Contact',

@@ -1,17 +1,17 @@
 'use client'
 
-import { IndicesNames } from '@/services/algolia.browser'
+import type { Structure } from '@/types/models'
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import dynamic from 'next/dynamic'
 import { Configure } from 'react-instantsearch-core'
-import { SearchFacet } from '@/components/Search/SearchFacet'
-import { StructureType, types } from '@/data/structures_types'
-import { SearchResults } from '@/components/Search/SearchResults'
-import { Structure } from '@/types/models'
+import { FloatingButtons } from '@/components/FloatingButtons'
 import { StructuresList } from '@/components/Map/StructuresList'
 import { SearchContext } from '@/components/Search/SearchContext'
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { SearchFacet } from '@/components/Search/SearchFacet'
 import { SearchInput } from '@/components/Search/SearchInput'
-import dynamic from 'next/dynamic'
-import { FloatingButtons } from '@/components/FloatingButtons'
+import { SearchResults } from '@/components/Search/SearchResults'
+import { type StructureType, types } from '@/data/structures_types'
+import { IndicesNames } from '@/services/algolia.browser'
 
 const GeoSearch = dynamic<Record<string, never>>(
   () => import('@/components/Search/GeoSearch').then(module => module.GeoSearch),
@@ -19,27 +19,55 @@ const GeoSearch = dynamic<Record<string, never>>(
 )
 const ALGOLIA_MAX_HITS_PER_PAGE = 1000
 const SearchField = () => (
-  <div className="mt-1 relative rounded-md shadow-xs w-full">
-    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-      <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 " aria-hidden="true" />
+  <div className="relative mt-1 w-full rounded-md shadow-xs">
+    <div className="
+      pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3
+    "
+    >
+      <MagnifyingGlassIcon className="size-5 text-gray-400" aria-hidden="true" />
     </div>
     <SearchInput
-      className="w-full border border-gray-default placeholder-gray-default rounded-md shadow-xs pl-3 pl-10 py-2 text-left cursor-default focus:outline-hidden focus:ring-1 focus:ring-blue-default focus:border-blue-default text-sm"
+      className="
+        w-full cursor-default rounded-md border border-gray-default py-2 pl-10
+        text-left text-sm placeholder-gray-default shadow-xs
+        focus:border-blue-default focus:ring-1 focus:ring-blue-default
+        focus:outline-hidden
+      "
       label="Chercher dans la zone"
     />
   </div>
 )
 export const SearchStructures = () => (
-  <div className="py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
-    <div className="relative max-w-7xl mx-auto">
+  <div className="
+    overflow-hidden px-4 py-16
+    sm:px-6
+    lg:px-8 lg:py-24
+  "
+  >
+    <div className="relative mx-auto max-w-7xl">
       <FloatingButtons className="absolute -top-5" />
       <div className="text-center">
-        <h1 className="text-3xl font-extrabold tracking-tight text-blue-default sm:text-4xl">Annuaire</h1>
+        <h1 className="
+          text-3xl font-extrabold tracking-tight text-blue-default
+          sm:text-4xl
+        "
+        >
+          Annuaire
+        </h1>
       </div>
-      <div className="flex flex-col bg-white drop-shadow-md print:drop-shadow-none rounded-md p-5 m-auto my-5">
+      <div className="
+        m-auto my-5 flex flex-col rounded-md bg-white p-5 drop-shadow-md
+        print:drop-shadow-none
+      "
+      >
         <SearchContext indexName={IndicesNames.structures}>
           <Configure aroundLatLngViaIP hitsPerPage={ALGOLIA_MAX_HITS_PER_PAGE} />
-          <div className="mb-4 grid sm:grid-cols-3 sm:gap-4 gap-2 print:hidden">
+          <div className="
+            mb-4 grid gap-2
+            sm:grid-cols-3 sm:gap-4
+            print:hidden
+          "
+          >
             <div className="sm:col-span-2">
               {/* TODO pouvoir vider le filtre */}
               <SearchFacet
@@ -47,7 +75,14 @@ export const SearchStructures = () => (
                 label="Filtrer par dispositifs dans la zone"
                 getItemLabel={item => types[item.value as StructureType].nom}
                 getItemClassName={item => types[item.value as StructureType].colorClassname}
-                className="relative w-full bg-white border border-gray-default rounded-md shadow-xs pl-3 pr-10 py-2 text-left cursor-default focus:outline-hidden focus:ring-1 focus:ring-blue-default focus:border-blue-default sm:text-sm"
+                className="
+                  relative w-full cursor-default rounded-md border
+                  border-gray-default bg-white py-2 pr-10 pl-3 text-left
+                  shadow-xs
+                  focus:border-blue-default focus:ring-1 focus:ring-blue-default
+                  focus:outline-hidden
+                  sm:text-sm
+                "
               />
             </div>
             <SearchField />
@@ -55,10 +90,10 @@ export const SearchStructures = () => (
           <SearchResults
             render={(hits: Structure[]) => (
               <StructuresList structures={hits} mapChildren={<GeoSearch />} />
-        )}
+            )}
           />
         </SearchContext>
       </div>
     </div>
   </div>
-  )
+)

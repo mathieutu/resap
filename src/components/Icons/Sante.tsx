@@ -1,5 +1,5 @@
+import type { ClassNameProp } from '../../types/react'
 import classNames from 'classnames'
-import { ClassNameProp } from '../../types/react'
 
 export const Sante = ({ className }: ClassNameProp) => (
   <svg className={classNames(className, 'fill-current')} xmlns="http://www.w3.org/2000/svg" width="72px" height="72px" viewBox="0 0 72 72">

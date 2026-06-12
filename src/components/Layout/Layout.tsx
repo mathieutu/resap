@@ -1,8 +1,8 @@
-import { ReactElement, ReactNode } from 'react'
-import { ClassNameProp } from '@/types/react'
+import type { ReactElement, ReactNode } from 'react'
+import type { ClassNameProp } from '@/types/react'
 import { Toaster } from 'react-hot-toast'
-import { Footer } from './Footer'
 import { BannerContact } from './BannerContact'
+import { Footer } from './Footer'
 import { Navbar } from './Navbar'
 
 type Props = {

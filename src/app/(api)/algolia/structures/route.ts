@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 
 import { flatten, pluck } from 'ramda'
+import { deleteStructure, refreshStructures, saveStructure } from '@/services/algolia.server'
 import {
-  ContentType,
+  type ContentType,
   fetchAllStructuresForIndexing,
   findAStructure,
-  SysType,
+  type SysType,
 } from '@/services/contentful'
-import { deleteStructure, refreshStructures, saveStructure } from '@/services/algolia.server'
 
 export async function GET() {
   console.log('Refreshing all the structures')

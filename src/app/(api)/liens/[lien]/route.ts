@@ -1,5 +1,5 @@
-import { findALien } from '@/services/contentful'
 import { redirect } from 'next/navigation'
+import { findALien } from '@/services/contentful'
 
 export const GET = async (_request: Request, { params }: { params: Promise<{ lien: string }> }) => {
   const { lien: id } = await params

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
+import type { Fiche, Structure } from '../types/models'
 import { algoliasearch } from 'algoliasearch'
-import { Fiche, Structure } from '../types/models'
 
 const { NEXT_PUBLIC_ALGOLIA_APP_ID: appId, ALGOLIA_ADMIN_API_KEY: apiKey } = process.env
 

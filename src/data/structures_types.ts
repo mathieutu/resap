@@ -9,8 +9,8 @@ export const types = {
     colorClassname: 'bg-fuchsia-200 text-fuchsia-700',
     markerClassname: 'text-fuchsia-500',
   },
-  "Association d'aide aux migrants": {
-    nom: "Association d'aide aux migrants",
+  'Association d\'aide aux migrants': {
+    nom: 'Association d\'aide aux migrants',
     colorClassname: 'bg-cyan-200 text-cyan-700',
     markerClassname: 'text-cyan-500',
   },
@@ -24,52 +24,52 @@ export const types = {
     colorClassname: 'bg-fuchsia-200 text-fuchsia-700',
     markerClassname: 'text-fuchsia-500',
   },
-  CAARUD: {
+  'CAARUD': {
     nom: 'Centres d\'Accueil et d\'Accompagnement à la Réduction des risques pour Usagers de Drogues',
     colorClassname: 'bg-stone-200 text-stone-700',
     markerClassname: 'text-stone-400',
   },
-  CADA: {
+  'CADA': {
     nom: 'Centre d\'Accueil des Demandeurs d\'Asile',
     colorClassname: 'bg-pink-200 text-pink-700',
     markerClassname: 'text-pink-500',
   },
-  CAES: {
+  'CAES': {
     nom: 'Comité d’Action et d’Entraide Sociales',
     colorClassname: 'bg-stone-200 text-stone-700',
     markerClassname: 'text-stone-400',
   },
-  CDS: {
+  'CDS': {
     nom: 'Centre De Santé',
     colorClassname: 'bg-red-200 text-red-700',
     markerClassname: 'text-red-500',
   },
-  CEGIDD: {
+  'CEGIDD': {
     nom: 'Centres Gratuits d\'Information, de Dépistage et de Diagnostic des infections',
     colorClassname: 'bg-lime-200 text-lime-700',
     markerClassname: 'text-lime-500',
   },
-  CLAT: {
+  'CLAT': {
     nom: 'Centre de Lutte Antituberculeux',
     colorClassname: 'bg-stone-200 text-stone-700',
     markerClassname: 'text-stone-400',
   },
-  COREVIH: {
+  'COREVIH': {
     nom: 'Coordination Régionale de lutte contre le Virus de l\'Immunodéficience Humaine',
     colorClassname: 'bg-stone-200 text-stone-700',
     markerClassname: 'text-stone-400',
   },
-  CPH: {
-    nom: "Centres Provisoires d'Hébergement",
+  'CPH': {
+    nom: 'Centres Provisoires d\'Hébergement',
     colorClassname: 'bg-violet-200 text-violet-700',
     markerClassname: 'text-violet-500',
   },
-  CPTS: {
+  'CPTS': {
     nom: 'Communautés Professionnelles Territoriales de Santé',
     colorClassname: 'bg-stone-200 text-stone-700',
     markerClassname: 'text-stone-400',
   },
-  CSAPA: {
+  'CSAPA': {
     nom: 'Centre de Soins, d\'Accompagnement et de Prévention en Addictologie',
     colorClassname: 'bg-rose-200 text-rose-700',
     markerClassname: 'text-rose-500',
@@ -89,37 +89,37 @@ export const types = {
     colorClassname: 'bg-sky-200 text-sky-700',
     markerClassname: 'text-sky-500',
   },
-  HUDA: {
+  'HUDA': {
     nom: 'Hébergement d’Urgence pour les Demandeurs d’Asile',
     colorClassname: 'bg-emerald-200 text-emerald-700',
     markerClassname: 'text-emerald-500',
   },
-  MDPH: {
+  'MDPH': {
     nom: 'Maison Départementale des Personnes Handicapées',
     colorClassname: 'bg-stone-200 text-stone-700',
     markerClassname: 'text-stone-400',
   },
-  MSP: {
+  'MSP': {
     nom: 'Maison de Santé Pluri-professionnelles',
     colorClassname: 'bg-orange-200 text-orange-700',
     markerClassname: 'text-orange-500',
   },
-  OFII: {
-    nom: "Office Français de l'Immigration et de l'Intégration",
+  'OFII': {
+    nom: 'Office Français de l\'Immigration et de l\'Intégration',
     colorClassname: 'bg-stone-200 text-stone-700',
     markerClassname: 'text-stone-400',
   },
-  PASS: {
+  'PASS': {
     nom: 'Permanences d\'Accès aux Soins de Santé',
     colorClassname: 'bg-green-200 text-green-700',
     markerClassname: 'text-green-500',
   },
-  PRAHDA: {
-    nom: "Programme d'Accueil et d&#39;Hébergement des Demandeurs d'Asile",
+  'PRAHDA': {
+    nom: 'Programme d\'Accueil et d&#39;Hébergement des Demandeurs d\'Asile',
     colorClassname: 'bg-stone-200 text-stone-700',
     markerClassname: 'text-stone-400',
   },
-  Préfecture: {
+  'Préfecture': {
     nom: 'Préfecture',
     colorClassname: 'bg-stone-200 text-stone-700',
     markerClassname: 'text-stone-400',
@@ -129,12 +129,12 @@ export const types = {
     colorClassname: 'bg-stone-200 text-stone-700',
     markerClassname: 'text-stone-400',
   },
-  SIAO: {
+  'SIAO': {
     nom: 'Service Intégré d\'Accueil et d\'Orientation',
     colorClassname: 'bg-indigo-200 text-indigo-700',
     markerClassname: 'text-indigo-500',
   },
-  SPADA: {
+  'SPADA': {
     nom: 'Structure du Premier Accueil du Demandeur d\'Asile',
     colorClassname: 'bg-stone-200 text-stone-700',
     markerClassname: 'text-stone-400',

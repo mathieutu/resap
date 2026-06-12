@@ -1,5 +1,5 @@
-import { Email } from 'nodemailer-react'
-import { CSSProperties } from 'react'
+import type { Email } from 'nodemailer-react'
+import type { CSSProperties } from 'react'
 import type { ContactFields } from './ContactFormSection'
 
 const bodyStyle: CSSProperties = {
@@ -12,7 +12,7 @@ const bodyStyle: CSSProperties = {
   width: '100% !important',
 } as const
 
-export const ContactEmail: Email<ContactFields> = (contact) => ({
+export const ContactEmail: Email<ContactFields> = contact => ({
   subject: 'Un nouveau message de ReSaP !',
   body: (
     <body style={bodyStyle}>
@@ -23,19 +23,49 @@ export const ContactEmail: Email<ContactFields> = (contact) => ({
         <p>Un nouveau message a été envoyé depuis le formulaire de contact de ReSap :</p>
         <p />
         <ul style={{ padding: 0 }}>
-          {contact.firstName ? <li><b>Prénom</b> : {contact.firstName}</li> : null}
-          {contact.lastName ? <li><b>Nom</b> : {contact.lastName}</li> : null}
+          {contact.firstName ? (
+            <li>
+              <b>Prénom</b>
+              {' '}
+              :
+              {' '}
+              {contact.firstName}
+            </li>
+          ) : null}
+          {contact.lastName ? (
+            <li>
+              <b>Nom</b>
+              {' '}
+              :
+              {' '}
+              {contact.lastName}
+            </li>
+          ) : null}
           {contact.email ? (
             <li>
-              <b>Email</b> : <a href={`mailto:${contact.email}`}>{contact.email}</a>
+              <b>Email</b>
+              {' '}
+              :
+              <a href={`mailto:${contact.email}`}>{contact.email}</a>
             </li>
           ) : null}
           {contact.phone ? (
             <li>
-              <b>Téléphone</b> : <a href={`tel:${contact.phone}`}>{contact.phone}</a>
+              <b>Téléphone</b>
+              {' '}
+              :
+              <a href={`tel:${contact.phone}`}>{contact.phone}</a>
             </li>
           ) : null}
-          {contact.organization ? <li><b>Structure</b> : {contact.organization}</li> : null}
+          {contact.organization ? (
+            <li>
+              <b>Structure</b>
+              {' '}
+              :
+              {' '}
+              {contact.organization}
+            </li>
+          ) : null}
           <div style={{ marginTop: '1em', whiteSpace: 'pre-line' }}>{contact.message}</div>
         </ul>
       </div>

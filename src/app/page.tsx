@@ -1,7 +1,7 @@
 import { InformationsSection } from '@/components/Home/InformationsSection'
-import { Layout } from '@/components/Layout/Layout'
 import { ThemeSection } from '@/components/Home/ThemeSection'
 import { HomeHeader } from '@/components/Layout/HomeHeader'
+import { Layout } from '@/components/Layout/Layout'
 
 export const metadata = {
   title: {

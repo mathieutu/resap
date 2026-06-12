@@ -1,9 +1,9 @@
 'use server'
 
+import type { ContactFields } from '@/components/Contact/ContactFormSection'
 import { Mailer } from 'nodemailer-react'
 import { ContactEmail } from '@/components/Contact/ContactEmail'
 import { NewStructureEmail, type NewStructureEmailParams } from '@/components/NewStructure/NewStructureEmail'
-import type { ContactFields } from '@/components/Contact/ContactFormSection'
 
 const { MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD } = process.env
 

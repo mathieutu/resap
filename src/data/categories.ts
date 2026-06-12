@@ -1,10 +1,10 @@
-import { Sante } from '../components/Icons/Sante'
 import { Besoin } from '../components/Icons/Besoin'
 import { Interpretariat } from '../components/Icons/Interpretariat'
+import { Sante } from '../components/Icons/Sante'
 import { Social } from '../components/Icons/Social'
 
 export const categories = {
-  sante: {
+  'sante': {
     name: 'Accès à la santé',
     description: 'L\'accès aux soins recouvrent différentes dimensions telle que l\'accessibilité physique et financière à une offre de soin. Mais d\'autres facteurs peuvent également intervenir dans la décision de recourir aux soins : l\'âge, le sexe, la profession, le statut familial, le lieu d’habitation, le degré de connaissance et d’acculturation à la complexité de l\'offre de soins, la culture d\'origine.',
     icon: Sante,
@@ -26,7 +26,7 @@ export const categories = {
     textColor: 'text-green-default',
     borderColor: 'border-green-default',
   },
-  interpretariat: {
+  'interpretariat': {
     name: 'Interprétariat',
     description: 'Compte tenu de l\'augmentation des flux migratoires pour raisons politiques, économiques ou écologiques, vous êtes et/ou allez être de plus en plus confronté en médecine de ville ou à l\'hôpital à des personnes qui ne maîtrisent pas ou peu la langue française et/ou les usages de la culture occidentale. Des outils et dispositifs sont à votre disposition pour vous accompagner dans la prise en charge de ces patients.',
     icon: Interpretariat,
@@ -37,7 +37,7 @@ export const categories = {
     textColor: 'text-interpretariat',
     borderColor: 'border-interpretariat',
   },
-  social: {
+  'social': {
     name: 'Social',
     description: 'Les inégalités de santé n\'ont cessé de s\'accroître ces dernières années. L’accès aux droits et aux soins sont liés. Pour les personnes vivant en hébergement, à la rue ou chez un tiers leur accès est complexe. Des dispositifs existent pour favoriser l’accès à la santé pour ces personnes.',
     icon: Social,

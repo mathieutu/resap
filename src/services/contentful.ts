@@ -1,12 +1,17 @@
-import { createClient, FieldsType, EntrySelectFilterWithFields } from 'contentful'
-import { documentToHtmlString, Options } from '@contentful/rich-text-html-renderer'
+import type { CategorieSlug } from '@/data/categories'
+import type { Fiche, Lien, Structure } from '@/types/models'
+import { documentToHtmlString, type Options } from '@contentful/rich-text-html-renderer'
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
+import { BLOCKS, type Document } from '@contentful/rich-text-types'
+import { createClient, type EntrySelectFilterWithFields, type FieldsType } from 'contentful'
 import { map } from 'ramda'
-import { BLOCKS, Document } from '@contentful/rich-text-types'
-import { Fiche, Structure, Lien } from '@/types/models'
-import { CategorieSlug } from '@/data/categories'
 
-const { CONTENTFUL_SPACE_ID, CONTENTFUL_PREVIEW_ACCESS_TOKEN, CONTENTFUL_ACCESS_TOKEN, FORCE_CONTENTFUL_PREVIEW } = process.env
+const {
+  CONTENTFUL_SPACE_ID,
+  CONTENTFUL_PREVIEW_ACCESS_TOKEN,
+  CONTENTFUL_ACCESS_TOKEN,
+  FORCE_CONTENTFUL_PREVIEW,
+} = process.env
 
 if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_PREVIEW_ACCESS_TOKEN || !CONTENTFUL_ACCESS_TOKEN) {
   throw new Error('CONTENTFUL env vars needed (SPACE_ID, PREVIEW_ACCESS_TOKEN, ACCESS_TOKEN).')
@@ -53,7 +58,6 @@ const parseContentfulEntries = (element: any): any => {
     })
   }
 
-  // eslint-disable-next-line no-param-reassign
   if (element.file) element.file.url = element.file.url.replace(/^\/\//, 'https://')
 
   return map(parseContentfulEntries, element)
@@ -100,7 +104,7 @@ const convertContentfulContentToHtml = (content: Document): string => {
 
   const options: Options = {
     renderNode: {
-      [BLOCKS.EMBEDDED_ASSET]: (node) => {
+      [BLOCKS.EMBEDDED_ASSET]: node => {
         const { title, file } = node.data.target.fields
 
         if (file.contentType.includes('video')) {

@@ -1,9 +1,9 @@
+import type { Metadata } from 'next'
 import { ArticleJsonLd } from 'next-seo'
 import { draftMode } from 'next/headers'
 import { ShowFiche } from '@/app/(dynamic)/fiches/[categorie]/[slug]/ShowFiche'
+import { type Categorie, categories, type CategorieSlug } from '@/data/categories'
 import { findAFiche, listAllFichesSlugs } from '@/services/contentful'
-import { Categorie, categories, CategorieSlug } from '@/data/categories'
-import { Metadata } from 'next'
 
 export const generateStaticParams = async () => listAllFichesSlugs()
 

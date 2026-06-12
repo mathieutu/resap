@@ -1,12 +1,10 @@
-/* eslint-disable no-underscore-dangle */
-import { createControlComponent } from '@react-leaflet/core'
 import type { Map } from 'leaflet'
+import { createControlComponent } from '@react-leaflet/core'
 import { Control, DomEvent, DomUtil } from 'leaflet'
 
 const CurrentLocationControlFactory = Control.extend({
   onAdd(map: Map) {
-    map.on('locationerror', (e) => {
-      // eslint-disable-next-line no-console
+    map.on('locationerror', e => {
       console.error(e)
       // eslint-disable-next-line no-alert
       alert('Votre position n\'a pas pu être déterminée. Avez vous activé/autorisé les services de Géolocalisation ?')

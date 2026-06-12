@@ -1,6 +1,6 @@
 'use client'
 
-import { InputHTMLAttributes, useEffect, useState } from 'react'
+import { type InputHTMLAttributes, useEffect, useState } from 'react'
 import { useSearchBox } from 'react-instantsearch-core'
 import { useDebounce } from '@/utils/hooks'
 
@@ -34,7 +34,7 @@ export const SearchInput = ({
         placeholder={placeholder ?? label}
         className={className}
         value={value}
-        onChange={(e) => setValue(e.currentTarget.value)}
+        onChange={e => setValue(e.currentTarget.value)}
       />
     </>
   )

@@ -1,6 +1,5 @@
-/* eslint-disable no-underscore-dangle */
-import { createControlComponent } from '@react-leaflet/core'
 import type { LatLng, Map } from 'leaflet'
+import { createControlComponent } from '@react-leaflet/core'
 import { Control, DomEvent, DomUtil, Util } from 'leaflet'
 
 const ResetViewControlFactory = Control.extend({

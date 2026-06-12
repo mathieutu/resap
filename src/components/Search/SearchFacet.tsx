@@ -1,17 +1,16 @@
-import { useRefinementList } from 'react-instantsearch-core'
-import { Fragment } from 'react'
+import type { RefinementListItem } from 'instantsearch.js/es/connectors/refinement-list/connectRefinementList'
+import type { ClassNameProp } from '../../types/react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import classNames from 'classnames'
-import type { RefinementListItem } from 'instantsearch.js/es/connectors/refinement-list/connectRefinementList'
-import { ClassNameProp } from '../../types/react'
+import { useRefinementList } from 'react-instantsearch-core'
 
 type SearchFacetProps = {
   attribute: string,
   label: string,
   getItemLabel?: (item: RefinementListItem) => string,
   getItemClassName?: (item: RefinementListItem) => string,
-} & ClassNameProp;
+} & ClassNameProp
 
 export const SearchFacet = ({
   attribute,
@@ -31,24 +30,28 @@ export const SearchFacet = ({
       {({ open }) => (
         <div>
           <Listbox.Label className="sr-only">{label}</Listbox.Label>
-          <div className="mt-1 relative">
+          <div className="relative mt-1">
             <Listbox.Button className={className}>
-              <span className="w-full inline-flex truncate gap-2">
+              <span className="inline-flex w-full gap-2 truncate">
                 {refinedItems.length
                   ? refinedItems.map(item => (
-                    <span
-                      key={item.value}
-                      className={classNames(
-                        'inline-flex items-center px-2 py-0.5 rounded-sm text-xs truncate',
-                        getItemClassName(item),
-                      )}
-                    >
-                      {getItemLabel(item)}
-                    </span>
-                  )) : <span className="text-gray-default text-sm">{label}</span>}
+                      <span
+                        key={item.value}
+                        className={classNames(
+                          'inline-flex items-center px-2 py-0.5 rounded-sm text-xs truncate',
+                          getItemClassName(item),
+                        )}
+                      >
+                        {getItemLabel(item)}
+                      </span>
+                    )) : <span className="text-sm text-gray-default">{label}</span>}
               </span>
-              <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+              <span className="
+                pointer-events-none absolute inset-y-0 right-0 flex items-center
+                pr-2
+              "
+              >
+                <ChevronUpDownIcon className="size-5 text-gray-400" aria-hidden="true" />
               </span>
             </Listbox.Button>
 
@@ -58,8 +61,16 @@ export const SearchFacet = ({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options as="ul" className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-sm ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-hidden sm:text-sm">
-                {items.map((item) => (
+              <Listbox.Options
+                as="ul"
+                className="
+                  absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md
+                  bg-white py-1 text-sm shadow-lg ring-1 ring-black/5
+                  focus:outline-hidden
+                  sm:text-sm
+                "
+              >
+                {items.map(item => (
                   <Listbox.Option
                     key={item.value}
                     as="li"
@@ -80,7 +91,9 @@ export const SearchFacet = ({
                             {getItemLabel(item)}
                           </span>
                           <span className={classNames(active ? getItemClassName(item) : 'text-gray-400', 'text-xs italic ml-2')}>
-                            ({item.count})
+                            (
+                            {item.count}
+                            )
                           </span>
                         </div>
 
@@ -91,7 +104,7 @@ export const SearchFacet = ({
                               'absolute inset-y-0 right-0 flex items-center pr-4',
                             )}
                           >
-                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            <CheckIcon className="size-5" aria-hidden="true" />
                           </span>
                         ) : null}
                       </>

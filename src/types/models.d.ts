@@ -1,5 +1,5 @@
-import { CategorieSlug } from '@/data/categories'
-import { StructureType } from '@/data/structures_types'
+import type { CategorieSlug } from '@/data/categories'
+import type { StructureType } from '@/data/structures_types'
 
 type ImageSize = {
   width: number,

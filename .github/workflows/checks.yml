@@ -2,9 +2,9 @@ name: Checks
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   checks:
@@ -12,15 +12,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js v22
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22
-        cache: 'yarn'
-    - name: Install dependencies
-      run: yarn install
-    - name: Type checking
-      run: yarn typecheck
-    - name: Lint
-      run: yarn lint
+      - uses: actions/checkout@v2
+      - name: Use Node.js v22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+      - name: Install dependencies
+        run: yarn install
+      - name: Type checking
+        run: yarn typecheck
+      - name: Lint
+        run: yarn lint

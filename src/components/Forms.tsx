@@ -1,23 +1,33 @@
-import { ReactNode, forwardRef, TextareaHTMLAttributes, InputHTMLAttributes, SelectHTMLAttributes } from 'react'
+import type { InputHTMLAttributes, ReactNode, Ref, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react'
 import classNames from 'classnames'
 
-export const FormField = ({ label, children, className, name, required, error }: { label: string, children: ReactNode; className?: string, name: string, required?: boolean, error?: string | boolean }) => (
+type FormFieldProps = {
+  label: string,
+  children: ReactNode,
+  className?: string,
+  name: string,
+  required?: boolean,
+  error?: string | boolean,
+}
+
+export const FormField = ({ label, children, className, name, required, error }: FormFieldProps) => (
   <div className={className}>
     <div className="flex justify-between">
       <label
         htmlFor={name}
         className={classNames(
-      error && 'text-red-500',
-      'block text-sm font-medium text-gray-700',
-    )}
+          error && 'text-red-500',
+          'block text-sm font-medium text-gray-700',
+        )}
       >
-        {label}{required && '*'}
+        {label}
+        {required && '*'}
       </label>
       {error && (
-      <span className="text-sm text-red-500">
-        {typeof error === 'string' ? error : 'Le champ est requis.'}
-      </span>
-    )}
+        <span className="text-sm text-red-500">
+          {typeof error === 'string' ? error : 'Le champ est requis.'}
+        </span>
+      )}
     </div>
     <div className="mt-1">
       {children}
@@ -27,68 +37,59 @@ export const FormField = ({ label, children, className, name, required, error }:
 
 const baseInputClasses = 'py-3 px-4 block w-full shadow-xs focus:ring-blue-default focus:border-blue-default border border-gray-300 rounded-md'
 
-interface FormInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> {
-  error?: boolean
-  className?: string
-}
+type FormInputProps = {
+  ref?: Ref<HTMLInputElement>,
+  error?: boolean,
+  className?: string,
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'className'>
 
-export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
-  ({ error, className, ...props }, ref) => (
-    <input
-      ref={ref}
-      className={classNames(
-        error && 'border-red-500 focus:ring-red-500 focus:border-red-500',
-        baseInputClasses,
-        className,
-      )}
-      {...props}
-    />
-  ),
+export const FormInput = ({ error, className, ref, ...props }: FormInputProps) => (
+  <input
+    ref={ref}
+    className={classNames(
+      error && 'border-red-500 focus:ring-red-500 focus:border-red-500',
+      baseInputClasses,
+      className,
+    )}
+    {...props}
+  />
 )
 
-FormInput.displayName = 'FormInput'
+type FormTextareaProps = {
+  ref?: Ref<HTMLTextAreaElement>,
+  error?: boolean,
+  className?: string,
+} & Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'className'>
 
-interface FormTextareaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'className'> {
-  error?: boolean
-  className?: string
-}
-
-export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
-  ({ error, className, rows = 4, ...props }, ref) => (
-    <textarea
-      ref={ref}
-      rows={rows}
-      className={classNames(
-        error && 'border-red-500 focus:ring-red-500 focus:border-red-500',
-        baseInputClasses,
-        className,
-      )}
-      {...props}
-    />
-  ),
+export const FormTextarea = ({ error, className, rows = 4, ref, ...props }: FormTextareaProps) => (
+  <textarea
+    ref={ref}
+    rows={rows}
+    className={classNames(
+      error && 'border-red-500 focus:ring-red-500 focus:border-red-500',
+      baseInputClasses,
+      className,
+    )}
+    {...props}
+  />
 )
 
-FormTextarea.displayName = 'FormTextarea'
+type FormSelectProps = {
+  ref?: Ref<HTMLSelectElement>,
+  error?: boolean,
+  className?: string,
+} & Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className'>
 
-interface FormSelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className'> {
-  error?: boolean
-  className?: string
-}
-
-export const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
-  ({ error, className, children, ...props }, ref) => (
-    <select
-      ref={ref}
-      className={classNames(
-        error && 'border-red-500 focus:ring-red-500 focus:border-red-500',
-        baseInputClasses,
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </select>
-  ),
+export const FormSelect = ({ error, className, children, ref, ...props }: FormSelectProps) => (
+  <select
+    ref={ref}
+    className={classNames(
+      error && 'border-red-500 focus:ring-red-500 focus:border-red-500',
+      baseInputClasses,
+      className,
+    )}
+    {...props}
+  >
+    {children}
+  </select>
 )
-
-FormSelect.displayName = 'FormSelect'

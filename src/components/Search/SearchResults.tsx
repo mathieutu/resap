@@ -1,9 +1,9 @@
 'use client'
 
-import { Fragment, ReactElement } from 'react'
+import type { BaseHit } from 'instantsearch.js'
+import type { ClassNameProp } from '@/types/react'
+import { Fragment, type ReactElement } from 'react'
 import { useHits } from 'react-instantsearch-core'
-import { BaseHit } from 'instantsearch.js'
-import { ClassNameProp } from '@/types/react'
 
 type Props<Hit extends BaseHit> =
   ClassNameProp

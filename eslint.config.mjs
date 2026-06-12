@@ -1,114 +1,72 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import { globalIgnores } from 'eslint/config';
+import antfu from '@antfu/eslint-config'
+import tailwind from 'eslint-plugin-better-tailwindcss'
 
-const compat = new FlatCompat();
-
-const eslintConfig = [
-  globalIgnores(['src/types/contentful.d.ts', 'next-env.d.ts', '.next', 'public']),
-  ...compat.extends('airbnb', 'next/core-web-vitals', 'next/typescript'),
-  {
-    rules: {
-      '@typescript-eslint/ban-ts-comment': 'off',
-      '@typescript-eslint/ban-ts-ignore': 'off',
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/explicit-module-boundary-types': 'off',
-
-      '@typescript-eslint/no-empty-function': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'off',
-
-      '@typescript-eslint/no-unused-vars': ['error', {
-          args: 'all',
-          argsIgnorePattern: '^_',
-          caughtErrors: 'all',
-          caughtErrorsIgnorePattern: '^_',
-          destructuredArrayIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          ignoreRestSiblings: true,
-        },
-      ],
-
-      '@typescript-eslint/no-var-requires': 'off',
-      '@typescript-eslint/prefer-interface': 'off',
-      '@next/next/no-img-element': 'off',
-      'arrow-parens': 'off',
-      'import/extensions': 'off',
-      'import/no-default-export': 'error',
-      'import/prefer-default-export': 'off',
-      'import/no-anonymous-default-export': 'off',
-      'jsx-a11y/anchor-is-valid': 'off',
-
-      'jsx-a11y/label-has-associated-control': ['error', {
-        labelComponents: [],
-        labelAttributes: [],
-        controlComponents: [],
-        assert: 'either',
-        depth: 25,
-      }],
-
-      'max-len': 'off',
-      'no-console': 'error',
-
-      'no-restricted-syntax': ['error', {
-        selector: "CallExpression[callee.name='dump']",
-        message: 'Dump expressions are not allowed',
-      }, {
-        selector: "CallExpression[callee.name='dumpParams']",
-        message: 'Dump expressions are not allowed',
-      }],
-
-      'object-curly-newline': 'off',
-
-      'react/destructuring-assignment': 'off',
-      'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }],
-      'react/jsx-one-expression-per-line': 'off',
-      'react/jsx-props-no-spreading': 'off',
-
-      'react/require-default-props': 'off',
-      'react/function-component-definition': ['off'],
-
-      'spaced-comment': ['error', 'always', {
-        markers: ['/'],
-      }],
-
-      indent: 'off',
-      semi: ['error', 'never'],
-      'consistent-return': 'off',
+export default antfu({
+  formatters: true,
+  react: true,
+  nextjs: true,
+  ignores: [
+    'src/types/contentful.d.ts',
+    'next-env.d.ts',
+    '.next/**',
+    'out/**',
+    'build/**',
+    'public/**',
+  ],
+}, {
+  ...tailwind.configs.recommended,
+  settings: {
+    [tailwind.meta.name]: {
+      entryPoint: 'src/assets/styles.css',
     },
   },
-  {
-    files: ['src/pages/**/*.tsx', 'src/app/**/*.tsx', '**/*.mjs'],
+}, {
+  rules: {
+    'antfu/top-level-function': 'off',
+    'antfu/if-newline': 'off',
+    'ts/consistent-type-definitions': ['error', 'type'],
+    'style/max-len': ['warn', { code: 120, ignoreComments: true, ignoreTemplateLiterals: true, ignoreStrings: true, ignoreRegExpLiterals: true }],
+    'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+    'style/operator-linebreak': ['error', 'before', { overrides: { '=': 'after' } }],
+    'style/no-extra-parens': 'off',
+    'style/brace-style': ['error', '1tbs'],
+    'style/multiline-ternary': 'off',
+    'style/arrow-parens': ['error', 'as-needed'],
+    'style/type-generic-spacing': 'off',
+    'style/member-delimiter-style': ['error', {
+      multiline: { delimiter: 'comma', requireLast: true },
+      singleline: { delimiter: 'comma', requireLast: false },
+      multilineDetection: 'brackets',
+    }],
 
-    rules: {
-      'import/no-default-export': 'off',
-    },
-  },
-  {
-    files: ['**/*.?(m)js'],
-    rules: {
-      semi: ['error', 'always'],
-      'import/no-extraneous-dependencies': ['error', {
-        devDependencies: true,
-      }],
-    },
-  },
-  {
-    files: ['**/*.js'],
-    rules: {
-      '@typescript-eslint/no-require-imports': 'off',
-      'global-require': 'off',
-    },
-  },
-  {
-    settings: {
-      'import/resolver': {
-        node: {
-          extensions: ['.json', '.d.ts', '.ts', '.tsx', '.js'],
-          moduleDirectory: ['node_modules', 'src/'],
-        },
-      },
-    },
-  },
-];
+    'no-console': 'error',
+    'node/prefer-global/process': 'off',
 
-export default eslintConfig;
+    'no-restricted-syntax': ['error', {
+      selector: 'CallExpression[callee.name=\'dump\']',
+      message: 'Dump expressions are not allowed',
+    }, {
+      selector: 'CallExpression[callee.name=\'dumpParams\']',
+      message: 'Dump expressions are not allowed',
+    }],
+
+    'import/no-default-export': 'error',
+
+    // '@next/next/no-img-element': 'off',
+  },
+}, {
+  files: ['**/*.ts', '**/*.tsx'],
+  rules: {
+    'ts/consistent-type-imports': ['error', { prefer: 'type-imports', fixStyle: 'inline-type-imports' }],
+  },
+}, {
+  files: ['src/app/**/*.tsx', '*.config.*'],
+  rules: {
+    'import/no-default-export': 'off',
+  },
+}, {
+  files: ['**/*.md'],
+  rules: {
+    'style/max-len': 'off',
+  },
+})

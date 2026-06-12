@@ -8,8 +8,8 @@ import { PrimaryButton } from '../Buttons'
 import { FormField, FormInput, FormTextarea } from '../Forms'
 
 // @see https://www.emailregex.com
-// eslint-disable-next-line no-control-regex
-const emailRegexp = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
+// eslint-disable-next-line no-control-regex, regexp/no-dupe-characters-character-class
+const emailRegexp = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\v\f\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|\\[\x01-\x09\v\f\x0E-\x7F])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4]\d|[01]?\d{1,2})\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d{1,2}|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\v\f\x0E-\x1F\x21-\x5A\x53-\x7F]|\\[\x01-\x09\v\f\x0E-\x7F])+)\])/
 
 export type ContactFields = {
   message: string,
@@ -37,7 +37,7 @@ const Form = () => {
       toast.success(
         'Votre message a été envoyé. \n\nNous reviendrons vers vous dans les plus brefs délais.',
       )
-    } catch (_e) {
+    } catch {
       toast.error(
         'Nous n\'avons pas pu envoyer votre message en raison d\'une erreur technique. \n\nMerci de nous contacter par un autre moyen.',
       )
@@ -45,7 +45,14 @@ const Form = () => {
   }
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-8">
+    <form
+      noValidate
+      onSubmit={handleSubmit(onSubmit)}
+      className="
+        grid grid-cols-1 gap-y-6
+        sm:grid-cols-6 sm:gap-x-8
+      "
+    >
       {/* Honeypot field - hidden with CSS to prevent bot detection */}
       <input
         type="text"
@@ -53,7 +60,7 @@ const Form = () => {
         tabIndex={-1}
         autoComplete="off"
         placeholder="Website"
-        className="absolute -left-[9999px] opacity-0 pointer-events-none"
+        className="pointer-events-none absolute left-[-9999px] opacity-0"
         aria-hidden="true"
       />
 
@@ -114,8 +121,10 @@ const Form = () => {
 
       <div className="sm:col-span-6">
         <p className="text-sm text-gray-500">
-          Nous vous remercions de renseigner vos informations de contact si vous souhaitez que nous revenions vers vous.
-          N&apos;hésitez pas à préciser dans le corps du message toute information qui pourrait être utile au traitement de votre demande.
+          Nous vous remercions de renseigner vos informations de contact si vous souhaitez que nous revenions vers
+          vous.
+          N&apos;hésitez pas à préciser dans le corps du message toute information qui pourrait être utile au
+          traitement de votre demande.
         </p>
       </div>
 
@@ -123,10 +132,21 @@ const Form = () => {
         <PrimaryButton
           type="submit"
           disabled={isSubmitting}
-          className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-xs text-base font-medium"
+          className="
+            inline-flex w-full items-center justify-center rounded-md border
+            border-transparent px-6 py-3 text-base font-medium shadow-xs
+          "
         >
           {isSubmitting
-            && <span aria-hidden="true" className="-ml-1 mr-3 w-5 h-5 border-2 border-transparent border-l-white rounded-full animate-spin" />}
+            && (
+              <span
+                aria-hidden="true"
+                className="
+                  mr-3 -ml-1 size-5 animate-spin rounded-full border-2
+                  border-transparent border-l-white
+                "
+              />
+            )}
           Envoyer
         </PrimaryButton>
       </div>
@@ -135,10 +155,15 @@ const Form = () => {
 }
 
 export const ContactFormSection = () => (
-  <div className="py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
-    <div className="relative max-w-xl mx-auto">
+  <div className="
+    overflow-hidden px-4 py-16
+    sm:px-6
+    lg:px-8 lg:py-24
+  "
+  >
+    <div className="relative mx-auto max-w-xl">
       <svg
-        className="absolute left-full  translate-x-1/2"
+        className="absolute left-full translate-x-1/2"
         width={404}
         height={404}
         fill="none"
@@ -160,7 +185,7 @@ export const ContactFormSection = () => (
         <rect width={404} height={404} fill="url(#85737c0e-0916-41d7-917f-596dc7edfa27)" />
       </svg>
       <svg
-        className="absolute right-full bottom-0  -translate-x-1/2"
+        className="absolute right-full bottom-0 -translate-x-1/2"
         width={404}
         height={404}
         fill="none"
@@ -182,9 +207,16 @@ export const ContactFormSection = () => (
         <rect width={404} height={404} fill="url(#85737c0e-0916-41d7-917f-596dc7edfa27)" />
       </svg>
       <div className="text-center">
-        <h1 className="text-3xl font-extrabold tracking-tight text-blue-default sm:text-4xl">Nous contacter</h1>
-        <p className="mt-4 text-lg leading-6 text-gray-500">
-          Vous avez une remarque ou une question, n’hésitez pas à remplir le formulaire ci-dessous, les porteurs du projet RESAP vous répondront.
+        <h1 className="
+          text-3xl font-extrabold tracking-tight text-blue-default
+          sm:text-4xl
+        "
+        >
+          Nous contacter
+        </h1>
+        <p className="mt-4 text-lg/6 text-gray-500">
+          Vous avez une remarque ou une question, n’hésitez pas à remplir le formulaire ci-dessous,
+          les porteurs du projet RESAP vous répondront.
         </p>
       </div>
       <div className="mt-12">

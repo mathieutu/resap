@@ -1,9 +1,9 @@
 'use client'
 
+import type { ReactNode } from 'react'
 import { InstantSearchSSRProvider } from 'react-instantsearch-core'
-import { ReactNode } from 'react'
-import { IndicesNames, searchClient } from '@/services/algolia.browser'
 import { InstantSearchNext } from 'react-instantsearch-nextjs'
+import { type IndicesNames, searchClient } from '@/services/algolia.browser'
 
 type SearchContextProps = {
   children: ReactNode,
@@ -48,4 +48,4 @@ export const SearchContext = ({
       {children}
     </InstantSearchNext>
   </InstantSearchSSRProvider>
-  )
+)

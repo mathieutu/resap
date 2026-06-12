@@ -1,6 +1,6 @@
+import { revalidatePath } from 'next/cache'
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { revalidatePath } from 'next/cache'
 
 export async function GET(request: Request) {
   const draft = await draftMode()

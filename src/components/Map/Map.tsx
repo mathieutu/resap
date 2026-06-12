@@ -1,28 +1,32 @@
 'use client'
 
-import 'leaflet/dist/leaflet.css'
+import type { Structure } from '@/types/models'
 
-import { GeoJSON, MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
-import L, { LatLngTuple } from 'leaflet'
-import { ReactNode, useEffect, useMemo } from 'react'
+import L, { type LatLngTuple } from 'leaflet'
 import { groupBy } from 'ramda'
-import { Structure } from '@/types/models'
+import { type ReactNode, useEffect, useMemo } from 'react'
+import { GeoJSON, MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
 import { types } from '@/data/structures_types'
-import { departementsBoundaries } from './departements'
 import { MarkerClusterGroup } from './Cluster'
-import { ResetViewControl } from './ResetViewControl'
 import { CurrentLocationControl } from './CurrentLocationControl'
+import { departementsBoundaries } from './departements'
+import { ResetViewControl } from './ResetViewControl'
+import 'leaflet/dist/leaflet.css'
 
 const initialCenter: LatLngTuple = [45.40, 4.66]
 const initialZoom = 7
 
 const UpdateViewWhenSelectingStructure = ({ selectedStructure: s }: { selectedStructure: Structure | undefined }) => {
   const map = useMap()
+  const id = s?.id
+  const lat = s?.latLon.lat
+  const lon = s?.latLon.lon
+
   useEffect(() => {
-    if (s) {
-      map.flyTo([s.latLon.lat, s.latLon.lon])
+    if (id !== undefined && lat !== undefined && lon !== undefined) {
+      map.flyTo([lat, lon])
     }
-  }, [map, s])
+  }, [map, id, lat, lon])
 
   return null
 }
@@ -79,7 +83,7 @@ export const Map = ({
         .map(([departement, structs]) => (
           <MarkerClusterGroup key={departement}>
             {structs!.filter(s => s.id !== selectedStructure?.id)
-              .map((s) => (
+              .map(s => (
                 <Marker
                   key={s.id}
                   position={[s.latLon.lat, s.latLon.lon]}

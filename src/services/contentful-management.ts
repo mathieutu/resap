@@ -9,14 +9,14 @@ if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN) {
 }
 
 export type CreateStructureData = {
-  nom: string
-  organisation: string
-  type: string
-  description: string
-  adresse: string
-  siteWeb: string
-  email: string
-  tel: string
+  nom: string,
+  organisation: string,
+  type: string,
+  description: string,
+  adresse: string,
+  siteWeb: string,
+  email: string,
+  tel: string,
 }
 
 const findCoordinates = async (address: string): Promise<{ lat: number, lon: number }> => {
@@ -37,11 +37,10 @@ const findCoordinates = async (address: string): Promise<{ lat: number, lon: num
     }
 
     return {
-      lat: parseFloat(data.features[0].geometry.coordinates[1]),
-      lon: parseFloat(data.features[0].geometry.coordinates[0]),
+      lat: Number.parseFloat(data.features[0].geometry.coordinates[1]),
+      lon: Number.parseFloat(data.features[0].geometry.coordinates[0]),
     }
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('Erreur lors du géocodage:', error)
     return { lat: 0, lon: 0 }
   }

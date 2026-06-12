@@ -1,4 +1,4 @@
-const { cyan } = require('tailwindcss/colors');
+const { cyan } = require('tailwindcss/colors')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -33,7 +33,7 @@ module.exports = {
         interpretariat: '#C693C2',
         cyan,
       },
-      typography: (theme) => ({
+      typography: theme => ({
         DEFAULT: {
           css: {
             color: theme('colors.grey.default'),
@@ -74,7 +74,7 @@ module.exports = {
               },
             },
             a: {
-              color: '#3182ce',
+              'color': '#3182ce',
               '&:hover': {
                 color: '#2c5282',
               },
@@ -88,4 +88,4 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
   ],
-};
+}

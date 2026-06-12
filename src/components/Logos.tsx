@@ -1,4 +1,4 @@
-import { ClassNameProp } from '../types/react'
+import type { ClassNameProp } from '../types/react'
 
 export const LogoFull = ({ className }: ClassNameProp) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" className={className} viewBox="0 0 54 16">

@@ -1,12 +1,12 @@
-/* eslint-disable react/no-danger */
+import type { ClassNameProp } from '../types/react'
 import classNames from 'classnames'
-import { ClassNameProp } from '../types/react'
 
 type proseProps = { html: string } & ClassNameProp
 
 export const Prose = ({ html, className }: proseProps) => (
   <div
     className={classNames(className, 'prose max-w-none')}
+    // eslint-disable-next-line react/dom-no-dangerously-set-innerhtml
     dangerouslySetInnerHTML={{ __html: html }}
   />
 )

@@ -2,7 +2,7 @@
 
 import { flatten, pluck } from 'ramda'
 import { deleteFiche, refreshFiches, saveFiche, saveFiches } from '@/services/algolia.server'
-import { ContentType, CONTENT_TYPES, fetchAllFichesForIndexing, findAFicheForIndexing, findAllFichesLinkedToAssetForIndexing, findAllFichesLinkedToEntryForIndexing, SysType, SYS_TYPES } from '@/services/contentful'
+import { CONTENT_TYPES, type ContentType, fetchAllFichesForIndexing, findAFicheForIndexing, findAllFichesLinkedToAssetForIndexing, findAllFichesLinkedToEntryForIndexing, SYS_TYPES, type SysType } from '@/services/contentful'
 
 export async function GET() {
   console.log('Refreshing all the fiches')

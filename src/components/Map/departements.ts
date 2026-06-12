@@ -1,5 +1,6 @@
+/* eslint-disable style/max-len */
 import type { FeatureCollection, Geometry } from 'geojson'
-import { DepartementCode } from '../../data/departements'
+import type { DepartementCode } from '../../data/departements'
 
 type Properties = {
   code: DepartementCode,

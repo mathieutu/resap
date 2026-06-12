@@ -1,13 +1,14 @@
-import { useMapEvents } from 'react-leaflet'
-import { useEffect, useState } from 'react'
-import { Configure } from 'react-instantsearch-core'
 import { LatLng, LatLngBounds } from 'leaflet'
 import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { Configure } from 'react-instantsearch-core'
+import { useMapEvents } from 'react-leaflet'
 
 const PADDING = 0.05
 
 const getBoundsFromFilters = (filters: string) => {
   const float = '[+-]?(?=\\.\\d|\\d)(?:\\d+)?(?:\\.?\\d*)'
+  // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/no-trivially-nested-quantifier, regexp/no-useless-non-capturing-group
   const regexp = new RegExp(`^_geoloc\\.lat < (${float}) AND _geoloc\\.lat > (${float}) AND _geoloc\\.lng > (${float}) AND _geoloc\\.lng < (${float})$`)
 
   const matches = filters.match(regexp)

@@ -1,13 +1,13 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { type ChangeEvent, type FormEvent, useEffect, useState } from 'react'
 
 export const useDebounce = <T>(value: T, delay = 300) => {
   const [debouncedValue, setDebouncedValue] = useState(value)
 
   useEffect(() => {
-    const timeOut = setTimeout(() => setDebouncedValue(value), delay)
+    const timeOut = setTimeout(setDebouncedValue, delay, value)
 
     return () => clearTimeout(timeOut)
   }, [value, delay])

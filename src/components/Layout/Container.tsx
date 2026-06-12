@@ -1,5 +1,5 @@
+import type { ChildrenProp, ClassNameProp } from '../../types/react'
 import classNames from 'classnames'
-import { ChildrenProp, ClassNameProp } from '../../types/react'
 
 type Props = ClassNameProp & ChildrenProp
 

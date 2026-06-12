@@ -4,4 +4,4 @@ module.exports = {
       { hostname: 'images.ctfassets.net' },
     ],
   },
-};
+}

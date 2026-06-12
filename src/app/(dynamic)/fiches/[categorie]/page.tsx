@@ -1,4 +1,4 @@
-import { categories, CategorieSlug } from '@/data/categories'
+import { categories, type CategorieSlug } from '@/data/categories'
 import { SearchFiches } from '../SearchFiches'
 
 export const generateMetadata = async ({ params }: { params: Promise<{ categorie: CategorieSlug }> }) => {

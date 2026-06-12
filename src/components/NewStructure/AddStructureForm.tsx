@@ -3,31 +3,31 @@
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { PrimaryButton } from '@/components/Buttons'
-import { FormField, FormInput, FormTextarea, FormSelect } from '@/components/Forms'
+import { FormField, FormInput, FormSelect, FormTextarea } from '@/components/Forms'
 import { types } from '@/data/structures_types'
 import { createStructureInContentful } from '@/services/contentful-management'
 import { sendNewStructureNotification } from '@/services/mailer'
 
 // @see https://www.emailregex.com
-// eslint-disable-next-line no-control-regex
-const emailRegexp = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
+// eslint-disable-next-line no-control-regex, regexp/no-dupe-characters-character-class
+const emailRegexp = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\v\f\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|\\[\x01-\x09\v\f\x0E-\x7F])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4]\d|[01]?\d{1,2})\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d{1,2}|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\v\f\x0E-\x1F\x21-\x5A\x53-\x7F]|\\[\x01-\x09\v\f\x0E-\x7F])+)\])/
 
 export type AddStructureFields = {
-  nom: string
-  organisation: string
-  type: string
-  description: string
-  adresse: string
-  siteWeb: string
-  email: string
-  tel: string
+  nom: string,
+  organisation: string,
+  type: string,
+  description: string,
+  adresse: string,
+  siteWeb: string,
+  email: string,
+  tel: string,
   // Informations de contact pour la soumission
-  contactFirstName: string
-  contactLastName: string
-  contactEmail: string
-  contactPhone: string
-  contactOrganization: string
-  commentaires: string
+  contactFirstName: string,
+  contactLastName: string,
+  contactEmail: string,
+  contactPhone: string,
+  contactOrganization: string,
+  commentaires: string,
 }
 
 export const AddStructureForm = () => {
@@ -66,18 +66,29 @@ export const AddStructureForm = () => {
   const structureTypes = Object.keys(types)
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-8">
+    <form
+      noValidate
+      onSubmit={handleSubmit(onSubmit)}
+      className="
+        grid grid-cols-1 gap-y-6
+        sm:grid-cols-6 sm:gap-x-8
+      "
+    >
       <div className="sm:col-span-6">
         {/* Informations sur la structure */}
         <div>
           <div>
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Informations sur la structure</h3>
+            <h3 className="text-lg/6 font-medium text-gray-900">Informations sur la structure</h3>
             <p className="mt-1 text-sm text-gray-500">
               Veuillez fournir toutes les informations disponibles sur la structure que vous souhaitez ajouter.
             </p>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-8">
+          <div className="
+            mt-6 grid grid-cols-1 gap-y-6
+            sm:grid-cols-6 sm:gap-x-8
+          "
+          >
             {/* Nom */}
             <FormField className="sm:col-span-full" name="nom" required error={errors.nom && 'Le nom de la structure est requis.'} label="Nom de la structure">
               <FormInput
@@ -96,11 +107,11 @@ export const AddStructureForm = () => {
                 {...register('type', { required: true })}
               >
                 <option value="">Sélectionnez un type</option>
-                {structureTypes.map((type) => (
+                {structureTypes.map(type => (
                   <option key={type} value={type}>
                     {types[type as keyof typeof types].nom}
                   </option>
-                  ))}
+                ))}
               </FormSelect>
             </FormField>
 
@@ -135,11 +146,11 @@ export const AddStructureForm = () => {
                 id="email"
                 error={!!errors.email}
                 {...register('email', {
-                    pattern: {
-                      value: emailRegexp,
-                      message: 'Format d\'email invalide',
-                    },
-                  })}
+                  pattern: {
+                    value: emailRegexp,
+                    message: 'Format d\'email invalide',
+                  },
+                })}
               />
             </FormField>
 
@@ -176,13 +187,17 @@ export const AddStructureForm = () => {
         {/* Informations de contact */}
         <div>
           <div>
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Vos informations de contact</h3>
+            <h3 className="text-lg/6 font-medium text-gray-900">Vos informations de contact</h3>
             <p className="mt-1 text-sm text-gray-500">
               Ces informations nous permettront de vous recontacter si nous avons des questions sur votre proposition.
             </p>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-8">
+          <div className="
+            mt-6 grid grid-cols-1 gap-y-6
+            sm:grid-cols-6 sm:gap-x-8
+          "
+          >
             {/* Prénom */}
             <FormField className="sm:col-span-3" name="contactFirstName" required error={errors.contactFirstName && 'Le prénom est requis.'} label="Prénom">
               <FormInput
@@ -213,12 +228,12 @@ export const AddStructureForm = () => {
                 autoComplete="email"
                 error={!!errors.contactEmail}
                 {...register('contactEmail', {
-                required: true,
-                pattern: {
-                value: emailRegexp,
-                message: 'Format d\'email invalide',
-                },
-              })}
+                  required: true,
+                  pattern: {
+                    value: emailRegexp,
+                    message: 'Format d\'email invalide',
+                  },
+                })}
               />
             </FormField>
 
@@ -248,10 +263,21 @@ export const AddStructureForm = () => {
         <PrimaryButton
           type="submit"
           disabled={isSubmitting}
-          className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-xs text-base font-medium"
+          className="
+            inline-flex w-full items-center justify-center rounded-md border
+            border-transparent px-6 py-3 text-base font-medium shadow-xs
+          "
         >
           {isSubmitting
-            && <span aria-hidden="true" className="-ml-1 mr-3 w-5 h-5 border-2 border-transparent border-l-white rounded-full animate-spin" />}
+            && (
+              <span
+                aria-hidden="true"
+                className="
+                  mr-3 -ml-1 size-5 animate-spin rounded-full border-2
+                  border-transparent border-l-white
+                "
+              />
+            )}
           {isSubmitting ? 'Envoi en cours...' : 'Proposer cette structure'}
         </PrimaryButton>
       </div>
