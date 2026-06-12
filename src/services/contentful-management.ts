@@ -52,13 +52,11 @@ export const createStructureInContentful = async (data: CreateStructureData): Pr
     accessToken: CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
   })
 
-  const space = await client.getSpace(CONTENTFUL_SPACE_ID)
-  const environment = await space.getEnvironment('master')
-
   const { lat, lon } = await findCoordinates(data.adresse)
 
-  const structureEntry = await environment.createEntry('structure', {
-    fields: {
+  const structureEntry = await client.entry.create(
+    { spaceId: CONTENTFUL_SPACE_ID, environmentId: 'master', contentTypeId: 'structure' },
+    { fields: {
       nom: {
         fr: data.nom,
       },
@@ -87,8 +85,8 @@ export const createStructureInContentful = async (data: CreateStructureData): Pr
           lon,
         },
       },
-    },
-  })
+    } },
+  )
 
   const contentfulUrl = `https://app.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/entries/${structureEntry.sys.id}`
 

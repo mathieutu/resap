@@ -4,7 +4,7 @@ import { globalIgnores } from 'eslint/config';
 const compat = new FlatCompat();
 
 const eslintConfig = [
-  globalIgnores(['src/types/contentful.d.ts', '.next', 'public']),
+  globalIgnores(['src/types/contentful.d.ts', 'next-env.d.ts', '.next', 'public']),
   ...compat.extends('airbnb', 'next/core-web-vitals', 'next/typescript'),
   {
     rules: {

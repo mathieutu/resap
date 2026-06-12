@@ -6,7 +6,6 @@ import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 
 export const MarkerClusterGroup = createPathComponent(
   (_props, ctx) => {
-    // @ts-expect-error The markerClusterGroup function does exist 🤷
     const markerClusterGroup = L.markerClusterGroup({
       showCoverageOnHover: false,
       chunkedLoading: true,
